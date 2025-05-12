@@ -1,10 +1,10 @@
-import { defineConfig } from "vite";
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        index: "index.html", // 기본 index.html
+        index: 'index.html', // 기본 index.html
         // list: 'src/pages/todo/list.html', // 추가 HTML 파일
         // regist: 'src/pages/todo/regist.html', // 추가 HTML 파일
         // info: 'src/pages/todo/info.html', // 추가 HTML 파일
@@ -12,5 +12,5 @@ export default defineConfig({
       },
     },
   },
-  appType: "mpa", // fallback 사용안함
+  appType: 'mpa', // fallback 사용안함
 });
