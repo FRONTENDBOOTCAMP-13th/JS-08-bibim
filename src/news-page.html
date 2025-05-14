@@ -3,14 +3,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>News Article Page</title>
-    <script type="module" src="main.ts"></script>
+    <title>뉴스 상세 페이지</title>
+    <link
+      rel="preload"
+      as="font"
+      href="/font/woff2/PretendardVariable.woff2"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" as="style" href="/font/pretendardvariable.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
+    <script type="module" src="/src/typescript/category.ts"></script>
   </head>
   <body class="max-w-screen-xl mx-auto px-4 py-6">
+    <nav>
+      <!-- 로고 이미지 -->
+      <a href="/">
+        <svg
+          width="180"
+          height="60"
+          viewBox="0 0 180 60"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <!-- 아이콘 -->
+          <rect x="0" y="0" width="60" height="60" rx="12" fill="#E0F0FF" />
+          <rect x="12" y="12" width="36" height="8" rx="2" fill="#0070F3" />
+          <rect x="12" y="24" width="24" height="4" rx="2" fill="#0070F3" />
+          <rect x="12" y="32" width="36" height="4" rx="2" fill="#0070F3" />
+          <rect x="12" y="40" width="20" height="4" rx="2" fill="#0070F3" />
+
+          <!-- 텍스트 -->
+          <text
+            x="70"
+            y="40"
+            font-family="Arial, sans-serif"
+            font-size="32"
+            font-weight="bold"
+            fill="#0070F3"
+          >
+            wagle
+          </text>
+        </svg>
+      </a>
+      <!-- HOME -->
+      <a href="/">HOME</a>
+      <!-- MYPAGE -->
+      <a href="/">MYPAGE</a>
+      <!-- GAME -->
+      <a href="/">GAME</a>
+    </nav>
+    <nav>
+      <button type="button">종합</button>
+      <button type="button">정치</button>
+      <button type="button">경제</button>
+      <button type="button">사회</button>
+      <button type="button">생활/문화</button>
+      <button type="button">세계</button>
+      <button type="button">IT/과학</button>
+    </nav>
     <div class="border-t border-b border-gray-300 pt-4 pt-6 pb-6">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Main Content -->
@@ -97,6 +149,103 @@
               </div>
             </div>
           </article>
+
+          <!-- 퀴즈 섹션 박스 -->
+          <div
+            class="bg-[#E8F4FF] p-4 mt-4 border-t-2 border-black max-h-[500px] overflow-y-auto"
+          >
+            <h3 class="text-xl font-bold text-[#005DBA] mb-4">뉴스 퀴즈</h3>
+
+            <!-- 각 퀴즈 문항 -->
+            <div class="mb-2">
+              <!-- 질문 -->
+              <p class="font-medium text-gray-800 mb-3">
+                1. 아이폰 SE의 위조율은?
+              </p>
+
+              <!-- 보기 목록 -->
+              <div class="space-y-2">
+                <!-- 보기 항목 (선택된 경우) -->
+                <div
+                  class="p-3 rounded-lg cursor-pointer border border-[#005DBA] bg-[#005DBA]/10"
+                >
+                  <div class="flex items-center">
+                    <div
+                      class="h-5 w-5 rounded-full border border-[#005DBA] bg-[#005DBA] text-white flex items-center justify-center mr-3"
+                    >
+                      <span class="text-xs">✓</span>
+                    </div>
+                    <span>99.4%</span>
+                  </div>
+                </div>
+
+                <!-- 보기 항목 (선택되지 않은 경우) -->
+                <div
+                  class="p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50"
+                >
+                  <div class="flex items-center">
+                    <div
+                      class="h-5 w-5 rounded-full border border-gray-400 mr-3"
+                    ></div>
+                    <span>75%</span>
+                  </div>
+                </div>
+
+                <!-- 정답 표시 상태 예시 (맞춘 보기) -->
+                <div
+                  class="p-3 rounded-lg border border-green-500 bg-green-100"
+                >
+                  <div class="flex items-center">
+                    <div
+                      class="h-5 w-5 rounded-full border border-green-500 bg-green-500 text-white flex items-center justify-center mr-3"
+                    >
+                      <span class="text-xs">✓</span>
+                    </div>
+                    <span>99.4%</span>
+                  </div>
+                </div>
+
+                <!-- 정답 표시 상태 예시 (틀린 보기) -->
+                <div class="p-3 rounded-lg border border-red-500 bg-red-100">
+                  <div class="flex items-center">
+                    <div
+                      class="h-5 w-5 rounded-full border border-red-500 bg-red-500 text-white flex items-center justify-center mr-3"
+                    >
+                      <span class="text-xs">✓</span>
+                    </div>
+                    <span>50%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 제출 버튼 (활성 상태) -->
+            <button
+              class="w-40 py-3 rounded-lg font-medium bg-[#005DBA] text-white hover:bg-[#004DA5] transition-colors"
+            >
+              Submit Answers
+            </button>
+
+            <!-- 결과 표시 영역 -->
+            <div class="mt-6">
+              <div class="mb-4 p-4 bg-white rounded-lg text-center">
+                <p class="text-gray-600">정답이에요!!</p>
+              </div>
+              <!-- 제출 버튼 (비활성 상태) -->
+              <div class="flex justify-center gap-4">
+                <button
+                  class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors"
+                >
+                  정답 확인하기
+                </button>
+                <button
+                  class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors"
+                >
+                  다시 해볼래요
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Sidebar -->
