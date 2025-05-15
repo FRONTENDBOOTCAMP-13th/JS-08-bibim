@@ -5,74 +5,17 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>마이페이지</title>
-    <link
-      rel="preload"
-      as="font"
-      href="/font/woff2/PretendardVariable.woff2"
-      crossorigin="anonymous"
-    />
+    <link rel="preload" as="font" href="/font/woff2/PretendardVariable.woff2" crossorigin="anonymous" />
     <link rel="stylesheet" as="style" href="/font/pretendardvariable.css" />
     <script type="module" src="/src/main.ts"></script>
-    <script>
-      // 날짜 데이터를 렌더링하기 위한 스크립트
-      document.addEventListener('DOMContentLoaded', () => {
-        const calendar = document.getElementById('calendar-grid');
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = today.getMonth(); // 0부터 시작 (0 = 1월)
-        const date = today.getDate();
-        document.getElementById('calendar-title').textContent =
-          `📅 ${year}년 ${month + 1}월`;
-
-        const firstDay = new Date(year, month, 1).getDay(); // 해당 달의 1일의 요일
-        const daysInMonth = new Date(year, month + 1, 0).getDate(); // 해당 달의 마지막 날짜
-
-        const totalCells = 42; // 7일 x 6주
-        let dayCounter = 1;
-
-        for (let i = 0; i < totalCells; i++) {
-          const cell = document.createElement('div');
-          cell.className =
-            'flex items-center justify-center h-16 border border-gray-200';
-
-          if (i >= firstDay && dayCounter <= daysInMonth) {
-            if (dayCounter === date) {
-              // 오늘 날짜에 빨간 동그라미
-              cell.innerHTML = `<div class="w-8 h-8 rounded-full border-4 border-red-500 bg-orange-400 text-white flex items-center justify-center">${dayCounter}</div>`;
-            } else if (dayCounter === 3) {
-              cell.innerHTML = `<div class="w-8 h-8 rounded-full bg-orange-400 text-white flex items-center justify-center">${dayCounter}</div>`;
-            } else if (dayCounter === 4) {
-              cell.innerHTML = `<div class="w-8 h-8 rounded-full bg-orange-400 text-white flex items-center justify-center">${dayCounter}</div>`;
-            } else if (dayCounter === 6) {
-              cell.innerHTML = `<div class="w-8 h-8 rounded-full bg-orange-400 text-white flex items-center justify-center">${dayCounter}</div>`;
-            } else if (dayCounter === 8) {
-              cell.innerHTML = `<div class="w-8 h-8 rounded-full bg-orange-400 text-white flex items-center justify-center">${dayCounter}</div>`;
-            } else if (dayCounter === 9) {
-              cell.innerHTML = `<div class="w-8 h-8 rounded-full bg-orange-400 text-white flex items-center justify-center">${dayCounter}</div>`;
-            } else if (dayCounter === 10) {
-              cell.innerHTML = `<div class="w-8 h-8 rounded-full bg-orange-400 text-white flex items-center justify-center">${dayCounter}</div>`;
-            } else {
-              cell.textContent = dayCounter;
-            }
-            dayCounter++;
-          }
-
-          calendar.appendChild(cell);
-        }
-      });
-    </script>
+    <script type="module" src="/src/typescript/my-page.ts"></script>
   </head>
   <body>
     <!-- 상단 내비게이션 바 -->
     <nav class="flex items-center px-4 py-2 max-w-6xl mx-auto">
       <!-- 로고 이미지 -->
       <a href="/">
-        <svg
-          width="180"
-          height="60"
-          viewBox="0 0 180 60"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg width="180" height="60" viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg">
           <!-- 아이콘 -->
           <rect x="0" y="0" width="60" height="60" rx="12" fill="#E0F0FF" />
           <rect x="12" y="12" width="36" height="8" rx="2" fill="#0070F3" />
@@ -81,16 +24,7 @@
           <rect x="12" y="40" width="20" height="4" rx="2" fill="#0070F3" />
 
           <!-- 텍스트 -->
-          <text
-            x="70"
-            y="40"
-            font-family="Arial, sans-serif"
-            font-size="32"
-            font-weight="bold"
-            fill="#0070F3"
-          >
-            wagle
-          </text>
+          <text x="70" y="40" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#0070F3">wagle</text>
         </svg>
       </a>
       <div class="flex gap-4 ml-auto">
@@ -103,58 +37,51 @@
       </div>
     </nav>
     <!-- 마이페이지 영역 -->
-    <section class="bg-gray-200 max-w-6xl mx-auto h-[31.25rem] flex">
+    <section class="bg-gray-200 max-w-6xl mx-auto h-full flex py-5">
       <!-- 포인트 및 출석 선택 영역 -->
       <nav class="flex flex-col items-start px-5 gap-5">
-        <button
-          id="calendar-btn"
-          class="border-2 border-[#fc5f6f] rounded-2xl w-[10rem] h-[6rem] text-center"
-        >
-          내 출석
-        </button>
-        <button
-          id="point-btn"
-          class="border-2 border-[#fc5f6f] rounded-2xl w-[10rem] h-[6rem] text-center"
-        >
-          내 포인트
-        </button>
-        <button
-          id="history-btn"
-          class="border-2 border-[#fc5f6f] rounded-2xl w-[10rem] h-[6rem] text-center"
-        >
-          열람한 기사
-        </button>
-      </nav>
-      <div class="flex items-center justify-center w-full gap-5">
-        <div class="bg-white p-6 rounded-xl shadow-xl w-[400px]">
-          <h1
-            id="calendar-title"
-            class="text-xl font-bold mb-4 text-center"
-          ></h1>
+        <!-- 내 출석 버튼 -->
+        <input type="radio" name="menu" id="calendar" class="hidden" checked />
+        <label for="calendar" class="border-2 border-[#fc5f6f] rounded-2xl w-[10rem] h-[6rem] flex items-center justify-center text-center cursor-pointer"> 내 출석 </label>
 
-          <div
-            class="grid grid-cols-7 text-center font-semibold text-gray-700 mb-2"
-          >
-            <div class="text-red-500">일</div>
-            <div>월</div>
-            <div>화</div>
-            <div>수</div>
-            <div>목</div>
-            <div>금</div>
-            <div class="text-blue-500">토</div>
+        <!-- 내 포인트 버튼 -->
+        <input type="radio" name="menu" id="point" class="hidden" />
+        <label for="point" class="border-2 border-[#fc5f6f] rounded-2xl w-[10rem] h-[6rem] flex items-center justify-center text-center cursor-pointer"> 내 포인트 </label>
+
+        <!-- 열람한 기사 버튼 -->
+        <input type="radio" name="menu" id="history" class="hidden" />
+        <label for="history" class="border-2 border-[#fc5f6f] rounded-2xl w-[10rem] h-[6rem] flex items-center justify-center text-center cursor-pointer"> 열람한 기사 </label>
+      </nav>
+      <article>
+        <div class="flex items-center justify-center w-full gap-5" id="calendar-section" name="sections">
+          <div class="bg-white p-6 rounded-xl shadow-xl w-[400px]">
+            <h1 id="calendar-title" class="text-xl font-bold mb-4 text-center"></h1>
+
+            <div class="grid grid-cols-7 text-center font-semibold text-gray-700 mb-2">
+              <div class="text-red-500 w-16">일</div>
+              <div class="w-16">월</div>
+              <div class="w-16">화</div>
+              <div class="w-16">수</div>
+              <div class="w-16">목</div>
+              <div class="w-16">금</div>
+              <div class="text-blue-500 w-16">토</div>
+            </div>
+            <div id="calendar-grid" class="grid grid-cols-7 text-sm text-gray-800"></div>
           </div>
-          <div
-            id="calendar-grid"
-            class="grid grid-cols-7 text-sm text-gray-800"
-          ></div>
-        </div>
-        <div class="bg-white p-6 rounded-xl shadow-xl w-[250px]">
-          <div class="flex">
-            <span class="bg-orange-400 rounded-full w-8 h-8"></span>
-            <span>출석한 날짜</span>
+          <div class="bg-white p-6 rounded-xl shadow-xl w-[250px]">
+            <div class="flex">
+              <span class="bg-orange-400 rounded-full w-8 h-8"></span>
+              <span>출석한 날짜</span>
+            </div>
+            <div class="flex">
+              <span class="border-4 border-red-500 rounded-full w-8 h-8"></span>
+              <span>오늘 날짜</span>
+            </div>
           </div>
         </div>
-      </div>
+        <div name="sections" id="point-section">2번째 섹션</div>
+        <div name="sections">3번째 섹션</div>
+      </article>
     </section>
   </body>
 </html>
