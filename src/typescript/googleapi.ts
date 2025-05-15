@@ -1,6 +1,6 @@
 async function searchNews(query: string) {
-  const API_KEY = 'AIzaSyBPwRQTO7jRxoULD_deTpdRy2MJNrVsOj4';
-  const SEARCH_ENGINE_ID = '143f38bbad544463d';
+  const API_KEY = `${import.meta.env.VITE_GOOGLE_API_KEY}`;
+  const SEARCH_ENGINE_ID = `${import.meta.env.VITE_GOOGLE_SEARCH_ENGINE_ID}`;
 
   // 검색하고 싶은 뉴스 사이트들
   const newsSites = ['news.naver.com', 'v.daum.net', 'news.chosun.com'];

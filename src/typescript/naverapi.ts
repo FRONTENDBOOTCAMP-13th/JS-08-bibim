@@ -1,5 +1,5 @@
-const clientId = '2ODTy1eCXan80pD_dB3d';
-const clientSecret = 'DMBwFd0_Ed';
+const clientId = `${import.meta.env.VITE_NAVER_CLIENT_ID}`;
+const clientSecret = `${import.meta.env.VITE_CLIENT_SECRET}`;
 const keyword = '롯데 자이언츠';
 
 async function NaverNews() {
