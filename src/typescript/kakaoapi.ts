@@ -1,4 +1,4 @@
-// const KAKAO_API_KEY = '0d170aae0300af5803e982454cbb689a';
+// const KAKAO_API_KEY = `${import.meta.env.VITE_KAKAO_API_KEY}`;
 // const keyword = '롯데자이언츠';
 
 // async function KakaoNews() {
@@ -57,7 +57,7 @@ async function fetchKakaoWebSearch(query: string): Promise<NewsData[]> {
       const response = await fetch(url, {
         method: 'GET',
         headers: {
-          Authorization: 'KakaoAK 5a9ad4c0a2958c0a04fd6b04034c47e4', // ← 여기에 발급받은 REST API 키를 입력해야 해
+          Authorization: 'KakaoAK ', // ← 여기에 발급받은 REST API 키를 입력해야 해
         },
       });
 
