@@ -19,6 +19,7 @@
     "vite": "^6.3.5"
   },
   "dependencies": {
+    "serpapi": "^2.1.0",
     "swiper": "^11.2.6"
   }
 }
