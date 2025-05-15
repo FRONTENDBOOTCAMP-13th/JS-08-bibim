@@ -55,9 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         quiz.textContent = quizData.question;
 
         // 선택지 표시 (섞어서)
-        const shuffledOptions = [...quizData.options].sort(
-          () => Math.random() - 0.5,
-        );
+        const shuffledOptions = [...quizData.options].sort(() => Math.random() - 0.5);
         ulElem.innerHTML = ''; // 기존 내용 초기화
 
         shuffledOptions.forEach(opt => {
@@ -67,6 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (opt.isCorrect) {
               liElem.style.fontWeight = 'bold';
               liElem.style.backgroundColor = 'green';
+              const points = JSON.parse(localStorage.getItem('points') || '[0]');
+              const pointLog = JSON.parse(localStorage.getItem('pointLog') || '[]');
+
+              pointLog.push(`기사 문제 정답`);
+              points[0] = points[0] + 50;
+              localStorage.setItem('points', JSON.stringify(points));
+              localStorage.setItem('pointLog', JSON.stringify(pointLog));
             } else {
               liElem.style.fontWeight = 'bold';
               liElem.style.backgroundColor = 'red';
