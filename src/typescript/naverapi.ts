@@ -1,6 +1,6 @@
-const clientId = 'your_client_id_here';
-const clientSecret = 'your_client_secret_here';
-const keyword = '롯데자이언츠';
+const clientId = '2ODTy1eCXan80pD_dB3d';
+const clientSecret = 'DMBwFd0_Ed';
+const keyword = '롯데 자이언츠';
 
 async function NaverNews() {
   const URL = `https://openapi.naver.com/v1/search/news.json?query=${keyword}&display=10&start=1&sort=sim`;
