@@ -12,11 +12,10 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" as="style" href="/font/pretendardvariable.css" />
-    <!-- JS는 어떻게 할 것인지 회의 -->
     <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
-    <nav class="bg-gray-100">
+    <nav class="flex items-center px-4 py-2 max-w-6xl mx-auto">
       <!-- 로고 이미지 -->
       <a href="/">
         <svg
@@ -45,12 +44,14 @@
           </text>
         </svg>
       </a>
-      <!-- HOME -->
-      <a href="/">HOME</a>
-      <!-- MYPAGE -->
-      <a href="/">MYPAGE</a>
-      <!-- GAME -->
-      <a href="/">GAME</a>
+      <div class="flex gap-4 ml-auto">
+        <!-- HOME -->
+        <a href="/">HOME</a>
+        <!-- MYPAGE -->
+        <a href="/">MYPAGE</a>
+        <!-- GAME -->
+        <a href="/">GAME</a>
+      </div>
     </nav>
   </body>
 </html>
