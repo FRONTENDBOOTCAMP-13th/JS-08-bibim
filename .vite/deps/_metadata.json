@@ -1,8 +1,25 @@
 {
-  "hash": "766c3006",
+  "hash": "4b1f6cef",
   "configHash": "dc507a91",
-  "lockfileHash": "89d2c4b7",
-  "browserHash": "f716e2de",
-  "optimized": {},
-  "chunks": {}
+  "lockfileHash": "e06613c6",
+  "browserHash": "542795d5",
+  "optimized": {
+    "swiper": {
+      "src": "../../node_modules/swiper/swiper.mjs",
+      "file": "swiper.js",
+      "fileHash": "c38135df",
+      "needsInterop": false
+    },
+    "swiper/modules": {
+      "src": "../../node_modules/swiper/modules/index.mjs",
+      "file": "swiper_modules.js",
+      "fileHash": "a4a8587d",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-XLOWEJT4": {
+      "file": "chunk-XLOWEJT4.js"
+    }
+  }
 }

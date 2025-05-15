@@ -95,3 +95,15 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+.animate-scroll {
+  animation: scroll 18s linear infinite;
+}

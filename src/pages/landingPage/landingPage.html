@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/public/logo copy.svg" />
+    <title>landingPage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: #fff;
+      }
+
+      .swiper {
+        width: 90vw;
+        max-width: 640px;
+        height: auto;
+      }
+
+      .marquee-track {
+        display: flex;
+        min-width: 200%; /* 내용의 두 배 너비로 설정 */
+        animation: infinite-scroll 15s linear infinite;
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateX(0%);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      .animate-scroll {
+        animation: scroll 15s linear infinite;
+      }
+      .pretendard {
+        font-family:
+          "Pretendard Variable",
+          "Pretendard",
+          -apple-system,
+          BlinkMacSystemFont,
+          system-ui,
+          Roboto,
+          "Helvetica Neue",
+          "Segoe UI",
+          "Apple SD Gothic Neo",
+          "Noto Sans KR",
+          "Malgun Gothic",
+          sans-serif;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- SVG Logo in Top-Left Corner -->
+    <div class="absolute top-4 left-4 w-48">
+      <svg
+        width="180"
+        height="60"
+        viewBox="0 0 180 60"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <!-- 아이콘 -->
+        <rect x="0" y="0" width="60" height="60" rx="12" fill="#E0F0FF" />
+        <rect x="12" y="12" width="36" height="8" rx="2" fill="#0070F3" />
+        <rect x="12" y="24" width="24" height="4" rx="2" fill="#0070F3" />
+        <rect x="12" y="32" width="36" height="4" rx="2" fill="#0070F3" />
+        <rect x="12" y="40" width="20" height="4" rx="2" fill="#0070F3" />
+
+        <!-- 텍스트 -->
+        <text
+          x="70"
+          y="40"
+          font-family="Arial, sans-serif"
+          font-size="32"
+          font-weight="bold"
+          fill="#0070F3"
+        >
+          wagle
+        </text>
+      </svg>
+    </div>
+
+    <!-- Centered Container -->
+    <div
+      class="flex flex-col items-center justify-center min-h-screen px-4 text-center"
+    >
+      <!-- Title -->
+      <h1 class="text-4xl md:text-5xl font-medium text-gray-600 mb-12">
+        뉴스가 모이는 곳<br />
+        <div style="color: #0170f3">Wagle!</div>
+      </h1>
+
+      <!-- Swiper -->
+      <div class="swiper mySwiper mb-20">
+        <div class="swiper-wrapper">
+          <!-- Slide 1 -->
+          <div class="swiper-slide">
+            <div
+              class="relative bg-blue-500 rounded-2xl p-8 md:p-10 text-left text-white shadow-lg"
+            >
+              <div class="text-lg pretendard mb-4 text-orange-400">경제</div>
+              <div class="text-4xl pretendard mb-4">
+                트럼프 관세에 무너지는 韓 성장률...KDI, 3개월만에 1.6→0.8%로
+                대폭 낮춰
+              </div>
+              <p class="text-lg md:text-xl mb-6">
+                트럼프발 관세 전쟁으로 한국개발연구원(KDI)이 올해 한국의
+                경제성장률 전망치를 종전 1.6%에서 0.8%로 대폭 끌어내렸다.
+                한국은행과 정부를 비롯한 국내외기구가 제시한 전망치 가운데 가장
+                낮은 수준으로 첫 0%대 성장률이다. KDI는 14일 발표한 ‘2025 상반기
+                경제전망’에서...
+              </p>
+              <div class="text-gray-200">매일경제</div>
+              <div
+                class="h-1 w-full max-w-xs bg-gradient-to-r from-orange-500 to-orange-600 mt-3"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="swiper-slide">
+            <div
+              class="relative bg-gray-800 rounded-2xl p-8 md:p-10 text-left text-white shadow-lg"
+            >
+              <div class="text-lg pretendard mb-4 text-orange-400">정치</div>
+              <div class="text-4xl pretendard mb-4">
+                “오늘내일 결단할 것”...여기저기서 쏟아지는 ‘尹 탈당설’
+              </div>
+              <p class="text-lg md:text-xl mb-6">
+                김문수 국민의힘 대선 후보가 윤석열 전 대통령의 탈당 여부에 대해
+                “본인의 뜻”이라고 선을 그었지만, 조만간 윤 전 대통령의 탈당이
+                이뤄질 것이란 전망에 무게가 실리고 있다. 윤 전 대통령의 자진
+                출당을 요구하는 목소리가 당 안팎으로 연일 계속되고...
+              </p>
+              <div class="text-gray-200">매일경제</div>
+              <div
+                class="h-1 w-full max-w-xs bg-gradient-to-r from-orange-500 to-orange-600 mt-3"
+              ></div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="swiper-slide">
+            <div
+              class="relative bg-indigo-600 rounded-2xl p-8 md:p-10 text-left text-white shadow-lg"
+            >
+              <div class="text-lg pretendard mb-4 text-orange-400">스포츠</div>
+              <div class="text-4xl pretendard mb-4">
+                "만족한 순간 뒷걸음질, 최고령 우승 재도전"
+              </div>
+              <p class="text-lg md:text-xl mb-6">
+                SKT 오픈 2연패 정조준 최경주 페이드 구질, 스트레이트 바꿔 강풍
+                뚫고 핀 공략 가능해져 드라이버 거리 10야드 늘어 6번홀선 작년보다
+                30야드 더 "작년 기적처럼 공 떨어졌던 섬 올핸 근처에도 가지 않을
+                것"
+              </p>
+              <div class="text-gray-200">매일경제</div>
+              <div
+                class="h-1 w-full max-w-xs bg-gradient-to-r from-orange-500 to-orange-600 mt-3"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scrolling Partner Logos -->
+      <div class="marquee-wrapper overflow-hidden w-full py-4">
+        <div
+          class="marquee-track flex w-max animate-scroll min-w-[200%]"
+          id="marqueeTrack"
+        >
+          <img
+            src="/src/pages/landingPage/svg/Dong-a_Ilbo_logo.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/Hankyorehe.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/Seoul_Shinmun_logo.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/The_JoongAng_logo.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/The_kyunghyang_shinmun_logo.svg"
+            class="h-10 mx-6"
+          />
+          <!-- 복제본 (같은 이미지 다시 반복) -->
+          <img
+            src="/src/pages/landingPage/svg/Dong-a_Ilbo_logo.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/Hankyorehe.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/Seoul_Shinmun_logo.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/The_JoongAng_logo.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/The_kyunghyang_shinmun_logo.svg"
+            class="h-10 mx-6"
+          />
+        </div>
+      </div>
+    </div>
+    <script>
+      const track = document.getElementById("marqueeTrack");
+      const logos = [...track.children];
+      const screenWidth = window.innerWidth;
+
+      while (track.scrollWidth < screenWidth * 2) {
+        logos.forEach((logo) => {
+          const clone = logo.cloneNode(true);
+          track.appendChild(clone);
+        });
+      }
+    </script>
+
+    <!-- Swiper JS -->
+    <script type="module" src="/src/pages/landingPage/landingPage.ts"></script>
+  </body>
+</html>

@@ -21,6 +21,8 @@
     "vite": "^6.3.5"
   },
   "dependencies": {
+    "serpapi": "^2.1.0",
+    "swiper": "^11.2.6"
     "axios": "^1.9.0",
     "openai": "^4.98.0",
     "serpapi": "^2.1.0"
