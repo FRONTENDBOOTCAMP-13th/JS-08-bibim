@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>뉴스 카드 리스트</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 p-6">
+    <header class="bg-white border-b w-full fixed top-0 left-0 z-50">
+      <div
+        class="max-w-7xl mx-auto px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center"
+      >
+        <!-- 로고 -->
+        <a href="/" class="block h-10 w-44">
+          <svg
+            width="150"
+            height="45"
+            viewBox="0 0 180 60"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <!-- 아이콘 -->
+            <rect x="0" y="0" width="60" height="60" rx="12" fill="#E0F0FF" />
+            <rect x="12" y="12" width="36" height="8" rx="2" fill="#0070F3" />
+            <rect x="12" y="24" width="24" height="4" rx="2" fill="#0070F3" />
+            <rect x="12" y="32" width="36" height="4" rx="2" fill="#0070F3" />
+            <rect x="12" y="40" width="20" height="4" rx="2" fill="#0070F3" />
+
+            <!-- 텍스트 -->
+            <text
+              x="70"
+              y="40"
+              font-family="Arial, sans-serif"
+              font-size="32"
+              font-weight="bold"
+              fill="#0070F3"
+            >
+              wagle
+            </text>
+          </svg>
+        </a>
+
+        <!-- 가운데 여백 -->
+        <div></div>
+
+        <!-- 우측 메뉴 -->
+        <nav>
+          <ul class="flex items-center gap-10 text-sm font-medium">
+            <li>
+              <a href="#" class="text-[#0070F3] hover:underline">HOME</a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="text-gray-800 hover:text-[#0070F3] hover:underline"
+              >
+                MYPAGE
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                class="text-gray-800 hover:text-[#0070F3] hover:underline pr-[20px]"
+              >
+                GAME
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- 카테고리 탭 -->
+<div class="grid place-items-center pb-[15px]">
+  <div class="relative">
+    <nav
+      id="categoryNav"
+      class="flex flex-wrap justify-center gap-10"
+      aria-label="뉴스 카테고리"
+    >
+      <a
+        href="/detail.html?category=종합"
+        class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10"
+        data-category="종합"
+      >
+        종합
+      </a>
+      <a
+        href="/detail.html?category=정치"
+        class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10"
+        data-category="정치"
+      >
+        정치
+      </a>
+      <a
+        href="/detail.html?category=사회/문화"
+        class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10"
+        data-category="사회/문화"
+      >
+        사회/문화
+      </a>
+      <a
+        href="/detail.html?category=세계"
+        class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10"
+        data-category="세계"
+      >
+        세계
+      </a>
+      <a
+        href="/detail.html?category=IT/과학"
+        class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10"
+        data-category="IT/과학"
+      >
+        IT/과학
+      </a>
+      <a
+        href="/detail.html?category=생활"
+        class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10"
+        data-category="생활"
+      >
+        생활
+      </a>
+    </nav>
+  </div>
+</div>
+
+
+      </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto mt-[128px]">
+      <h1 class="text-2xl font-bold text-gray-800 mb-6">종합 뉴스</h1>
+      <div
+        id="newsGrid"
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
+        <!-- 카드 렌더링 위치 -->
+      </div>
+    </div>
+
+    <script>
+      const fallbackImage =
+        'https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=1000';
+
+      // 임시 뉴스 데이터 (API 데이터 매핑 예정)
+      const articles = [
+        {
+          id: 1,
+          image:
+            'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=800',
+          category: '테크뉴스',
+          date: '5월 15일 오전 11:06',
+          title: '삼성전자, 신형 스마트폰 출시 예정',
+          description:
+            '삼성전자가 더욱 더 혁신적인 기능을 탑재한 새로운 스마트폰을 출시할 예정이라고 발표했습니다.',
+          url: '#',
+        },
+        {
+          id: 2,
+          image:
+            'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800',
+          category: '경제정보',
+          date: '5월 15일 오전 11:06',
+          title: '2024년 경제 전망: 전문가들의 분석',
+          description:
+            '국내외 경제 전문가들이 2024년 경제 상황과 주요 경제 지표에 대한 전망을 내놓았습니다.',
+          url: '#',
+        },
+      ];
+
+      const renderCard = (article) => {
+        const card = document.createElement('a');
+        card.href = article.url;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+        card.className =
+          'flex flex-col rounded-lg overflow-hidden shadow-md bg-white h-full transition-transform hover:scale-[1.01]';
+
+        card.innerHTML = `
+          <div class="relative h-40 overflow-hidden">
+            <img src="${article.image}" alt="${article.title}"
+              class="w-full h-full object-cover"
+              onerror="this.src='${fallbackImage}'"
+            />
+            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
+              <div class="flex justify-between items-center">
+                <span class="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-md">${article.category}</span>
+                <span class="text-xs text-white">${article.date}</span>
+              </div>
+              <h3 class="text-white font-bold mt-1 line-clamp-2">${article.title}</h3>
+            </div>
+          </div>
+          <div class="p-4 flex flex-col flex-grow">
+            <p class="text-sm text-gray-700 mb-4 flex-grow">${article.description}</p>
+            <span class="text-blue-500 text-sm flex items-center hover:underline">
+              자세히 보기 →
+            </span>
+          </div>
+        `;
+
+        return card;
+      };
+
+      const newsGrid = document.getElementById('newsGrid');
+      articles.forEach((article) => {
+        newsGrid.appendChild(renderCard(article));
+      });
+    </script>
+  </body>
+</html>
