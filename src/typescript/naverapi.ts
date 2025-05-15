@@ -1,20 +1,26 @@
+import axios from 'axios';
+
 const clientId = `${import.meta.env.VITE_NAVER_CLIENT_ID}`;
-const clientSecret = `${import.meta.env.VITE_CLIENT_SECRET}`;
-const keyword = '롯데 자이언츠';
+const clientSecret = `${import.meta.env.VITE_NAVER_CLIENT_SECRET}`;
 
-async function NaverNews() {
-  const URL = `https://openapi.naver.com/v1/search/news.json?query=${keyword}&display=10&start=1&sort=sim`;
+async function naverNews() {
+  const keyword = '롯데자이언츠';
+  const URL = `https://fesp-api.koyeb.app/proxy/v1/search/news.json?query=${keyword}`;
 
-  fetch(URL, {
-    method: 'GET',
-    headers: {
-      'X-Naver-Client-Id': clientId,
-      'X-Naver-Client-Secret': clientSecret,
-    },
-  })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error('Error:', error));
+  try {
+    const response = await axios.get(URL, {
+      headers: {
+        'X-Naver-Client-Id': clientId,
+        'X-Naver-Client-Secret': clientSecret,
+        'X-Target-Url': 'https://openapi.naver.com',
+      },
+    });
+
+    console.log('전체 응답:', response.data);
+    console.log('뉴스 아이템:', response.data.items);
+  } catch (error) {
+    console.error('에러 발생:', error);
+  }
 }
 
-NaverNews();
+naverNews();
