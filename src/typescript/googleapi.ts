@@ -6,8 +6,7 @@ async function searchNews(query: string) {
   const newsSites = ['news.naver.com', 'v.daum.net', 'news.chosun.com'];
 
   // OR로 연결된 site: 필터 생성
-  const siteFilter =
-    '(' + newsSites.map(site => 'site:' + site).join(' OR ') + ')';
+  const siteFilter = '(' + newsSites.map(site => 'site:' + site).join(' OR ') + ')';
   const fullQuery = query + ' ' + siteFilter;
 
   try {
@@ -43,4 +42,4 @@ async function searchNews(query: string) {
 }
 
 // 실행
-searchNews('경제 뉴스');
+searchNews('롯데 자이언츠');
