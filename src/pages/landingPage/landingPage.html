@@ -44,22 +44,21 @@
       }
       .pretendard {
         font-family:
-          "Pretendard Variable",
-          "Pretendard",
+          'Pretendard Variable',
+          'Pretendard',
           -apple-system,
           BlinkMacSystemFont,
           system-ui,
           Roboto,
-          "Helvetica Neue",
-          "Segoe UI",
-          "Apple SD Gothic Neo",
-          "Noto Sans KR",
-          "Malgun Gothic",
+          'Helvetica Neue',
+          'Segoe UI',
+          'Apple SD Gothic Neo',
+          'Noto Sans KR',
+          'Malgun Gothic',
           sans-serif;
       }
     </style>
   </head>
-
   <body>
     <!-- SVG Logo in Top-Left Corner -->
     <div class="absolute top-4 left-4 w-48">
@@ -199,6 +198,22 @@
             src="/src/pages/landingPage/svg/The_kyunghyang_shinmun_logo.svg"
             class="h-10 mx-6"
           />
+          <img
+            src="/src/pages/landingPage/svg/Asiae_CI_Light.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/Hankyung_logo.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/The_kyunghyang_shinmun_logo.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/YTN_2014_logo.svg"
+            class="h-10 mx-6"
+          />
           <!-- 복제본 (같은 이미지 다시 반복) -->
           <img
             src="/src/pages/landingPage/svg/Dong-a_Ilbo_logo.svg"
@@ -220,16 +235,32 @@
             src="/src/pages/landingPage/svg/The_kyunghyang_shinmun_logo.svg"
             class="h-10 mx-6"
           />
+          <img
+            src="/src/pages/landingPage/svg/Asiae_CI_Light.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/Hankyung_logo.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/The_kyunghyang_shinmun_logo.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/YTN_2014_logo.svg"
+            class="h-10 mx-6"
+          />
         </div>
       </div>
     </div>
     <script>
-      const track = document.getElementById("marqueeTrack");
+      const track = document.getElementById('marqueeTrack');
       const logos = [...track.children];
       const screenWidth = window.innerWidth;
 
       while (track.scrollWidth < screenWidth * 2) {
-        logos.forEach((logo) => {
+        logos.forEach(logo => {
           const clone = logo.cloneNode(true);
           track.appendChild(clone);
         });

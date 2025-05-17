@@ -1,131 +1,111 @@
-// Swiper 모듈 import
-// Swiper Init
-import Swiper from "swiper";
-import "swiper/css";
-import "swiper/css/effect-cards";
-import { EffectCards } from "swiper/modules";
+import Swiper from 'swiper';
+import { Mousewheel, EffectCards } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/mousewheel';
+import 'swiper/css/effect-cards';
 
-window.addEventListener("DOMContentLoaded", () => {
-  new Swiper(".mySwiper", {
-    modules: [EffectCards],
-    effect: "cards",
-    grabCursor: true,
-  });
+const swiper = new Swiper('.mySwiper', {
+  effect: 'cards',
+  grabCursor: true, // 마우스 커서가 카드 잡는 모양으로 변함
+  mousewheel: {
+    forceToAxis: false,
+    invert: false,
+    sensitivity: 1,
+    releaseOnEdges: true,
+  },
+  modules: [Mousewheel, EffectCards],
 });
 
-// /// kakao API로 변경
-
+// 뉴스 데이터 인터페이스
 interface NewsData {
   title: string;
   description: string;
   link: string;
 }
 
-async function fetchKakaoWebSearch(query: string): Promise<NewsData[]> {
+// ✅ 네이버 뉴스 API를 프록시를 통해 fetch하는 함수
+async function fetchNaverNewsViaProxy(query: string): Promise<NewsData[]> {
+  const clientId = import.meta.env.VITE_NAVER_CLIENT_ID;
+  const clientSecret = import.meta.env.VITE_CLIENT_SECRET;
+  const url = `https://fesp-api.koyeb.app/proxy/v1/search/news.json?query=${encodeURIComponent(query)}&display=10&sort=date`;
+
   try {
-    // data를 담을 객체
-    const arr = [];
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'X-Naver-Client-Id': clientId, // 네이버 애플리케이션 Client ID
+        'X-Naver-Client-Secret': clientSecret, // 네이버 애플리케이션 Secret
+        'X-Target-Url': 'https://openapi.naver.com', // optional, 기본값이라 생략 가능
+      },
+    });
 
-    console.log(arr.length);
-    // arr안의 data들의 수가 10개가 되면 반환
-    // 10개 될때까지 탐색
-    let page = 1;
-    while (arr.length < 10) {
-      const url = `https://dapi.kakao.com/v2/search/web?query=${encodeURIComponent(query)}&size=50&sort=accuracy&page=${page}`;
-
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          Authorization: "KakaoAK 5a9ad4c0a2958c0a04fd6b04034c47e4", // ← 여기에 발급받은 REST API 키를 입력해야 해
-        },
-      });
-
-      const data = await response.json();
-
-      const filtered = data.documents.filter(
-        (item: any) =>
-          item.url.includes("news.daum.net") ||
-          item.url.includes("joongang.co.kr") ||
-          item.url.includes("yna.co.kr") ||
-          item.url.includes("imnews.imbc.com") ||
-          item.url.includes("news") ||
-          item.url.includes("chosun.com"),
-      );
-      console.log(Array.isArray(filtered));
-      console.log(filtered);
-      arr.push(...filtered);
-      page = page + 1;
-      console.log(arr);
+    if (!response.ok) {
+      throw new Error('네이버 뉴스 API 호출 실패!');
     }
 
-    return arr.map((item: any) => ({
-      title: item.title.replace(/<b>/g, "").replace(/<\/b>/g, ""),
-      description: item.contents.replace(/<b>/g, "").replace(/<\/b>/g, ""),
-      link: item.url,
-    }));
+    const data = await response.json();
 
-    // return data.documents.map((item: any) => ({
-    //   title: item.title.replace(/<b>/g, '').replace(/<\/b>/g, ''),
-    //   description: item.contents.replace(/<b>/g, '').replace(/<\/b>/g, ''),
-    //   link: item.url,
-    // }));
-  } catch (error) {
-    console.error("카카오 API 호출 실패:", error);
+    return data.items.map((item: any) => ({
+      title: item.title.replace(/<b>/g, '').replace(/<\/b>/g, ''),
+      description: item.description.replace(/<b>/g, '').replace(/<\/b>/g, ''),
+      link: item.link,
+    }));
+  } catch (err) {
+    console.error('❌ 네이버 API 오류:', err);
     return [];
   }
 }
 
-// 슬라이드를 동적으로 추가하는 함수
+// ✅ 슬라이드 업데이트 함수
 function updateSwiperSlides(newsData: NewsData[], query: string): void {
   const swiperWrapper = document.querySelector(
-    ".swiper-wrapper",
+    '.swiper-wrapper',
   ) as HTMLElement;
   if (!swiperWrapper) return;
 
-  swiperWrapper.innerHTML = ""; // 기존 슬라이드 제거
+  swiperWrapper.innerHTML = '';
 
-  // 배경색 배열 정의 (Tailwind 색상 클래스)
   const bgColors = [
-    "bg-blue-500",
-    "bg-indigo-700",
-    "bg-blue-800",
-    "bg-sky-900",
+    'bg-blue-500',
+    'bg-indigo-700',
+    'bg-blue-800',
+    'bg-sky-900',
   ];
 
   newsData.forEach((news, index) => {
-    const slideElement = document.createElement("div");
-    slideElement.classList.add("swiper-slide");
+    const slideElement = document.createElement('div');
+    slideElement.classList.add('swiper-slide');
 
-    // 인덱스를 색상 배열 크기로 나눠서 반복 순환
     const bgColorClass = bgColors[index % bgColors.length];
 
     slideElement.innerHTML = `
-    <div class="relative ${bgColorClass} rounded-2xl p-8 md:p-10 text-left text-white shadow-lg">
-    <div class="text-xl text-orange-500">${query}</div>
-    <div class="text-4xl pretendard mb-4">${news.title}</div>
-    <p class="text-lg md:text-xl mb-6">${news.description}</p>
-    <a href="${news.link}" target="_blank" class="mt-3 text-gray-300">Read More</a>
-    <div class="h-1 w-full max-w-xs bg-gradient-to-r from-orange-500 to-orange-600 mt-3"></div>
-        </div>
-      `;
+      <div class="relative ${bgColorClass} rounded-2xl p-8 md:p-10 text-left text-white shadow-lg">
+        <div class="text-xl text-orange-500">${query}</div>
+        <div class="text-4xl pretendard mb-4">${news.title}</div>
+        <p class="text-lg md:text-xl mb-6">${news.description}</p>
+        <a href="${news.link}" target="_blank" class="mt-3 text-gray-300">Read More</a>
+        <div class="h-1 w-full max-w-xs bg-gradient-to-r from-orange-500 to-orange-600 mt-3"></div>
+      </div>
+    `;
+
     swiperWrapper.appendChild(slideElement);
   });
 
-  // Swiper 초기화
   if ((window as any).swiperInstance) {
-    (window as any).swiperInstance.update(); // 기존 Swiper 인스턴스 업데이트
+    (window as any).swiperInstance.update();
   } else {
-    (window as any).swiperInstance = new Swiper(".myswiper", {
+    (window as any).swiperInstance = new Swiper('.mySwiper', {
+      modules: [EffectCards],
+      effect: 'cards',
+      grabCursor: true,
       loop: true,
-      slidesPerView: 1,
-      spaceBetween: 10,
     });
   }
 }
 
-// 페이지가 로드되면 데이터를 받아와서 업데이트
-window.addEventListener("DOMContentLoaded", async () => {
-  const query = "경제"; // 검색어를 여기에 입력하세요
-  const slidesData = await fetchKakaoWebSearch(query); // ✅ 카카오 API 함수로 변경
-  updateSwiperSlides(slidesData, query);
+// ✅ 페이지 로드시 뉴스 데이터 받아오기
+window.addEventListener('DOMContentLoaded', async () => {
+  const query = '경제'; // 검색어 지정
+  const news = await fetchNaverNewsViaProxy(query);
+  updateSwiperSlides(news, query);
 });
