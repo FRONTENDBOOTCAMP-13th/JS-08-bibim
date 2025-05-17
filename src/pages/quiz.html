@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>뉴스 상세 페이지</title>
+    <title>뉴스 퀴즈 페이지</title>
     <link
       rel="preload"
       as="font"
@@ -138,185 +138,242 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Main Content -->
         <div class="lg:col-span-2">
-          <article>
-            <h1 class="text-3xl font-bold mb-2">
-              중국서 들어온 아이폰 99%가 ‘짝퉁’
-            </h1>
-            <p class="text-sm mb-4">
-              MZ세대서 서브폰으로 인기 가짜부품 이용 조립제품 판쳐 SE모델은
-              ‘전량 위조품’ 판정
-            </p>
-            <div class="flex justify-between items-center text-xs mb-4">
-              <span>유준호 기자 yjunho@mk.co.kr </span>
-              <span>입력 : 2025-05-14 11:17:31</span>
-            </div>
-            <div class="mb-4">
-              <img
-                src="https://pimg.mk.co.kr/news/cms/202505/14/news-p.v1.20250514.8401381af39d4ee397e6ba2020b7685b_P1.png"
-                alt="Spearhead Bio founder"
-                class="w-full h-auto"
-              />
-              <p class="text-xs mt-1 text-gray-600">
-                세관당국이 상표권 침해 판정을 내린 중고 아이폰. &lt;사진=관세청
-                평택직할세관&gt;
-              </p>
-            </div>
-            <p class="mb-4">
-              최근 MZ세대 사이에서 사진 촬영용으로 중고 구형 아이폰에 대한
-              인기가 높아진 가운데 중국에서 가짜 부품을 이용해 조립한 짝퉁
-              제품이 국내에 쏟아져 들어오고 있다. 세관당국이 조사한 제품 중
-              99.4%가 상표권 위반 판정을 받았을 정도다. 세관당국은 통관절차를
-              강화하고, 위조품에 대한 소비자들의 각별한 주의를 당부했다.
-            </p>
-            <p class="mb-4">
-              14일 관세청 평택직할세관은 “구형 아이폰의 해외직구가 늘어나면서
-              불법 제품도 해상 특송화물로 반입되고 있어 국내 소비자 보호를 위해
-              통관을 강화했다”고 밝혔다.
-            </p>
-            <p class="mb-4">
-              관세청은 지난 3월 4일부터 24일 사이 평택세관 특송물류센터로 반입된
-              중국발 아이폰 1116대에 대해 지식재산권 침해여부를 확인했다. 이번
-              조사는 A사의 국내 및 해외 전문가까지 평택세관 특송물류센터를 찾아
-              현장감정했다.
-            </p>
-            <p class="mb-4">
-              조사결과 전체 대상 물량의 99.4%인 1110대가 상표권을 침해한 것으로
-              판정됐다. 특히 서브폰으로 인기가 높은 아이폰 SE모델은 비규격품을
-              이용해 재조립한 것으로 전량 상표권을 침해한 물품으로 확인됐다.
-            </p>
-            <p class="mb-4">
-              세관당국은 전자상거래로 반입되는 위조상품이 증가함에 따라
-              통관검사를 강화하고, 명백한 위조 상품에 대해서는 직권으로
-              통관보류할 계획이다. 관세청 관계자는 “공식 쇼핑몰이 아닌 곳에서
-              정품 가격보다 저렴하게 판매하는 제품은 위조품일 가능성이 높아
-              각별한 주의가 필요하다”고 당부했다.
-            </p>
+          <h1 class="text-xl font-bold text-[#005DBA] mb-4">뉴스 퀴즈</h1>
 
-            <div class="flex justify-between my-6">
-              <!-- 이전 페이지 -->
-              <button
-                class="bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded"
-              >
-                <span class="text-xs">이전 페이지</span>
-              </button>
-
-              <!-- 다음 페이지 -->
-              <button
-                class="bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded"
-              >
-                <span class="text-xs">다음 페이지</span>
-              </button>
-            </div>
-
-            <div class="flex items-center mt-8 bg-gray-100 p-4">
-              <img
-                src="https://pimg.mk.co.kr/news/cms/202505/14/news-p.v1.20250514.8401381af39d4ee397e6ba2020b7685b_P1.png"
-                alt="Eric Schmid"
-                class="w-16 h-16 rounded-full mr-4"
-              />
-              <div>
-                <h3 class="font-bold">유준호 기자</h3>
-                <p class="text-sm">yjunho@mk.co.kr</p>
-              </div>
-            </div>
-          </article>
-
-          <!-- 퀴즈 섹션 박스 -->
-          <div
-            class="bg-[#E8F4FF] p-4 mt-4 border-t-2 border-black max-h-[500px] overflow-y-auto"
-          >
-            <h3 class="text-xl font-bold text-[#005DBA] mb-4">뉴스 퀴즈</h3>
-
-            <!-- 각 퀴즈 문항 -->
-            <div class="mb-2">
-              <!-- 질문 -->
-              <p class="font-medium text-gray-800 mb-3">
-                1. 아이폰 SE의 위조율은?
-              </p>
-
-              <!-- 보기 목록 -->
-              <div class="space-y-2">
-                <!-- 보기 항목 (선택된 경우) -->
-                <div
-                  class="p-3 rounded-lg cursor-pointer border border-[#005DBA] bg-[#005DBA]/10"
-                >
-                  <div class="flex items-center">
-                    <div
-                      class="h-5 w-5 rounded-full border border-[#005DBA] bg-[#005DBA] text-white flex items-center justify-center mr-3"
-                    >
-                      <span class="text-xs">✓</span>
+          <!-- 퀴즈 섹션 -->
+          <section class="p-6 bg-[#E8F4FF]">
+            <ul class="space-y-6">
+              <!-- 퀴즈1 -->
+              <li class="bg-white p-4 rounded shadow">
+                <!-- quizProblem -->
+                <p id="quizProblem" class="font-medium text-gray-800"></p>
+                <ul id="quizChoice" class="space-y-2 mt-2">
+                  <li
+                    class="p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50 option"
+                    data-index="0"
+                    data-is-correct="false"
+                  >
+                    <div class="flex items-center">
+                      <div
+                        class="h-5 w-5 rounded-full border border-gray-400 mr-3"
+                      ></div>
+                      <!-- quizChoice 문제 항목1 -->
+                      <span></span>
                     </div>
-                    <span>99.4%</span>
-                  </div>
-                </div>
-
-                <!-- 보기 항목 (선택되지 않은 경우) -->
-                <div
-                  class="p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50"
-                >
-                  <div class="flex items-center">
-                    <div
-                      class="h-5 w-5 rounded-full border border-gray-400 mr-3"
-                    ></div>
-                    <span>75%</span>
-                  </div>
-                </div>
-
-                <!-- 정답 표시 상태 예시 (맞춘 보기) -->
-                <div
-                  class="p-3 rounded-lg border border-green-500 bg-green-100"
-                >
-                  <div class="flex items-center">
-                    <div
-                      class="h-5 w-5 rounded-full border border-green-500 bg-green-500 text-white flex items-center justify-center mr-3"
-                    >
-                      <span class="text-xs">✓</span>
+                  </li>
+                  <li
+                    class="p-3 rounded-lg cursor-pointer border option"
+                    data-index="1"
+                    data-is-correct="true"
+                  >
+                    <div class="flex items-center">
+                      <div
+                        class="h-5 w-5 rounded-full border border-gray-400 mr-3"
+                      ></div>
+                      <!-- quizChoice 문제 항목2 -->
+                      <span></span>
                     </div>
-                    <span>99.4%</span>
-                  </div>
-                </div>
-
-                <!-- 정답 표시 상태 예시 (틀린 보기) -->
-                <div class="p-3 rounded-lg border border-red-500 bg-red-100">
-                  <div class="flex items-center">
-                    <div
-                      class="h-5 w-5 rounded-full border border-red-500 bg-red-500 text-white flex items-center justify-center mr-3"
-                    >
-                      <span class="text-xs">✓</span>
+                  </li>
+                  <li
+                    class="p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50 option"
+                    data-index="2"
+                    data-is-correct="false"
+                  >
+                    <div class="flex items-center">
+                      <div
+                        class="h-5 w-5 rounded-full border border-gray-400 mr-3"
+                      ></div>
+                      <!-- quizChoice 문제 항목3 -->
+                      <span></span>
                     </div>
-                    <span>50%</span>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- 결과 영역 -->
+              <section class="space-y-6" aria-labelledby="quiz-feedback">
+                <div class="text-center bg-white p-4 rounded shadow hidden">
+                  <p id="quiz-feedback" class="text-green-500 font-medium">
+                    축하드립니다! 정답을 맞추셨습니다!
+                  </p>
+                  <p class="text-gray-600 text-sm mt-1">
+                    <span id="earned-points">5</span> 포인트가 적립 되었습니다.
+                    현재 당신의 총점은 <span id="total-points">5</span>점
+                    입니다.
+                  </p>
+                </div>
+
+                <!-- 버튼 영역 -->
+                <div class="flex justify-center gap-4 mt-4">
+                  <button
+                    class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors"
+                  >
+                    정답 확인하기
+                  </button>
+                  <button
+                    class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors"
+                  >
+                    다시 해볼래요
+                  </button>
+                </div>
+              </section>
+
+              <!-- 퀴즈2 -->
+              <li class="bg-white p-4 rounded shadow">
+                <!-- quizProblem -->
+                <p id="quizProblem" class="font-medium text-gray-800">
+                  2. 아이폰 SE의 위조율은?
+                </p>
+                <ul id="quizChoice" class="space-y-2 mt-2">
+                  <li
+                    class="p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50 option"
+                    data-index="0"
+                    data-is-correct="false"
+                  >
+                    <div class="flex items-center">
+                      <div
+                        class="h-5 w-5 rounded-full border border-gray-400 mr-3"
+                      ></div>
+                      <!-- quizChoice 문제 항목1 -->
+                      <span></span>
+                    </div>
+                  </li>
+                  <li
+                    class="p-3 rounded-lg cursor-pointer border border-green-500 bg-green-100 option"
+                    data-index="1"
+                    data-is-correct="true"
+                  >
+                    <div class="flex items-center">
+                      <div
+                        class="h-5 w-5 rounded-full border border-green-500 bg-green-500 text-white flex items-center justify-center mr-3"
+                      >
+                        <span class="text-xs">✓</span>
+                      </div>
+                      <!-- quizChoice 문제 항목2 -->
+                      <span></span>
+                    </div>
+                  </li>
+                  <li
+                    class="p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50 option"
+                    data-index="2"
+                    data-is-correct="false"
+                  >
+                    <div class="flex items-center">
+                      <div
+                        class="h-5 w-5 rounded-full border border-gray-400 mr-3"
+                      ></div>
+                      <!-- quizChoice 문제 항목3 -->
+                      <span></span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- 결과 영역 -->
+              <section class="space-y-6" aria-labelledby="quiz-feedback">
+                <div class="text-center bg-white p-4 rounded shadow">
+                  <p id="quiz-feedback" class="text-green-500 font-medium">
+                    축하드립니다! 정답을 맞추셨습니다!
+                  </p>
+                  <p class="text-gray-600 text-sm mt-1">
+                    <span id="earned-points">5</span> 포인트가 적립 되었습니다.
+                    현재 당신의 총점은 <span id="total-points">5</span>점
+                    입니다.
+                  </p>
+                  <!-- 정답 설명 영역 -->
+                  <p id="explanation" class="mt-3 text-sm text-gray-700"></p>
+                </div>
+
+                <!-- 버튼 영역 -->
+                <div class="flex justify-center gap-4 mt-4">
+                  <button
+                    class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors"
+                  >
+                    정답 확인하기
+                  </button>
+                  <button
+                    class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors"
+                  >
+                    다시 해볼래요
+                  </button>
+                </div>
+              </section>
+
+              <!-- 퀴즈3 -->
+              <li class="bg-white p-4 rounded shadow">
+                <!-- quizProblem -->
+                <p id="quizProblem" class="font-medium text-gray-800"></p>
+                <ul id="quizChoice" class="space-y-2 mt-2">
+                  <li
+                    class="p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50 option"
+                    data-index="0"
+                    data-is-correct="false"
+                  >
+                    <div class="flex items-center">
+                      <div
+                        class="h-5 w-5 rounded-full border border-gray-400 mr-3"
+                      ></div>
+                      <!-- quizChoice 문제 항목1 -->
+                      <span></span>
+                    </div>
+                  </li>
+                  <li
+                    class="p-3 rounded-lg cursor-pointer border option"
+                    data-index="1"
+                    data-is-correct="true"
+                  >
+                    <div class="flex items-center">
+                      <div
+                        class="h-5 w-5 rounded-full border border-gray-400 mr-3"
+                      ></div>
+                      <!-- quizChoice 문제 항목2 -->
+                      <span></span>
+                    </div>
+                  </li>
+                  <li
+                    class="p-3 rounded-lg cursor-pointer border border-red-500 bg-red-100 hover:border-[#005DBA]/50 option"
+                    data-index="2"
+                    data-is-correct="false"
+                  >
+                    <div class="flex items-center">
+                      <div
+                        class="h-5 w-5 rounded-full border border-red-500 bg-red-500 text-white flex items-center justify-center mr-3"
+                      >
+                        <span class="text-xs">✓</span>
+                      </div>
+                      <!-- quizChoice 문제 항목3 -->
+                      <span></span>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+
+              <!-- 결과 영역 -->
+              <section class="space-y-6" aria-labelledby="quiz-feedback">
+                <div class="text-center bg-white p-4 rounded shadow">
+                  <div class="mb-4 p-4 bg-white rounded-lg text-center">
+                    <p class="text-red-500">
+                      정답이 아닙니다. 다시 선택 해주세요.
+                    </p>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            <!-- 제출 버튼 (활성 상태) -->
-            <button
-              class="w-40 py-3 rounded-lg font-medium bg-[#005DBA] text-white hover:bg-[#004DA5] transition-colors"
-            >
-              Submit Answers
-            </button>
-
-            <!-- 결과 표시 영역 -->
-            <div class="mt-6">
-              <div class="mb-4 p-4 bg-white rounded-lg text-center">
-                <p class="text-gray-600">정답이에요!!</p>
-              </div>
-              <!-- 제출 버튼 (비활성 상태) -->
-              <div class="flex justify-center gap-4">
-                <button
-                  class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors"
-                >
-                  정답 확인하기
-                </button>
-                <button
-                  class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors"
-                >
-                  다시 해볼래요
-                </button>
-              </div>
-            </div>
-          </div>
+                <!-- 버튼 영역 -->
+                <div class="flex justify-center gap-4 mt-4">
+                  <button
+                    class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors"
+                  >
+                    정답 확인하기
+                  </button>
+                  <button
+                    class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors"
+                  >
+                    다시 해볼래요
+                  </button>
+                </div>
+              </section>
+            </ul>
+          </section>
         </div>
 
         <!-- Sidebar -->
@@ -439,6 +496,7 @@
               <!-- Other articles... -->
             </div>
 
+            <!-- 광고 추가 위치 (추후 필요 시 진행) -->
             <!-- <div class="mt-8 border-t-2 border-black">
               <div class="flex justify-between items-center my-2">
                 <h2 class="text-xl font-bold">Podcasts</h2>
