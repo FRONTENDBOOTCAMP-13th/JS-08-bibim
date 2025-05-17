@@ -34,7 +34,7 @@ const fallbackImage = 'https://images.unsplash.com/photo-1504711434969-e33886168
 //   },
 // ];
 
-const keyword = 'KBO 롯데자이언츠';
+const keyword = '정치';
 const articles: NaverNewsItem[] | undefined = await naverNews(keyword, 21);
 
 const renderCard = (article: NaverNewsItem) => {
