@@ -66,6 +66,16 @@ const renderCard = (article: NaverNewsItem) => {
   </div>
 `;
 
+  // 누른 카드뉴스를 로그에 입력
+  card.addEventListener('click', () => {
+    console.log(`${card.href}를 눌렀습니다!`);
+    const history = JSON.parse(localStorage.getItem('history') || '[]') as unknown[];
+    if (!history.includes(article)) {
+      history.push(article);
+      localStorage.setItem('history', JSON.stringify(history));
+    }
+  });
+
   return card;
 };
 
