@@ -44,52 +44,63 @@
       }
       .pretendard {
         font-family:
-          "Pretendard Variable",
-          "Pretendard",
+          'Pretendard Variable',
+          'Pretendard',
           -apple-system,
           BlinkMacSystemFont,
           system-ui,
           Roboto,
-          "Helvetica Neue",
-          "Segoe UI",
-          "Apple SD Gothic Neo",
-          "Noto Sans KR",
-          "Malgun Gothic",
+          'Helvetica Neue',
+          'Segoe UI',
+          'Apple SD Gothic Neo',
+          'Noto Sans KR',
+          'Malgun Gothic',
           sans-serif;
       }
     </style>
   </head>
-
   <body>
     <!-- SVG Logo in Top-Left Corner -->
-    <div class="absolute top-4 left-4 w-48">
-      <svg
-        width="180"
-        height="60"
-        viewBox="0 0 180 60"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <!-- 아이콘 -->
-        <rect x="0" y="0" width="60" height="60" rx="12" fill="#E0F0FF" />
-        <rect x="12" y="12" width="36" height="8" rx="2" fill="#0070F3" />
-        <rect x="12" y="24" width="24" height="4" rx="2" fill="#0070F3" />
-        <rect x="12" y="32" width="36" height="4" rx="2" fill="#0070F3" />
-        <rect x="12" y="40" width="20" height="4" rx="2" fill="#0070F3" />
 
-        <!-- 텍스트 -->
-        <text
-          x="70"
-          y="40"
-          font-family="Arial, sans-serif"
-          font-size="32"
-          font-weight="bold"
-          fill="#0070F3"
-        >
-          wagle
-        </text>
-      </svg>
-    </div>
-
+    <header>
+      <nav class="flex items-center px-4 py-2 max-w-6xl mx-auto">
+        <!-- 로고 이미지 -->
+        <a href="/">
+          <svg
+            width="180"
+            height="60"
+            viewBox="0 0 180 60"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <!-- 아이콘 -->
+            <rect x="0" y="0" width="60" height="60" rx="12" fill="#E0F0FF" />
+            <rect x="12" y="12" width="36" height="8" rx="2" fill="#0070F3" />
+            <rect x="12" y="24" width="24" height="4" rx="2" fill="#0070F3" />
+            <rect x="12" y="32" width="36" height="4" rx="2" fill="#0070F3" />
+            <rect x="12" y="40" width="20" height="4" rx="2" fill="#0070F3" />
+            <!-- 텍스트 -->
+            <text
+              x="70"
+              y="40"
+              font-family="Arial, sans-serif"
+              font-size="32"
+              font-weight="bold"
+              fill="#0070F3"
+            >
+              wagle
+            </text>
+          </svg>
+        </a>
+        <div class="flex gap-4 ml-auto">
+          <!-- HOME -->
+          <a href="/">HOME</a>
+          <!-- MYPAGE -->
+          <a href="/">MYPAGE</a>
+          <!-- GAME -->
+          <a href="/">GAME</a>
+        </div>
+      </nav>
+    </header>
     <!-- Centered Container -->
     <div
       class="flex flex-col items-center justify-center min-h-screen px-4 text-center"
@@ -172,7 +183,6 @@
           </div>
         </div>
       </div>
-
       <!-- Scrolling Partner Logos -->
       <div class="marquee-wrapper overflow-hidden w-full py-4">
         <div
@@ -199,6 +209,22 @@
             src="/src/pages/landingPage/svg/The_kyunghyang_shinmun_logo.svg"
             class="h-10 mx-6"
           />
+          <img
+            src="/src/pages/landingPage/svg/Asiae_CI_Light.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/Hankyung_logo.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/The_kyunghyang_shinmun_logo.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/YTN_2014_logo.svg"
+            class="h-10 mx-6"
+          />
           <!-- 복제본 (같은 이미지 다시 반복) -->
           <img
             src="/src/pages/landingPage/svg/Dong-a_Ilbo_logo.svg"
@@ -220,16 +246,42 @@
             src="/src/pages/landingPage/svg/The_kyunghyang_shinmun_logo.svg"
             class="h-10 mx-6"
           />
+          <img
+            src="/src/pages/landingPage/svg/Asiae_CI_Light.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/Hankyung_logo.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/The_kyunghyang_shinmun_logo.svg"
+            class="h-10 mx-6"
+          />
+          <img
+            src="/src/pages/landingPage/svg/YTN_2014_logo.svg"
+            class="h-10 mx-6"
+          />
         </div>
       </div>
+      <footer>
+        <nav>
+          <li><a href="/">개인정보처리 방침</a></li>
+          <li><a href="/">이용약관</a></li>
+        </nav>
+        <div>
+          <p><span>Copyrights © 2025 | 8joBibim</span></p>
+          <p><span>Website by 8joBibim</span></p>
+        </div>
+      </footer>
     </div>
     <script>
-      const track = document.getElementById("marqueeTrack");
+      const track = document.getElementById('marqueeTrack');
       const logos = [...track.children];
       const screenWidth = window.innerWidth;
 
       while (track.scrollWidth < screenWidth * 2) {
-        logos.forEach((logo) => {
+        logos.forEach(logo => {
           const clone = logo.cloneNode(true);
           track.appendChild(clone);
         });
