@@ -148,7 +148,7 @@ const renderCard = (article: NaverNewsItem) => {
     }
   });
 
-  // 즐겨찾기 버튼 이벤트 리스너 추가
+  // 즐겨찾기 버튼 이벤트 리스너 추가, 즐겨찾기 기능 추가 예정
   const favoriteButton = card.querySelector('.favorite-button');
   favoriteButton?.addEventListener('click', event => {
     event.preventDefault();

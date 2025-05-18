@@ -7,12 +7,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="/src/typescript/main-page-test.ts" type="module"></script>
   </head>
-  <body class="bg-gray-100 p-6">
+  <body class="bg-gray-100 flex flex-col min-h-screen">
     <header class="bg-white border-b w-full fixed top-0 left-0 z-50">
-      <div class="max-w-7xl mx-auto px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         <!-- 로고 -->
         <a href="/" class="block h-10 w-44">
-          <svg width="150" height="45" viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg">
+          <svg aria-hidden="true" aria-label="홈페이지로 이동" width="150" height="45" viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg">
             <!-- 아이콘 -->
             <rect x="0" y="0" width="60" height="60" rx="12" fill="#E0F0FF" />
             <rect x="12" y="12" width="36" height="8" rx="2" fill="#0070F3" />
@@ -24,9 +24,6 @@
             <text x="70" y="40" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#0070F3">wagle</text>
           </svg>
         </a>
-
-        <!-- 가운데 여백 -->
-        <div></div>
 
         <!-- 우측 메뉴 -->
 
@@ -71,11 +68,32 @@
       </div>
     </header>
 
-    <main class="max-w-7xl mx-auto mt-[128px] py-10">
+    <main class="max-w-7xl mx-auto mt-[128px] pt-16 flex-grow">
       <h1 class="text-2xl font-bold text-gray-800 mb-6"></h1>
-      <div id="newsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div id="newsGrid" aria-label="뉴스목록" role="region" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- 카드 렌더링 위치 -->
       </div>
     </main>
+
+    <footer class="min-w-[561px] h-[100px] pt-2 bg-[#E0F0FF] mt-4">
+      <div class="flex justify-between px-12 gap-4">
+        <nav aria-label="사이트 정책">
+          <ul class="flex gap-6">
+            <li class="inline-block">
+              <a href="/" title="개인정보처리방침 페이지로 이동">개인정보처리 방침</a>
+            </li>
+            <li class="inline-block">
+              <a href="/" title="이용약관 페이지로 이동">이용약관</a>
+            </li>
+          </ul>
+        </nav>
+        <address>
+          <p class="inline-block"><span>Copyrights © 2025 | 8joBibim</span></p>
+          <p class="inline-block">
+            <span>Website by kyungmin, yeono, hyunji, sunjin</span>
+          </p>
+        </address>
+      </div>
+    </footer>
   </body>
 </html>
