@@ -73,7 +73,7 @@ function extractJsonBlocks(text: string): Quiz[] {
     }
   }
 
-  return results;
+  return results as Quiz[];
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -81,6 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const options = document.querySelectorAll('.option');
   const feedbacks = document.querySelectorAll('.quiz-feedback');
   const retryBtns = document.querySelectorAll('.retry');
+
+  const points = JSON.parse(localStorage.getItem('points') || '[0]');
+  const pointLog = JSON.parse(localStorage.getItem('pointLog') || '[]');
 
   axios.post(API_URL, data, { headers }).then(response => {
     console.log('전체 응답:', response.data);
@@ -112,6 +115,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
               // 피드백
               if (feedbacks[i]) feedbacks[i].textContent = '정답입니다!' + '\n' + data.explanation;
+              if (!pointLog.includes(`${data.question} 문제 정답`)) {
+                // TODO 기사 제목 + j을 입력받아 여기에 저장
+                pointLog.push(`${data.question} 문제 정답`);
+                points[0] = points[0] + 50;
+                localStorage.setItem('points', JSON.stringify(points));
+                localStorage.setItem('pointLog', JSON.stringify(pointLog));
+                if (feedbacks[i]) feedbacks[i].innerHTML += '<br/>50 포인트 획득!';
+              }
             } else {
               liElem.style.backgroundColor = 'red';
 
@@ -137,12 +148,40 @@ document.addEventListener('DOMContentLoaded', () => {
         // 재시작
         retryBtns.forEach((btn, index) => {
           btn.addEventListener('click', () => {
-            const liElems = options[index].querySelectorAll('li');
+            // 선택지 초기화
+            options[index].classList.remove('answered');
+            options[index].innerHTML = ''; // li 요소 모두 제거
 
-            liElems.forEach(li => {
-              li.style.pointerEvents = 'auto'; // 클릭 가능하게 변경
-              li.style.backgroundColor = ''; // 배경색 초기화
-            });
+            // 피드백 초기화
+            if (feedbacks[index]) feedbacks[index].textContent = '';
+
+            // 다시 선택지 생성
+            const currentData = quizData[index];
+            for (let j = 0; j < 3; j++) {
+              const liElem = document.createElement('li');
+              const textElem = document.createTextNode(currentData.options[j].text);
+              liElem.appendChild(textElem);
+
+              liElem.addEventListener('click', () => {
+                if (options[index].classList.contains('answered')) return;
+
+                if (currentData.options[j].isCorrect) {
+                  liElem.style.backgroundColor = 'green';
+                  if (feedbacks[index]) feedbacks[index].textContent = '정답입니다!\n' + currentData.explanation;
+                } else {
+                  liElem.style.backgroundColor = 'red';
+                  if (feedbacks[index]) feedbacks[index].textContent = '틀렸습니다.\n' + currentData.explanation;
+                }
+
+                options[index].classList.add('answered');
+                const allLi = options[index].querySelectorAll('li');
+                allLi.forEach(li => {
+                  li.style.pointerEvents = 'none';
+                });
+              });
+
+              options[index].appendChild(liElem);
+            }
           });
         });
       });
