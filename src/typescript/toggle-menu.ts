@@ -1,87 +1,63 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const sidebar = document.getElementById('sidebar') as HTMLElement | null;
-  const backdrop = document.getElementById('backdrop') as HTMLElement | null;
-  const openBtn = document.getElementById(
-    'open-sidebar',
-  ) as HTMLButtonElement | null;
-  const closeBtn = document.getElementById(
-    'close-sidebar',
-  ) as HTMLButtonElement | null;
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('backdrop');
+  const openBtn = document.getElementById('open-sidebar');
+  const closeBtn = document.getElementById('close-sidebar');
 
-  if (sidebar && backdrop && openBtn && closeBtn) {
-    openBtn.addEventListener('click', () => {
-      sidebar.classList.remove('translate-x-full');
-      sidebar.classList.add('translate-x-0');
-      backdrop.classList.remove('hidden');
-    });
+  openBtn?.addEventListener('click', () => {
+    sidebar?.classList.remove('translate-x-full');
+    sidebar?.classList.add('translate-x-0');
+    backdrop?.classList.remove('hidden');
+  });
 
-    closeBtn.addEventListener('click', () => {
-      sidebar.classList.remove('translate-x-0');
-      sidebar.classList.add('translate-x-full');
-      backdrop.classList.add('hidden');
-    });
+  closeBtn?.addEventListener('click', () => {
+    sidebar?.classList.remove('translate-x-0');
+    sidebar?.classList.add('translate-x-full');
+    backdrop?.classList.add('hidden');
+  });
 
-    backdrop.addEventListener('click', () => {
-      sidebar.classList.remove('translate-x-0');
-      sidebar.classList.add('translate-x-full');
-      backdrop.classList.add('hidden');
-    });
-  }
+  backdrop?.addEventListener('click', () => {
+    sidebar?.classList.remove('translate-x-0');
+    sidebar?.classList.add('translate-x-full');
+    backdrop.classList.add('hidden');
+  });
+});
 
-  // Toggle point section
-  const pointToggle = document.getElementById(
-    'toggle-point',
-  ) as HTMLElement | null;
-  const pointSection = document.getElementById(
-    'point-section',
-  ) as HTMLElement | null;
-  const pointIcon = document.getElementById(
-    'point-toggle-icon',
-  ) as SVGElement | null;
+// Toggle point section
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.getElementById('toggle-point');
+  const section = document.getElementById('point-section');
+  const icon = document.getElementById('point-toggle-icon');
 
-  if (pointToggle && pointSection && pointIcon) {
-    pointToggle.addEventListener('click', () => {
-      pointSection.classList.toggle('max-h-0');
-      pointSection.classList.toggle('max-h-[1000px]');
-      pointIcon.classList.toggle('rotate-180');
-    });
-  }
+  toggleBtn?.addEventListener('click', () => {
+    section?.classList.toggle('max-h-0');
+    section?.classList.toggle('max-h-[1000px]');
+    icon?.classList.toggle('rotate-180');
+  });
+});
 
-  // Toggle attendance section
-  const attendanceToggle = document.getElementById(
-    'toggle-attendance',
-  ) as HTMLElement | null;
-  const attendanceSection = document.getElementById(
-    'attendance-section',
-  ) as HTMLElement | null;
-  const attendanceIcon = document.getElementById(
-    'toggle-icon',
-  ) as SVGElement | null;
+// Toggle article panel
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.getElementById('toggle-header');
+  const section = document.getElementById('article-panel');
+  const icon = document.getElementById('article-toggle-icon');
 
-  if (attendanceToggle && attendanceSection && attendanceIcon) {
-    attendanceToggle.addEventListener('click', () => {
-      attendanceSection.classList.toggle('max-h-0');
-      attendanceSection.classList.toggle('max-h-[1000px]');
-      attendanceIcon.classList.toggle('rotate-180');
-    });
-  }
+  toggleBtn?.addEventListener('click', () => {
+    section?.classList.toggle('max-h-0');
+    section?.classList.toggle('max-h-[1000px]');
+    icon?.classList.toggle('rotate-180');
+  });
+});
 
-  // Toggle article panel
-  const articleToggle = document.getElementById(
-    'toggle-header',
-  ) as HTMLElement | null;
-  const articleSection = document.getElementById(
-    'article-panel',
-  ) as HTMLElement | null;
-  const articleIcon = document.getElementById(
-    'article-toggle-icon',
-  ) as SVGElement | null;
+// Toggle attendance section
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.getElementById('toggle-attendance');
+  const section = document.getElementById('attendance-section');
+  const icon = document.getElementById('toggle-icon');
 
-  if (articleToggle && articleSection && articleIcon) {
-    articleToggle.addEventListener('click', () => {
-      articleSection.classList.toggle('max-h-0');
-      articleSection.classList.toggle('max-h-[1000px]');
-      articleIcon.classList.toggle('rotate-180');
-    });
-  }
+  toggleBtn?.addEventListener('click', () => {
+    section?.classList.toggle('max-h-0');
+    section?.classList.toggle('max-h-[1000px]');
+    icon?.classList.toggle('rotate-180');
+  });
 });
