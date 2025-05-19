@@ -118,14 +118,14 @@ const renderCard = (article: NaverNewsItem) => {
       <a href="${article.link}" target="_blank" rel="noopener noreferrer" class="text-blue-500 text-sm flex items-center hover:underline read-more-link">
         자세히 보기 →
       </a>
-      <a href="/quiz.html?article=${encodeURIComponent(article.link)}" class="text-green-500 text-sm flex items-center hover:underline quiz-button">
+      <button class="text-green-500 text-sm flex items-center cursor-pointer hover:underline quiz-button">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1" aria-hidden="true">
           <circle cx="12" cy="12" r="10"></circle>
           <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
           <line x1="12" y1="17" x2="12.01" y2="17"></line>
         </svg>
         퀴즈 풀러가기
-      </a>
+      </button>
     </div>
   </div>
   `;
@@ -279,6 +279,17 @@ const renderCard = (article: NaverNewsItem) => {
     }
 
     // 즐겨찾기 상태 저장 로직
+  });
+
+  // 퀴즈 풀러 가기
+  const quizBtn = card.querySelector('.quiz-button');
+  quizBtn?.addEventListener('click', () => {
+    const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", ""]');
+    quizStorage[0] = article.title;
+    quizStorage[1] = article.description;
+    localStorage.setItem('quiz', JSON.stringify(quizStorage));
+
+    window.location.href = '/src/pages/quiz.html';
   });
 
   // 누른 카드뉴스를 로그에 입력

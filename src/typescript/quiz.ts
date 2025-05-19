@@ -1,6 +1,11 @@
 import axios from 'axios';
 
 console.log('hello');
+const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", ""]');
+
+const title = quizStorage[0];
+const description = quizStorage[1];
+
 const API_KEY = `${import.meta.env.VITE_DEEPSEEK_API_KEY}`;
 const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
@@ -16,6 +21,8 @@ const data = {
       role: 'user',
       content: `다음 내용에서 키워드 3개를 골라 각 키워드에 대한 토막 상식 퀴즈를 내주세요. 총 3문제입니다.
       출력 형식은 아래 JSON 형식을 정확히 따르세요.
+      출력 형식 의외의 출력 금지.
+      key값이 틀리지 않도록 주의.
       문제는 한국어로 출력하세요:
 
 {
@@ -29,8 +36,8 @@ const data = {
 }
 
 생성할 내용:
-[오늘의 날씨] 맑고 포근한 일요일…낮 최고기온 24도
-사진=연합뉴스 18일은 전국이 맑고 포근하겠다. 아침 최저기온은 8∼17도, 낮 최고기온은 18∼24도로 예보됐다. 미세먼지 농도는 원활한 대기 확산으로 전 권역이 '좋음' 수준을 보이겠다. 바다 물결은 동해·서해... 
+${title}
+${description}
 `,
     },
   ],
@@ -115,10 +122,11 @@ document.addEventListener('DOMContentLoaded', () => {
           innerDiv.className = 'flex items-center';
 
           const circleDiv = document.createElement('div');
-          circleDiv.className = 'h-5 w-5 rounded-full border border-gray-400 mr-3';
+          circleDiv.className = 'h-5 w-5 rounded-full border border-gray-400 mr-3 flex items-center justify-center';
 
           const checkSpan = document.createElement('span');
           checkSpan.textContent = '✓';
+          checkSpan.className = 'text-sm text-[#005DBA]';
 
           const spanElem = document.createElement('span');
           console.log(data.options[j].text);
