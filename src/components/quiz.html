@@ -14,7 +14,28 @@
     <section class="p-6 bg-[#E8F4FF]">
       <ul class="space-y-6">
         <li>
-          <p class="quizProblem"></p>
+          <p name="quizProblem"></p>
+          <ul class="option">
+            <!-- <li class="option" data-is-correct="false"></li>
+            <li class="option" data-is-correct="false"></li>
+            <li class="option" data-is-correct="false"></li> -->
+          </ul>
+          <section class="space-y-6 quiz-feedback hidden">
+            <div class="text-center bg-white p-4 rounded shadow">
+              <p name="quiz-result" class="text-green-500 font-medium"></p>
+              <p name="quiz-reason" class="text-gray-600 text-sm mt-1"></p>
+              <p name="quiz-points" class="text-gray-600 text-sm"></p>
+            </div>
+
+            <!-- 버튼 영역 -->
+            <div class="flex justify-center gap-4 mt-4">
+              <button class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors">정답 확인하기</button>
+              <button class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors">다시 해볼래요</button>
+            </div>
+          </section>
+        </li>
+        <li>
+          <p name="quizProblem"></p>
           <ul class="option">
             <!-- <li class="option" data-is-correct="false"></li>
             <li class="option" data-is-correct="false"></li>
@@ -32,25 +53,7 @@
           </section>
         </li>
         <li>
-          <p class="quizProblem"></p>
-          <ul class="option">
-            <!-- <li class="option" data-is-correct="false"></li>
-            <li class="option" data-is-correct="false"></li>
-            <li class="option" data-is-correct="false"></li> -->
-          </ul>
-          <section aria-labelledby="quiz-feedback">
-            <div>
-              <p class="quiz-feedback"></p>
-              <p><span class="earned-points"></span><span class="total-points"></span></p>
-            </div>
-            <div>
-              <button type="button">정답 확인</button>
-              <button type="button" class="retry">다시 해볼래요</button>
-            </div>
-          </section>
-        </li>
-        <li>
-          <p class="quizProblem"></p>
+          <p name="quizProblem"></p>
           <ul class="option">
             <!-- <li class="option" data-is-correct="false"></li>
             <li class="option" data-is-correct="false"></li>
