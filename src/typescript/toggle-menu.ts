@@ -50,6 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       if (pointLog.log.length > 10) {
         logTxt = document.createTextNode(`${pointLog.log.substring(0, 3)}... 퀴즈 정답`);
+        spanElemLog.className = 'cursor-help'; // 마우스 커서 스타일 추가
+        spanElemLog.title = pointLog.log; // 툴팁 내용 설정
       } else {
         logTxt = document.createTextNode(`${pointLog.log} 퀴즈 정답`);
       }
