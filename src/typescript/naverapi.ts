@@ -17,7 +17,10 @@ export interface NaverNewsItem {
  * 네이버 뉴스 API를 호출하여 뉴스를 가져오는 함수
  * @returns
  */
-export async function naverNews(keyword: string, display: number): Promise<NaverNewsItem[] | undefined> {
+export async function naverNews(
+  keyword: string,
+  display: number,
+): Promise<NaverNewsItem[] | undefined> {
   const URL = `https://fesp-api.koyeb.app/proxy/v1/search/news.json?query=${keyword}&display=${display}`;
 
   try {

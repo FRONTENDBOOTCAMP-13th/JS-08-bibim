@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/public/logo copy.svg" />
     <title>landingPage</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module" src="/src/main.ts"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
@@ -40,7 +41,7 @@
       }
 
       .animate-scroll {
-        animation: scroll 15s linear infinite;
+        animation: scroll 25s linear infinite;
       }
       .pretendard {
         font-family:
@@ -110,6 +111,31 @@
         뉴스가 모이는 곳<br />
         <div style="color: #0170f3">Wagle!</div>
       </h1>
+
+      <!-- Search Input -->
+      <div class="my-6 relative w-full max-w-md mx-auto mb-14">
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="키워드를 입력하세요!"
+          class="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-full text-lg shadow-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+        <!-- 🔍 검색 아이콘 (왼쪽) -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"
+          />
+        </svg>
+      </div>
 
       <!-- Swiper -->
       <div class="swiper mySwiper mb-20">
@@ -183,95 +209,68 @@
           </div>
         </div>
       </div>
+      <!-- 퀴즈 페이지 이동 버튼 -->
+      <div class="w-full flex justify-center mt-10 mb-20">
+        <a
+          href="/src/pages/quiz.html"
+          class="px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-sky-600 text-white text-lg font-semibold shadow-lg hover:brightness-125 transition-all duration-200"
+        >
+          🧠 퀴즈 풀러 가기
+        </a>
+      </div>
       <!-- Scrolling Partner Logos -->
       <div class="marquee-wrapper overflow-hidden w-full py-4">
         <div
           class="marquee-track flex w-max animate-scroll min-w-[200%]"
           id="marqueeTrack"
         >
+          <img src="/src/pages/svg/Asiae_CI_Light.svg" class="h-10 mx-6" />
+          <img src="/src/pages/svg/Dong-a_Ilbo_logo.svg" class="h-10 mx-6" />
+          <img src="/src/pages/svg/Hankyorehe.svg" class="h-10 mx-6" />
+          <img src="/src/pages/svg/Hankyung_logo.svg" class="h-10 mx-6" />
+          <img src="/src/pages/svg/Seoul_Shinmun_logo.svg" class="h-10 mx-6" />
+          <img src="/src/pages/svg/The_JoongAng_logo.svg" class="h-10 mx-6" />
           <img
-            src="/src/pages/landingPage/svg/Dong-a_Ilbo_logo.svg"
+            src="/src/pages/svg/The_kyunghyang_shinmun_logo.svg"
             class="h-10 mx-6"
           />
-          <img
-            src="/src/pages/landingPage/svg/Hankyorehe.svg"
-            class="h-10 mx-6"
-          />
-          <img
-            src="/src/pages/landingPage/svg/Seoul_Shinmun_logo.svg"
-            class="h-10 mx-6"
-          />
-          <img
-            src="/src/pages/landingPage/svg/The_JoongAng_logo.svg"
-            class="h-10 mx-6"
-          />
-          <img
-            src="/src/pages/landingPage/svg/The_kyunghyang_shinmun_logo.svg"
-            class="h-10 mx-6"
-          />
-          <img
-            src="/src/pages/landingPage/svg/Asiae_CI_Light.svg"
-            class="h-10 mx-6"
-          />
-          <img
-            src="/src/pages/landingPage/svg/Hankyung_logo.svg"
-            class="h-10 mx-6"
-          />
-          <img
-            src="/src/pages/landingPage/svg/The_kyunghyang_shinmun_logo.svg"
-            class="h-10 mx-6"
-          />
-          <img
-            src="/src/pages/landingPage/svg/YTN_2014_logo.svg"
-            class="h-10 mx-6"
-          />
+          <img src="/src/pages/svg/YTN_2014_logo.svg" class="h-10 mx-6" />
           <!-- 복제본 (같은 이미지 다시 반복) -->
+          <img src="/src/pages/svg/Asiae_CI_Light.svg" class="h-10 mx-6" />
+          <img src="/src/pages/svg/Dong-a_Ilbo_logo.svg" class="h-10 mx-6" />
+          <img src="/src/pages/svg/Hankyorehe.svg" class="h-10 mx-6" />
+          <img src="/src/pages/svg/Hankyung_logo.svg" class="h-10 mx-6" />
+          <img src="/src/pages/svg/Seoul_Shinmun_logo.svg" class="h-10 mx-6" />
+          <img src="/src/pages/svg/The_JoongAng_logo.svg" class="h-10 mx-6" />
           <img
-            src="/src/pages/landingPage/svg/Dong-a_Ilbo_logo.svg"
+            src="/src/pages/svg/The_kyunghyang_shinmun_logo.svg"
             class="h-10 mx-6"
           />
-          <img
-            src="/src/pages/landingPage/svg/Hankyorehe.svg"
-            class="h-10 mx-6"
-          />
-          <img
-            src="/src/pages/landingPage/svg/Seoul_Shinmun_logo.svg"
-            class="h-10 mx-6"
-          />
-          <img
-            src="/src/pages/landingPage/svg/The_JoongAng_logo.svg"
-            class="h-10 mx-6"
-          />
-          <img
-            src="/src/pages/landingPage/svg/The_kyunghyang_shinmun_logo.svg"
-            class="h-10 mx-6"
-          />
-          <img
-            src="/src/pages/landingPage/svg/Asiae_CI_Light.svg"
-            class="h-10 mx-6"
-          />
-          <img
-            src="/src/pages/landingPage/svg/Hankyung_logo.svg"
-            class="h-10 mx-6"
-          />
-          <img
-            src="/src/pages/landingPage/svg/The_kyunghyang_shinmun_logo.svg"
-            class="h-10 mx-6"
-          />
-          <img
-            src="/src/pages/landingPage/svg/YTN_2014_logo.svg"
-            class="h-10 mx-6"
-          />
+          <img src="/src/pages/svg/YTN_2014_logo.svg" class="h-10 mx-6" />
         </div>
       </div>
-      <footer>
-        <nav>
-          <li><a href="/">개인정보처리 방침</a></li>
-          <li><a href="/">이용약관</a></li>
-        </nav>
-        <div>
-          <p><span>Copyrights © 2025 | 8joBibim</span></p>
-          <p><span>Website by 8joBibim</span></p>
+      <footer class="mt-16 min-w-[561px] h-[50px]">
+        <div class="flex justify-between px-12 gap-4">
+          <nav aria-label="사이트 정책">
+            <ul class="flex gap-6">
+              <li class="inline-block">
+                <a href="/" title="개인정보처리방침 페이지로 이동"
+                  >개인정보처리 방침</a
+                >
+              </li>
+              <li class="inline-block">
+                <a href="/" title="이용약관 페이지로 이동">이용약관</a>
+              </li>
+            </ul>
+          </nav>
+          <address>
+            <p class="inline-block">
+              <span>Copyrights © 2025 | 8joBibim</span>
+            </p>
+            <p class="inline-block">
+              <span>Website by kyungmin, yeono, hyunji, sunjin</span>
+            </p>
+          </address>
         </div>
       </footer>
     </div>
@@ -280,8 +279,9 @@
       const logos = [...track.children];
       const screenWidth = window.innerWidth;
 
-      while (track.scrollWidth < screenWidth * 2) {
+      if (track.scrollWidth < screenWidth * 2) {
         logos.forEach(logo => {
+          console.log(123);
           const clone = logo.cloneNode(true);
           track.appendChild(clone);
         });
@@ -289,6 +289,7 @@
     </script>
 
     <!-- Swiper JS -->
-    <script type="module" src="/src/pages/landingPage/landingPage.ts"></script>
+
+    <script type="module" src="/src/typescript/landingPage.ts"></script>
   </body>
 </html>
