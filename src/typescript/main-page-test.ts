@@ -1,0 +1,443 @@
+import { naverNews } from './naverapi.ts';
+import type { NaverNewsItem } from './naverapi.ts';
+
+/**
+ * 현재 선택된 뉴스 카테고리 또는 검색어
+ * @type {string}
+ */
+let keyword = '';
+
+/**
+ * 기사 발행 시간과 현재 시간의 차이를 계산하여 점의 색상과 툴팁 메시지를 결정
+ * @param {string} pubDate - 기사 발행 시간 (예: "Sun, 18 May 2025 02:02:00 +0900")
+ * @returns {{ color: string, tooltip: string }} 색상 hexcode와 툴팁 메시지
+ */
+const getTimeIndicator = (pubDate: string): { color: string; tooltip: string } => {
+  try {
+    // 발행 시간을 Date 객체로 변환
+    const publishedDate = new Date(pubDate);
+    // 현재 시간
+    const currentDate = new Date();
+
+    // 발행 시간과 현재 시간의 차이 (밀리초)
+    const timeDifference = currentDate.getTime() - publishedDate.getTime();
+
+    // 시간 차이를 시간 단위로 변환
+    const hoursDifference = timeDifference / (1000 * 60 * 60);
+
+    // 1시간 이내
+    if (hoursDifference <= 1) {
+      return {
+        color: '#dc2626', // 빨간색 (red-600)
+        tooltip: '1시간 이내 발행된 최신 기사',
+      };
+    }
+    // 24시간 이내
+    else if (hoursDifference <= 24) {
+      return {
+        color: '#f97316', // 주황색 (orange-500)
+        tooltip: '24시간 이내 발행된 기사',
+      };
+    }
+    // 그 외
+    else {
+      return {
+        color: '#ffffff', // 흰색
+        tooltip: '24시간 이전에 발행된 기사',
+      };
+    }
+  } catch (error) {
+    console.error('날짜 파싱 오류:', error, pubDate);
+    return {
+      color: '#ffffff', // 오류 시 기본값은 흰색
+      tooltip: '발행 시간을 확인할 수 없음',
+    };
+  }
+};
+
+/**
+ * 뉴스 기사를 시각적으로 표시하는 카드 요소 생성
+ * @param {NaverNewsItem} article - 표시할 뉴스 기사 정보
+ * @returns {HTMLElement} 생성된 뉴스 카드 요소
+ */
+const renderCard = (article: NaverNewsItem) => {
+  // 발행 시간에 따른 점 색상과 툴팁 결정
+  const { color: dotColor, tooltip: dotTooltip } = getTimeIndicator(article.pubDate);
+
+  // article 요소로 변경 (시맨틱하게 뉴스 콘텐츠를 나타냄)
+  const card = document.createElement('article');
+  card.className = 'relative flex flex-col rounded-lg overflow-hidden shadow-md bg-white h-full transition-transform hover:scale-[1.01]';
+  card.setAttribute('tabindex', '0'); // 키보드 포커스 가능하도록 설정
+
+  card.innerHTML = `
+  <div class="relative h-40 overflow-hidden bg-blue-500">
+    <div 
+      class="w-[15px] h-[15px] absolute top-3 left-4 rounded-full cursor-help" 
+      style="background-color: ${dotColor};"
+      title="${dotTooltip}"
+      role="tooltip"
+      aria-label="${dotTooltip}"
+    ></div>
+    
+    <!-- 하트 아이콘 - 버튼으로 변경 -->
+    <button 
+      class="absolute top-3 right-4 z-10 bg-transparent border-0 p-0 favorite-button"
+      aria-label="즐겨찾기에 추가"
+      title="즐겨찾기에 추가"
+      data-article-id="${article.link}"
+    >
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="20" 
+        height="20" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="white" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        class="favorite-icon drop-shadow-md hover:scale-125 transition-transform duration-300"
+      >
+        <path d="M12 21c-7-4-10.5-8.5-10.5-12.5C1.5,5,4,2.5,7.5,2.5c2,0,4,1,4.5,3.5c0.5-2.5,2.5-3.5,4.5-3.5c3.5,0,6,2.5,6,6C22.5,12.5,19,17,12,21z"/>
+      </svg>
+    </button>
+    
+    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
+      <div class="flex justify-between items-center">
+        <span class="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-md">${keyword}</span>
+        <time class="text-xs text-white" datetime="${article.pubDate}">${article.pubDate}</time>
+      </div>
+      <h3 class="text-white font-bold mt-1 line-clamp-2 h-[45px]">${article.title}</h3>
+    </div>
+  </div>
+  <div class="p-4 flex flex-col flex-grow">
+    <p class="text-sm text-gray-700 mb-4 flex-grow">${article.description}</p>
+    
+    <!-- 자세히 보기와 퀴즈 풀러가기 버튼 -->
+    <div class="flex justify-between items-center">
+      <a href="${article.link}" target="_blank" rel="noopener noreferrer" class="text-blue-500 text-sm flex items-center hover:underline read-more-link">
+        자세히 보기 →
+      </a>
+      <a href="/quiz.html?article=${encodeURIComponent(article.link)}" class="text-green-500 text-sm flex items-center hover:underline quiz-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        퀴즈 풀러가기
+      </a>
+    </div>
+  </div>
+  `;
+
+  // 카드 클릭 이벤트 , 안의 세부a태그를 클릭했을경우 카드 전체를 클릭한경우와 중복되지 않도록 처리해줌
+  card.addEventListener('click', event => {
+    // 이미 버튼이나 링크 클릭 이벤트가 처리 중이면 카드 클릭 무시
+    if ((event.target as HTMLElement).closest('a') || (event.target as HTMLElement).closest('button')) {
+      return;
+    }
+
+    // 그 외의 경우 자세히 보기 링크로 이동
+    window.open(article.link, '_blank', 'noopener,noreferrer');
+  });
+
+  // 키보드 접근성을 위한 Enter 키 이벤트, 내부요소가 아니라 카드 전체에 포커스되어 있을 경우에만 동작
+  card.addEventListener('keydown', event => {
+    if (event.key === 'Enter' && !(event.target as HTMLElement).closest('a, button')) {
+      window.open(article.link, '_blank', 'noopener,noreferrer');
+    }
+  });
+
+  // 즐겨찾기 버튼 이벤트 리스너 추가, 즐겨찾기 기능 추가 예정
+  const favoriteButton = card.querySelector('.favorite-button');
+  favoriteButton?.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const favoriteIcon = favoriteButton.querySelector('.favorite-icon');
+    const isFavorite = favoriteIcon?.getAttribute('fill') === 'white'; //하트의 fill 속성이 "white"면 이미 즐겨찾기 되어 있는 상태로 판단
+
+    if (isFavorite) {
+      // 즐겨찾기 해제
+      favoriteIcon?.setAttribute('fill', 'none');
+      favoriteButton.setAttribute('aria-label', '즐겨찾기에 추가');
+      favoriteButton.setAttribute('title', '즐겨찾기에 추가');
+    } else {
+      // 즐겨찾기 추가
+      favoriteIcon?.setAttribute('fill', 'white');
+      favoriteButton.setAttribute('aria-label', '즐겨찾기에서 제거');
+      favoriteButton.setAttribute('title', '즐겨찾기에서 제거');
+    }
+
+    // 즐겨찾기 상태 저장 로직
+  });
+
+  return card;
+};
+
+/**
+ * 페이지 초기 상태 설정 (카테고리 미선택 상태)
+ * 뉴스 그리드에 안내 메시지 표시, 카테고리 버튼 비활성화, 키워드 초기화
+ */
+const setupInitialView = () => {
+  const newsGrid = document.getElementById('newsGrid');
+  if (newsGrid) {
+    newsGrid.innerHTML = '<div class="col-span-full text-center py-8">관심 있는 카테고리를 선택하거나 검색어를 입력하세요.</div>';
+  }
+
+  // 페이지 제목 업데이트
+  const mainTitle = document.querySelector('main h1');
+  if (mainTitle) {
+    mainTitle.textContent = '뉴스 카테고리를 선택하세요';
+  }
+
+  // 모든 버튼 비활성화 상태로 설정
+  const allButtons = document.querySelectorAll('.category-btn');
+  allButtons.forEach(button => {
+    button.classList.remove('bg-blue-600', 'text-white');
+    button.setAttribute('aria-current', 'false');
+  });
+
+  // 키워드 초기화
+  keyword = '';
+};
+
+/**
+ * 검색어로 뉴스를 검색하고 결과 표시
+ * @param {string} searchKeyword - 검색할 키워드
+ * @returns {Promise<void>}
+ */
+const searchNews = async (searchKeyword: string): Promise<void> => {
+  if (!searchKeyword.trim()) {
+    setupInitialView();
+    return;
+  }
+
+  // 키워드 설정
+  keyword = searchKeyword;
+
+  // 모든 카테고리 버튼 비활성화
+  const allButtons = document.querySelectorAll('.category-btn');
+  allButtons.forEach(button => {
+    button.classList.remove('bg-blue-600', 'text-white');
+    button.setAttribute('aria-current', 'false');
+  });
+
+  // 로딩 상태 표시
+  const newsGrid = document.getElementById('newsGrid');
+  if (newsGrid) {
+    newsGrid.innerHTML = '<div class="col-span-full text-center py-8" aria-live="polite">뉴스를 불러오는 중입니다...</div>';
+  }
+
+  // 페이지 제목 업데이트
+  const mainTitle = document.querySelector('main h1');
+  if (mainTitle) {
+    mainTitle.textContent = `'${keyword}' 검색 결과`;
+  }
+
+  try {
+    // 뉴스 데이터 가져오기
+    const articles: NaverNewsItem[] | undefined = await naverNews(keyword, 30);
+
+    // 뉴스 그리드 업데이트
+    if (newsGrid) {
+      // 그리드 초기화
+      newsGrid.innerHTML = '';
+
+      // 기사가 없을 경우
+      if (!articles || articles.length === 0) {
+        newsGrid.innerHTML = `<div class="col-span-full text-center py-8" aria-live="polite">'${keyword}'에 관한 뉴스를 찾을 수 없습니다.</div>`;
+        return;
+      }
+
+      // 기사 렌더링
+      articles.forEach(article => {
+        newsGrid.appendChild(renderCard(article));
+      });
+
+      // 스크린 리더 사용자를 위한 알림
+      const srAnnouncement = document.createElement('span');
+      srAnnouncement.className = 'sr-only';
+      srAnnouncement.setAttribute('aria-live', 'polite');
+      srAnnouncement.textContent = `${keyword}에 대한 검색 결과 ${articles.length}개를 찾았습니다.`;
+      document.body.appendChild(srAnnouncement);
+
+      // 잠시 후 알림 요소 제거
+      setTimeout(() => {
+        if (document.body.contains(srAnnouncement)) {
+          document.body.removeChild(srAnnouncement);
+        }
+      }, 1000);
+    }
+  } catch (error) {
+    console.error('뉴스를 불러오는 중 오류가 발생했습니다:', error);
+    if (newsGrid) {
+      newsGrid.innerHTML = '<div class="col-span-full text-center py-8 text-red-500" aria-live="assertive">뉴스를 불러오는 중 오류가 발생했습니다.</div>';
+    }
+  }
+};
+
+/**
+ * 페이지 초기화 및 이벤트 리스너 설정
+ */
+document.addEventListener('DOMContentLoaded', () => {
+  // 검색 폼 이벤트 리스너 추가
+  const searchForm = document.querySelector('form');
+  const searchInput = document.getElementById('search') as HTMLInputElement; //타입스크립트에서 이게 input이라는 결 명시해주는 타입단언
+
+  /**
+   * 검색 폼 제출 이벤트 처리
+   * @param {Event} event - 폼 제출 이벤트
+   */
+  searchForm?.addEventListener('submit', async event => {
+    event.preventDefault(); //폼을 전송하면 새로고침이 발생하는걸 막는기능 수행행
+    const searchValue = searchInput?.value.trim();
+
+    if (searchValue) {
+      await searchNews(searchValue);
+    } else {
+      setupInitialView();
+    }
+  });
+
+  // URL에서 카테고리 파라미터 확인
+  const urlParams = new URLSearchParams(window.location.search);
+  const categoryParam = urlParams.get('category');
+
+  if (categoryParam) {
+    // URL에 카테고리가 있으면 해당 버튼 찾기
+    const categoryButton = document.querySelector(`[data-category="${categoryParam}"]`) as HTMLElement;
+    if (categoryButton) {
+      // 버튼이 있으면 클릭 이벤트 시뮬레이션
+      categoryButton.click();
+    } else {
+      // 카테고리가 유효하지 않으면 초기 화면 설정
+      setupInitialView();
+    }
+  } else {
+    // URL에 카테고리가 없으면 초기 화면 설정
+    setupInitialView();
+  }
+});
+
+// 카테고리 네비게이션 요소 가져오기
+const categoryNav = document.getElementById('categoryNav');
+
+/**
+ * 카테고리 버튼 클릭 이벤트 처리
+ * @param {Event} event - 클릭 이벤트
+ */
+categoryNav?.addEventListener('click', async event => {
+  // 이벤트가 발생한 요소 확인
+  const target = event.target as HTMLElement;
+
+  // 클릭된 요소가 카테고리 버튼인지 확인
+  // (버튼 자체 또는 버튼 내부 요소를 클릭했을 수 있음)
+  const clickedButton = target.closest('.category-btn') as HTMLElement;
+
+  // 버튼이 아니면 무시
+  if (!clickedButton) return;
+
+  // 카테고리를 한번 더 선택하면 원래 기본페이지로 돌아감
+  if (clickedButton.classList.contains('selected')) {
+    event.preventDefault();
+    clickedButton.classList.remove('selected', 'bg-blue-600', 'text-white');
+    clickedButton.setAttribute('aria-current', 'false');
+    setupInitialView();
+
+    // URL 초기화 추가
+    const url = new URL(window.location.href);
+    url.searchParams.delete('category'); // 'category' 파라미터 제거
+    window.history.pushState({}, '', url);
+    return;
+  }
+  if (clickedButton) clickedButton.classList.add('selected');
+
+  // 기본 이벤트 방지 (링크 이동 방지)
+  event.preventDefault();
+
+  // data-category 속성 가져오기
+  const category = clickedButton.getAttribute('data-category');
+
+  // 카테고리가 없으면 무시
+  if (!category) return;
+
+  // 검색 입력창 초기화
+  const searchInput = document.getElementById('search') as HTMLInputElement;
+  if (searchInput) {
+    searchInput.value = '';
+  }
+
+  // 키워드 설정 (카테고리 값을 그대로 키워드로 사용)
+  keyword = category;
+
+  // UI 업데이트 (동기적)
+  // 1. 모든 버튼에서 활성 상태 제거
+  const allButtons = document.querySelectorAll('.category-btn');
+  allButtons.forEach(button => {
+    button.classList.remove('bg-blue-600', 'text-white');
+    button.setAttribute('aria-current', 'false');
+  });
+
+  // 2. 선택된 버튼에 활성 상태 추가
+  clickedButton.classList.add('bg-blue-600', 'text-white');
+  clickedButton.setAttribute('aria-current', 'page');
+
+  // 3. 로딩 상태 표시
+  const newsGrid = document.getElementById('newsGrid');
+  if (newsGrid) {
+    newsGrid.innerHTML = '<div class="col-span-full text-center py-8" aria-live="polite">뉴스를 불러오는 중입니다. 조금만 기다려주세요 >_<</div>';
+  }
+
+  // 페이지 제목 업데이트
+  const mainTitle = document.querySelector('main h1');
+  if (mainTitle) {
+    mainTitle.textContent = `${keyword} 뉴스`;
+  }
+
+  // URL 업데이트, 페이지 새로고침 없이 주소 표시줄에 파라미터업데이트, 나중에 사용자가 새로고침하거나 공유해도 카테고리 유지됌
+  const url = new URL(window.location.href);
+  url.searchParams.set('category', category);
+  window.history.pushState({}, '', url);
+
+  // 비동기 작업: 뉴스 데이터 가져오기
+  try {
+    const articles: NaverNewsItem[] | undefined = await naverNews(keyword, 30);
+
+    // 뉴스 그리드 업데이트
+    if (newsGrid) {
+      // 그리드 초기화
+      newsGrid.innerHTML = '';
+
+      // 기사가 없을 경우
+      if (!articles || articles.length === 0) {
+        newsGrid.innerHTML = `<div class="col-span-full text-center py-8" aria-live="polite">${keyword}에 관한 뉴스를 찾을 수 없습니다.</div>`;
+        return;
+      }
+
+      // 기사 렌더링
+      articles.forEach(article => {
+        newsGrid.appendChild(renderCard(article));
+      });
+
+      // 스크린 리더 사용자를 위한 알림
+      const srAnnouncement = document.createElement('span');
+      srAnnouncement.className = 'sr-only';
+      srAnnouncement.setAttribute('aria-live', 'polite');
+      srAnnouncement.textContent = `${keyword} 카테고리의 뉴스 ${articles.length}개를 불러왔습니다.`;
+      document.body.appendChild(srAnnouncement);
+
+      // 잠시 후 알림 요소 제거
+      setTimeout(() => {
+        if (document.body.contains(srAnnouncement)) {
+          document.body.removeChild(srAnnouncement);
+        }
+      }, 1000);
+    }
+  } catch (error) {
+    console.error('뉴스를 불러오는 중 오류가 발생했습니다:', error);
+    if (newsGrid) {
+      newsGrid.innerHTML = '<div class="col-span-full text-center py-8 text-red-500" aria-live="assertive">뉴스를 불러오는 중 오류가 발생했습니다.</div>';
+    }
+  }
+});

@@ -5,21 +5,14 @@
     <title>뉴스 카드 리스트</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="/src/typescript/main-page.ts" type="module"></script>
+    <script src="/src/typescript/main-page-test.ts" type="module"></script>
   </head>
-  <body class="bg-gray-100 p-6">
+  <body class="bg-gray-100 flex flex-col min-h-screen">
     <header class="bg-white border-b w-full fixed top-0 left-0 z-50">
-      <div
-        class="max-w-7xl mx-auto px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center"
-      >
+      <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         <!-- 로고 -->
         <a href="/" class="block h-10 w-44">
-          <svg
-            width="150"
-            height="45"
-            viewBox="0 0 180 60"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg aria-hidden="true" aria-label="홈페이지로 이동" width="150" height="45" viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg">
             <!-- 아이콘 -->
             <rect x="0" y="0" width="60" height="60" rx="12" fill="#E0F0FF" />
             <rect x="12" y="12" width="36" height="8" rx="2" fill="#0070F3" />
@@ -28,121 +21,79 @@
             <rect x="12" y="40" width="20" height="4" rx="2" fill="#0070F3" />
 
             <!-- 텍스트 -->
-            <text
-              x="70"
-              y="40"
-              font-family="Arial, sans-serif"
-              font-size="32"
-              font-weight="bold"
-              fill="#0070F3"
-            >
-              wagle
-            </text>
+            <text x="70" y="40" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#0070F3">wagle</text>
           </svg>
         </a>
 
-        <!-- 가운데 여백 -->
-        <div></div>
-
         <!-- 우측 메뉴 -->
-        
-          <ul class="flex items-center gap-10 text-sm font-medium">
-            <li>
-              <a href="#" class="text-[#0070F3] hover:underline">HOME</a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="text-gray-800 hover:text-[#0070F3] hover:underline"
-              >
-                MYPAGE
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="text-gray-800 hover:text-[#0070F3] hover:underline pr-[20px]"
-              >
-                GAME
-              </a>
-            </li>
-          </ul>
-        
+
+        <ul class="flex items-center gap-10 text-sm font-medium">
+          <li>
+            <a href="#" class="text-[#0070F3] hover:underline">HOME</a>
+          </li>
+          <li>
+            <a href="#" class="text-gray-800 hover:text-[#0070F3] hover:underline"> MYPAGE </a>
+          </li>
+          <li>
+            <a href="#" class="text-gray-800 hover:text-[#0070F3] hover:underline pr-[20px]"> GAME </a>
+          </li>
+        </ul>
       </div>
 
-     
+      <form action="" class="w-full flex justify-center">
+        <div class="w-1/2 my-2 border-gray-300 border-2 rounded-full px-4 flex justify-between focus-within:border-black">
+          <label for="search" class="sr-only">검색어 입력</label>
+          <input type="search" id="search" placeholder="검색어를 입력하세요" class="py-2 w-1/2 outline-none basis-[170px] grow" />
+          <button type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </button>
+        </div>
+      </form>
 
       <!-- 카테고리 탭 -->
-<nav class="grid place-items-center pb-[15px]">
-  <div class="relative">
-  
-    <nav
-      id="categoryNav"
-      class="flex flex-wrap justify-center gap-10"
-      aria-label="뉴스 카테고리"
-    >
-    
-      <a
-        href="/detail.html?category=종합"
-        class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10"
-        data-category="종합"
-      >
-        종합
-      </a>
-      <a
-        href="/detail.html?category=정치"
-        class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10"
-        data-category="정치"
-      >
-        정치
-      </a>
-      <a
-        href="/detail.html?category=사회/문화"
-        class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10"
-        data-category="사회/문화"
-      >
-        사회/문화
-      </a>
-      <a
-        href="/detail.html?category=세계"
-        class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10"
-        data-category="세계"
-      >
-        세계
-      </a>
-      <a
-        href="/detail.html?category=IT/과학"
-        class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10"
-        data-category="IT/과학"
-      >
-        IT/과학
-      </a>
-      <a
-        href="/detail.html?category=생활"
-        class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10"
-        data-category="생활"
-      >
-        생활
-      </a>
-    </nav>
-  </div>
-  
-</nav>
-
-
+      <div class="category-container grid place-items-center pb-[15px]">
+        <div class="relative">
+          <nav id="categoryNav" class="flex flex-wrap justify-center gap-10" aria-label="뉴스 카테고리">
+            <a href="/detail.html?category=KBO야구" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="KBO야구"> KBO 야구 </a>
+            <a href="/detail.html?category=축구" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="축구"> 축구 </a>
+            <a href="/detail.html?category=연예" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="연예"> 연예 </a>
+            <a href="/detail.html?category=사회/문화" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="사회/문화"> 사회/문화 </a>
+            <a href="/detail.html?category=IT/과학" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="IT/과학"> IT/과학 </a>
+            <a href="/detail.html?category=경제" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="경제"> 경제 </a>
+            <a href="/detail.html?category=정치" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="정치"> 정치 </a>
+          </nav>
+        </div>
       </div>
     </header>
 
-    <main class="max-w-7xl mx-auto mt-[128px] ">
-        <h1 class="text-2xl font-bold text-gray-800 mb-6">종합 뉴스</h1>
-        <div
-          id="newsGrid"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          <!-- 카드 렌더링 위치 -->
-        </div>
+    <main class="max-w-7xl mx-auto mt-[128px] pt-16 flex-grow">
+      <h1 class="text-2xl font-bold text-gray-800 mb-6"></h1>
+      <div id="newsGrid" aria-label="뉴스목록" role="region" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- 카드 렌더링 위치 -->
+      </div>
     </main>
 
-    
+    <footer class="min-w-[561px] h-[100px] pt-2 bg-[#E0F0FF] mt-4">
+      <div class="flex justify-between px-12 gap-4">
+        <nav aria-label="사이트 정책">
+          <ul class="flex gap-6">
+            <li class="inline-block">
+              <a href="/" title="개인정보처리방침 페이지로 이동">개인정보처리 방침</a>
+            </li>
+            <li class="inline-block">
+              <a href="/" title="이용약관 페이지로 이동">이용약관</a>
+            </li>
+          </ul>
+        </nav>
+        <address>
+          <p class="inline-block"><span>Copyrights © 2025 | 8joBibim</span></p>
+          <p class="inline-block">
+            <span>Website by kyungmin, yeono, hyunji, sunjin</span>
+          </p>
+        </address>
+      </div>
+    </footer>
   </body>
 </html>
