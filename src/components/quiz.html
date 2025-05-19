@@ -5,19 +5,69 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>요약 퀴즈 컴포넌트</title>
-    <!-- <link
-      rel="preload"
-      as="font"
-      href="/font/woff2/PretendardVariable.woff2"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" as="style" href="/font/pretendardvariable.css" /> -->
-    <script type="module" src="/src/typescript/deepseekQuiz.js"></script>
+    <link rel="preload" as="font" href="/font/woff2/PretendardVariable.woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" as="style" href="/font/pretendardvariable.css" />
+    <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="/src/typescript/quiz.ts"></script>
   </head>
   <body>
-    <section>
-      <p id="quizProblem"></p>
-      <ul id="quizChoice"></ul>
+    <section class="p-6 bg-[#E8F4FF]">
+      <ul class="space-y-6">
+        <li>
+          <p class="quizProblem"></p>
+          <ul class="option">
+            <!-- <li class="option" data-is-correct="false"></li>
+            <li class="option" data-is-correct="false"></li>
+            <li class="option" data-is-correct="false"></li> -->
+          </ul>
+          <section aria-labelledby="quiz-feedback">
+            <div>
+              <p class="quiz-feedback"></p>
+              <p><span class="earned-points"></span><span class="total-points"></span></p>
+            </div>
+            <div>
+              <button type="button">정답 확인</button>
+              <button type="button" class="retry">다시 해볼래요</button>
+            </div>
+          </section>
+        </li>
+        <li>
+          <p class="quizProblem"></p>
+          <ul class="option">
+            <!-- <li class="option" data-is-correct="false"></li>
+            <li class="option" data-is-correct="false"></li>
+            <li class="option" data-is-correct="false"></li> -->
+          </ul>
+          <section aria-labelledby="quiz-feedback">
+            <div>
+              <p class="quiz-feedback"></p>
+              <p><span class="earned-points"></span><span class="total-points"></span></p>
+            </div>
+            <div>
+              <button type="button">정답 확인</button>
+              <button type="button" class="retry">다시 해볼래요</button>
+            </div>
+          </section>
+        </li>
+        <li>
+          <p class="quizProblem"></p>
+          <ul class="option">
+            <!-- <li class="option" data-is-correct="false"></li>
+            <li class="option" data-is-correct="false"></li>
+            <li class="option" data-is-correct="false"></li> -->
+          </ul>
+          <section aria-labelledby="quiz-feedback">
+            <div>
+              <p class="quiz-feedback"></p>
+              <p><span class="earned-points"></span><span class="total-points"></span></p>
+            </div>
+            <div>
+              <button type="button">정답 확인</button>
+              <button type="button" class="retry">다시 해볼래요</button>
+            </div>
+          </section>
+        </li>
+      </ul>
     </section>
   </body>
 </html>
