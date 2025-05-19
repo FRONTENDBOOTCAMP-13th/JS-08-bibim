@@ -4,18 +4,6 @@ import 'swiper/css';
 import 'swiper/css/mousewheel';
 import 'swiper/css/effect-cards';
 
-const swiper = new Swiper('.mySwiper', {
-  effect: 'cards',
-  grabCursor: true, // 마우스 커서가 카드 잡는 모양으로 변함
-  mousewheel: {
-    forceToAxis: false,
-    invert: false,
-    sensitivity: 1,
-    releaseOnEdges: true,
-  },
-  modules: [Mousewheel, EffectCards],
-});
-
 // 뉴스 데이터 인터페이스
 interface NewsData {
   title: string;
@@ -26,7 +14,7 @@ interface NewsData {
 // ✅ 네이버 뉴스 API를 프록시를 통해 fetch하는 함수
 async function fetchNaverNewsViaProxy(query: string): Promise<NewsData[]> {
   const clientId = import.meta.env.VITE_NAVER_CLIENT_ID;
-  const clientSecret = import.meta.env.VITE_CLIENT_SECRET;
+  const clientSecret = import.meta.env.VITE_NAVER_CLIENT_SECRET;
   const url = `https://fesp-api.koyeb.app/proxy/v1/search/news.json?query=${encodeURIComponent(query)}&display=10&sort=date`;
 
   try {
@@ -44,8 +32,8 @@ async function fetchNaverNewsViaProxy(query: string): Promise<NewsData[]> {
     }
 
     const data = await response.json();
-
-    return data.items.map((item: any) => ({
+    console.log('API 응답:', data);
+    return data.items.map((item: NewsData) => ({
       title: item.title.replace(/<b>/g, '').replace(/<\/b>/g, ''),
       description: item.description.replace(/<b>/g, '').replace(/<\/b>/g, ''),
       link: item.link,
@@ -91,21 +79,56 @@ function updateSwiperSlides(newsData: NewsData[], query: string): void {
     swiperWrapper.appendChild(slideElement);
   });
 
-  if ((window as any).swiperInstance) {
-    (window as any).swiperInstance.update();
-  } else {
-    (window as any).swiperInstance = new Swiper('.mySwiper', {
-      modules: [EffectCards],
-      effect: 'cards',
-      grabCursor: true,
-      loop: true,
-    });
-  }
+  // if (window.swiperInstance) {
+  //   window.swiperInstance.update();
+  // } else {
+  //   window.swiperInstance = new Swiper('.mySwiper', {
+  //     modules: [Mousewheel, EffectCards],
+  //     effect: 'cards',
+  //     grabCursor: true,
+  //     loop: true,
+  //     mousewheel: {
+  //       forceToAxis: false,
+  //       invert: false,
+  //       sensitivity: 1,
+  //       releaseOnEdges: true,
+  //     },
+  //   });
+  // }
+  new Swiper('.mySwiper', {
+    modules: [Mousewheel, EffectCards],
+    effect: 'cards',
+    grabCursor: true,
+    loop: true,
+    mousewheel: {
+      forceToAxis: false,
+      invert: false,
+      sensitivity: 1,
+      releaseOnEdges: true,
+    },
+  });
 }
 
-// ✅ 페이지 로드시 뉴스 데이터 받아오기
-window.addEventListener('DOMContentLoaded', async () => {
-  const query = '경제'; // 검색어 지정
-  const news = await fetchNaverNewsViaProxy(query);
+// ✅ 뉴스 검색 및 슬라이드 업데이트 트리거 함수
+async function fetchAndRenderNews(query: string) {
+  const news = await fetchNaverNewsViaProxy(query); // ✅ 함수 이름 주의! 네가 fetchNaverNewsViaProxy로 사용 중
   updateSwiperSlides(news, query);
+}
+
+// ✅ DOM이 로드되면 초기화 + 검색 이벤트 바인딩
+window.addEventListener('DOMContentLoaded', async () => {
+  const defaultQuery = '경제';
+  await fetchAndRenderNews(defaultQuery);
+
+  const inputElement = document.getElementById(
+    'searchInput',
+  ) as HTMLInputElement;
+  if (inputElement) {
+    inputElement.addEventListener('change', async () => {
+      const keyword = inputElement.value.trim();
+      if (keyword) {
+        await fetchAndRenderNews(keyword);
+      }
+    });
+  }
 });
