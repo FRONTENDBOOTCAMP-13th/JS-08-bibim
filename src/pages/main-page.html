@@ -5,6 +5,8 @@
     <title>뉴스 카드 리스트</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/public/iconLogo.svg" type="image/x-icon" />
+    <link rel="preload" as="font" href="/font/woff2/PretendardVariable.woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" as="style" href="/font/pretendardvariable.css" />
     <script type="module" src="/src/main.ts"></script>
     <script src="/src/typescript/main-page.ts" type="module"></script>
     <script type="module" src="/src/typescript/toggle-menu.ts"></script>
@@ -229,58 +231,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
               </svg>
             </header>
-            <div id="article-panel" class="border-gray-200 overflow-hidden transition-all duration-500 max-h-[1000px]">
-              <!-- 열람 기사1 -->
-              <div class="py-2 px-4 border-b border-gray-100">
-                <div class="flex justify-between items-start">
-                  <div>
-                    <a href="#" class="text-sm text-gray-900 hover:underline block">인공지능의 발전과 미래 전망</a>
-                    <span class="text-xs text-gray-500">2023-07-15</span>
-                  </div>
-                  <a href="#" class="text-gray-400 hover:text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      <polyline points="15 3 21 3 21 9" />
-                      <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-
-              <!-- 열람 기사2 -->
-              <div class="py-2 px-4 border-b border-gray-100">
-                <div class="flex justify-between items-start">
-                  <div>
-                    <a href="#" class="text-sm text-gray-900 hover:underline block">기후변화 대응을 위한 글로벌 정책 동향</a>
-                    <span class="text-xs text-gray-500">2023-07-10</span>
-                  </div>
-                  <a href="#" class="text-gray-400 hover:text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      <polyline points="15 3 21 3 21 9" />
-                      <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-
-              <!-- 열람 기사3 -->
-              <div class="py-2 px-4">
-                <div class="flex justify-between items-start">
-                  <div>
-                    <a href="#" class="text-sm text-gray-900 hover:underline block">블록체인 기술의 산업적 활용 사례</a>
-                    <span class="text-xs text-gray-500">2023-07-05</span>
-                  </div>
-                  <a href="#" class="text-gray-400 hover:text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      <polyline points="15 3 21 3 21 9" />
-                      <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
+            <div id="article-panel" class="border-gray-200 overflow-hidden transition-all duration-500 max-h-[1000px]"></div>
           </article>
         </section>
       </aside>

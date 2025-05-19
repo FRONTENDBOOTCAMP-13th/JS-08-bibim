@@ -37,11 +37,88 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Toggle article panel
+// 초기 내용
 document.addEventListener('DOMContentLoaded', () => {
   const toggleBtn = document.getElementById('toggle-header');
+  // 즐찾 기사를 감싸는 div
   const section = document.getElementById('article-panel');
   const icon = document.getElementById('article-toggle-icon');
 
+  const bookMark = JSON.parse(localStorage.getItem('bookMark') || '[]');
+  bookMark.forEach((data: string[]) => {
+    // 내부 즐겨찾기 내용
+    const linkElem = document.createElement('a');
+
+    const txt = document.createElement('textarea');
+    txt.innerHTML = data[1];
+    const decoded = txt.value;
+
+    // <b>와 </b> 태그만 제거
+    const cleanText = decoded.replace(/<\/?b>/g, '');
+
+    // 텍스트 노드로 변환
+    const title = document.createTextNode(cleanText);
+
+    const dateElem = document.createElement('span');
+    const date = document.createTextNode(data[2]);
+
+    linkElem.setAttribute('href', data[0]);
+    linkElem.setAttribute('target', '_blank');
+    linkElem.setAttribute('rel', 'noopener noreferrer');
+    linkElem.appendChild(title);
+    linkElem.className = 'text-sm text-gray-900 hover:underline block';
+
+    dateElem.appendChild(date);
+    dateElem.className = 'text-xs text-gray-500';
+
+    // 감싸기 시작
+    const innerDiv = document.createElement('div');
+    const midDiv = document.createElement('div');
+    const outerDiv = document.createElement('div');
+    outerDiv.setAttribute('data-link', data[0]);
+
+    midDiv.className = 'flex justify-between items-start';
+    outerDiv.className = 'py-2 px-4 border-b border-gray-100';
+
+    innerDiv.appendChild(linkElem);
+    innerDiv.appendChild(dateElem);
+    midDiv.appendChild(innerDiv);
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.setAttribute('type', 'button');
+    deleteBtn.setAttribute('class', 'cursor-pointer');
+    deleteBtn.setAttribute('class', 'delete-btn');
+    deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
+
+    deleteBtn.addEventListener('click', () => {
+      // 북마크에서 해당 기사 제거
+      for (let i = 0; i < bookMark.length; i++) {
+        if (bookMark[i][0] === data[0]) {
+          bookMark.splice(i, 1); // 배열에서 제거
+          localStorage.setItem('bookMark', JSON.stringify(bookMark));
+
+          const section = document.querySelector('#article-panel');
+          const targetDiv = section?.querySelector(`[data-link="${data[0]}"]`);
+          if (targetDiv) {
+            section?.removeChild(targetDiv);
+          }
+
+          break;
+        }
+      }
+
+      // 변경된 북마크 저장
+      localStorage.setItem('bookMark', JSON.stringify(bookMark));
+    });
+
+    midDiv.appendChild(deleteBtn);
+    outerDiv.append(midDiv);
+
+    // 최종 반영
+    section?.appendChild(outerDiv);
+  });
+
+  // 토글 로직
   toggleBtn?.addEventListener('click', () => {
     section?.classList.toggle('max-h-0');
     section?.classList.toggle('max-h-[1000px]');
