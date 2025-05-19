@@ -7,6 +7,7 @@
     <link rel="preload" as="font" href="/font/woff2/PretendardVariable.woff2" crossorigin="anonymous" />
     <link rel="stylesheet" as="style" href="/font/pretendardvariable.css" />
     <script type="module" src="/src/main.ts"></script>
+    <script type="module" src="/src/typescript/quiz.ts"></script>
     <script type="module" src="/src/typescript/category.ts"></script>
   </head>
   <body class="max-w-screen-xl mx-auto px-4">
@@ -74,140 +75,71 @@
               <!-- 퀴즈1 -->
               <li class="bg-white p-4 rounded shadow">
                 <!-- quizProblem -->
-                <p name="quizProblem" class="font-medium text-gray-800"></p>
-                <ul class="space-y-2 mt-2 option">
+                <ul class="space-y-2 mt-2">
                   <!-- 여기부터 li 삭제 -->
-                  <li class="p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50 option" data-index="0" data-is-correct="false">
-                    <div class="flex items-center">
-                      <div class="h-5 w-5 rounded-full border border-gray-400 mr-3"></div>
-                      <!-- quizChoice 문제 항목1 -->
-                      <span></span>
-                    </div>
-                  </li>
-                  <li class="p-3 rounded-lg cursor-pointer border option" data-index="1" data-is-correct="true">
-                    <div class="flex items-center">
-                      <div class="h-5 w-5 rounded-full border border-gray-400 mr-3"></div>
-                      <!-- quizChoice 문제 항목2 -->
-                      <span></span>
-                    </div>
-                  </li>
-                  <li class="p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50 option" data-index="2" data-is-correct="false">
-                    <div class="flex items-center">
-                      <div class="h-5 w-5 rounded-full border border-gray-400 mr-3"></div>
-                      <!-- quizChoice 문제 항목3 -->
-                      <span></span>
-                    </div>
+                  <li>
+                    <p name="quizProblem" class="text-xl mb-1 text-gray-800">문제를 불러오는 중입니다. 잠시만 기다려 주세요! &gt;ㅁ&lt;</p>
+                    <ul class="option gap-1"></ul>
+                    <section class="space-y-6 quiz-feedback hidden">
+                      <div class="text-center bg-white p-4 rounded shadow">
+                        <p name="quiz-result" class="font-medium"></p>
+                        <p name="quiz-reason" class="text-gray-600 text-sm mt-1"></p>
+                        <p name="quiz-points" class="text-gray-600 text-sm"></p>
+                      </div>
+                      <!-- 버튼 영역 -->
+                      <div class="flex justify-center gap-4 mt-4">
+                        <button type="button" class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors retry">다시 해볼래요</button>
+                      </div>
+                    </section>
                   </li>
                 </ul>
               </li>
-
-              <!-- 결과 영역 -->
-              <section class="space-y-6 quiz-feedback">
-                <div class="text-center bg-white p-4 rounded shadow">
-                  <p name="quiz-result" class="text-green-500 font-medium">축하드립니다! 정답을 맞히셨습니다!</p>
-                  <p name="quiz-reason" class="text-gray-600 text-sm mt-1">이유이유</p>
-                  <p class="text-gray-600 text-sm">50 포인트가 적립 되었습니다. 현재 당신의 총점은 <span id="total-points">50</span>점 입니다.</p>
-                </div>
-
-                <!-- 버튼 영역 -->
-                <div class="flex justify-center gap-4 mt-4">
-                  <button class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors">정답 확인하기</button>
-                  <button class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors">다시 해볼래요</button>
-                </div>
-              </section>
 
               <!-- 퀴즈2 -->
               <li class="bg-white p-4 rounded shadow">
                 <!-- quizProblem -->
-                <p name="quizProblem" class="font-medium text-gray-800">2. 아이폰 SE의 위조율은?</p>
-                <ul class="space-y-2 mt-2 option">
-                  <li class="p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50 option" data-index="0" data-is-correct="false">
-                    <div class="flex items-center">
-                      <div class="h-5 w-5 rounded-full border border-gray-400 mr-3"></div>
-                      <!-- quizChoice 문제 항목1 -->
-                      <span></span>
-                    </div>
-                  </li>
-                  <li class="p-3 rounded-lg cursor-pointer border border-green-500 bg-green-100 option" data-index="1" data-is-correct="true">
-                    <div class="flex items-center">
-                      <div class="h-5 w-5 rounded-full border border-green-500 bg-green-500 text-white flex items-center justify-center mr-3">
-                        <span class="text-xs">✓</span>
+                <ul class="space-y-2 mt-2">
+                  <!-- 여기부터 li 삭제 -->
+                  <li>
+                    <p name="quizProblem" class="text-xl mb-1 text-gray-800">문제를 불러오는 중입니다. 잠시만 기다려 주세요! &gt;ㅁ&lt;</p>
+                    <ul class="option gap-1"></ul>
+                    <section class="space-y-6 quiz-feedback hidden">
+                      <div class="text-center bg-white p-4 rounded shadow">
+                        <p name="quiz-result" class="font-medium"></p>
+                        <p name="quiz-reason" class="text-gray-600 text-sm mt-1"></p>
+                        <p name="quiz-points" class="text-gray-600 text-sm"></p>
                       </div>
-                      <!-- quizChoice 문제 항목2 -->
-                      <span></span>
-                    </div>
-                  </li>
-                  <li class="p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50 option" data-index="2" data-is-correct="false">
-                    <div class="flex items-center">
-                      <div class="h-5 w-5 rounded-full border border-gray-400 mr-3"></div>
-                      <!-- quizChoice 문제 항목3 -->
-                      <span></span>
-                    </div>
+                      <!-- 버튼 영역 -->
+                      <div class="flex justify-center gap-4 mt-4">
+                        <button type="button" class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors retry">다시 해볼래요</button>
+                      </div>
+                    </section>
                   </li>
                 </ul>
               </li>
-
-              <!-- 결과 영역 -->
-              <section class="space-y-6 quiz-feedback">
-                <div class="text-center bg-white p-4 rounded shadow">
-                  <p name="quiz-result" class="text-green-500 font-medium">축하드립니다! 정답을 맞추셨습니다!</p>
-                  <p class="text-gray-600 text-sm mt-1"><span id="earned-points">5</span> 포인트가 적립 되었습니다. 현재 당신의 총점은 <span id="total-points">5</span>점 입니다.</p>
-                  <!-- 정답 설명 영역 -->
-                  <p id="explanation" class="mt-3 text-sm text-gray-700"></p>
-                </div>
-
-                <!-- 버튼 영역 -->
-                <div class="flex justify-center gap-4 mt-4">
-                  <button class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors">정답 확인하기</button>
-                  <button class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors">다시 해볼래요</button>
-                </div>
-              </section>
 
               <!-- 퀴즈3 -->
               <li class="bg-white p-4 rounded shadow">
                 <!-- quizProblem -->
-                <p name="quizProblem" class="font-medium text-gray-800"></p>
-                <ul class="space-y-2 mt-2 option">
-                  <li class="p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50 option" data-index="0" data-is-correct="false">
-                    <div class="flex items-center">
-                      <div class="h-5 w-5 rounded-full border border-gray-400 mr-3"></div>
-                      <!-- quizChoice 문제 항목1 -->
-                      <span></span>
-                    </div>
-                  </li>
-                  <li class="p-3 rounded-lg cursor-pointer border option" data-index="1" data-is-correct="true">
-                    <div class="flex items-center">
-                      <div class="h-5 w-5 rounded-full border border-gray-400 mr-3"></div>
-                      <!-- quizChoice 문제 항목2 -->
-                      <span></span>
-                    </div>
-                  </li>
-                  <li class="p-3 rounded-lg cursor-pointer border border-red-500 bg-red-100 hover:border-[#005DBA]/50 option" data-index="2" data-is-correct="false">
-                    <div class="flex items-center">
-                      <div class="h-5 w-5 rounded-full border border-red-500 bg-red-500 text-white flex items-center justify-center mr-3">
-                        <span class="text-xs">✓</span>
+                <ul class="space-y-2 mt-2">
+                  <!-- 여기부터 li 삭제 -->
+                  <li>
+                    <p name="quizProblem" class="text-xl mb-1 text-gray-800">문제를 불러오는 중입니다. 잠시만 기다려 주세요! &gt;ㅁ&lt;</p>
+                    <ul class="option gap-1"></ul>
+                    <section class="space-y-6 quiz-feedback hidden">
+                      <div class="text-center bg-white p-4 rounded shadow">
+                        <p name="quiz-result" class="font-medium"></p>
+                        <p name="quiz-reason" class="text-gray-600 text-sm mt-1"></p>
+                        <p name="quiz-points" class="text-gray-600 text-sm"></p>
                       </div>
-                      <!-- quizChoice 문제 항목3 -->
-                      <span></span>
-                    </div>
+                      <!-- 버튼 영역 -->
+                      <div class="flex justify-center gap-4 mt-4">
+                        <button type="button" class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors retry">다시 해볼래요</button>
+                      </div>
+                    </section>
                   </li>
                 </ul>
               </li>
-
-              <!-- 결과 영역 -->
-              <section class="space-y-6 quiz-feedback">
-                <div class="text-center bg-white p-4 rounded shadow">
-                  <div class="mb-4 p-4 bg-white rounded-lg text-center">
-                    <p class="text-red-500">정답이 아닙니다. 다시 선택 해주세요.</p>
-                  </div>
-                </div>
-
-                <!-- 버튼 영역 -->
-                <div class="flex justify-center gap-4 mt-4">
-                  <button class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors">정답 확인하기</button>
-                  <button class="w-40 py-2 rounded-lg font-medium bg-gray-200 text-[#005DBA] hover:bg-gray-300 transition-colors">다시 해볼래요</button>
-                </div>
-              </section>
             </ul>
           </section>
         </div>

@@ -101,12 +101,15 @@ document.addEventListener('DOMContentLoaded', () => {
       quizData?.forEach((data, i) => {
         console.log(data.question);
         // 문제
-        if (quizProblems[i]) quizProblems[i].textContent = data.question;
+        if (quizProblems[i]) {
+          quizProblems[i].textContent = `${i + 1}. ${data.question}`;
+          quizProblems[i].classList.add('mb-2');
+        }
 
         // 선택지
         for (let j = 0; j < 3; j++) {
           const liElem = document.createElement('li');
-          liElem.className = 'p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50';
+          liElem.className = 'p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50 my-1';
 
           const innerDiv = document.createElement('div');
           innerDiv.className = 'flex items-center';
@@ -114,7 +117,11 @@ document.addEventListener('DOMContentLoaded', () => {
           const circleDiv = document.createElement('div');
           circleDiv.className = 'h-5 w-5 rounded-full border border-gray-400 mr-3';
 
+          const checkSpan = document.createElement('span');
+          checkSpan.textContent = '✓';
+
           const spanElem = document.createElement('span');
+          console.log(data.options[j].text);
           const textElem = document.createTextNode(data.options[j].text);
 
           spanElem.appendChild(textElem);
@@ -123,6 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
           liElem.appendChild(innerDiv);
 
           liElem.addEventListener('click', () => {
+            circleDiv.appendChild(checkSpan);
+
             if (quizFeedbacks[i]) {
               quizFeedbacks[i].classList.remove('hidden');
             }
@@ -135,7 +144,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
               // 피드백
               //  + '\n' + data.explanation
-              if (quizResult[i]) quizResult[i].textContent = '축하드립니다! 정답을 맞히셨습니다!';
+              if (quizResult[i]) {
+                quizResult[i].textContent = '축하드립니다! 정답을 맞히셨습니다!';
+                quizResult[i].classList.contains('text-green-500');
+              }
               if (quizReason[i]) quizReason[i].textContent = data.explanation;
               if (!pointLog.includes(`${data.question} 문제 정답`)) {
                 // TODO 기사 제목 + j을 입력받아 여기에 저장
@@ -143,13 +155,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 points[0] = points[0] + 50;
                 localStorage.setItem('points', JSON.stringify(points));
                 localStorage.setItem('pointLog', JSON.stringify(pointLog));
-                if (quizPoints[i]) quizPoints[i].textContent = `50 포인트가 적립 되었습니다. 현재 당신의 총점은 ${points[0]}점 입니다.`;
+                if (quizPoints[i]) quizPoints[i].textContent = `50 포인트가 적립 되었습니다. 현재 당신의 포인트는 총 ${points[0]}점 입니다.`;
+              } else {
+                if (quizPoints[i]) quizPoints[i].textContent = `현재 당신의 포인트는 총 ${points[0]}점 입니다.`;
               }
             } else {
               liElem.classList.add('bg-red-500');
-
               // 피드백
-              if (quizResult[i]) quizResult[i].textContent = '정답이 아닙니다. 다시 선택 해주세요.';
+              if (quizResult[i]) {
+                quizResult[i].textContent = '정답이 아닙니다. 다시 선택 해주세요.';
+                quizResult[i].classList.contains('text-red-500');
+              }
             }
 
             // 다른 선택지 클릭 못 하도록 클래스 추가
@@ -176,30 +192,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 피드백 초기화
             if (quizResult[index]) quizResult[index].textContent = '';
+            if (quizReason[index]) quizReason[index].textContent = '';
+            if (quizPoints[index]) quizPoints[index].textContent = '';
+            if (quizFeedbacks[index]) quizFeedbacks[index].classList.add('hidden');
 
             // 다시 선택지 생성
             const currentData = quizData[index];
             for (let j = 0; j < 3; j++) {
               const liElem = document.createElement('li');
+              liElem.className = 'p-3 rounded-lg cursor-pointer border border-gray-200 hover:border-[#005DBA]/50 my-1';
+
+              const innerDiv = document.createElement('div');
+              innerDiv.className = 'flex items-center';
+
+              const circleDiv = document.createElement('div');
+              circleDiv.className = 'h-5 w-5 rounded-full border border-gray-400 mr-3 flex items-center justify-center';
+
+              const checkSpan = document.createElement('span');
+              checkSpan.textContent = '✓';
+              checkSpan.className = 'text-sm text-[#005DBA]';
+
+              const spanElem = document.createElement('span');
               const textElem = document.createTextNode(currentData.options[j].text);
-              liElem.appendChild(textElem);
+              spanElem.appendChild(textElem);
+
+              innerDiv.appendChild(circleDiv);
+              innerDiv.appendChild(spanElem);
+              liElem.appendChild(innerDiv);
 
               liElem.addEventListener('click', () => {
+                if (quizFeedbacks[index]) quizFeedbacks[index].classList.remove('hidden');
                 if (options[index].classList.contains('answered')) return;
 
+                // 다른 선택지들 초기화 (체크 제거, 색상 제거)
+                const allLi = options[index].querySelectorAll('li');
+                allLi.forEach(li => {
+                  li.classList.remove('bg-green-500', 'bg-red-500');
+                  const circle = li.querySelector('.h-5.w-5');
+                  if (circle) circle.innerHTML = '';
+                  li.style.pointerEvents = 'none'; // 클릭 비활성화
+                });
+
+                // 현재 항목에 체크 추가
+                circleDiv.appendChild(checkSpan);
+
                 if (currentData.options[j].isCorrect) {
-                  liElem.style.backgroundColor = 'green';
-                  if (quizResult[index]) quizResult[index].textContent = '정답입니다!\n' + currentData.explanation;
+                  liElem.classList.add('bg-green-500');
+                  if (quizResult[index]) quizResult[index].textContent = '축하드립니다! 정답을 맞히셨습니다!';
+                  if (quizReason[index]) quizReason[index].textContent = currentData.explanation;
+
+                  if (quizPoints[index]) {
+                    quizPoints[index].textContent = `현재 당신의 포인트는 총 ${points[0]}점 입니다.`;
+                  }
                 } else {
-                  liElem.style.backgroundColor = 'red';
-                  if (quizResult[index]) quizResult[index].textContent = '틀렸습니다.\n' + currentData.explanation;
+                  liElem.classList.add('bg-red-500');
+                  if (quizResult[index]) quizResult[index].textContent = '정답이 아닙니다. 다시 선택 해주세요.';
+                  if (quizReason[index]) quizReason[index].textContent = currentData.explanation;
                 }
 
                 options[index].classList.add('answered');
-                const allLi = options[index].querySelectorAll('li');
-                allLi.forEach(li => {
-                  li.style.pointerEvents = 'none';
-                });
               });
 
               options[index].appendChild(liElem);
@@ -210,6 +261,9 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (err) {
       console.error(err);
       console.log('bye');
+      quizProblems.forEach(data => {
+        if (data) data.textContent = `퀴즈를 불러오는 도중 문제가 생겼습니다. 새로고침을 눌러주세요!`;
+      });
     }
   });
 });
