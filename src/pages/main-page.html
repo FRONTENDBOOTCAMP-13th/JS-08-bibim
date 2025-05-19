@@ -140,43 +140,7 @@
               </div>
 
               <!-- 달력 날짜 셀 -->
-              <div class="grid grid-cols-7 gap-1 text-sm text-center">
-                <div class="h-8"></div>
-                <div class="h-8"></div>
-                <div class="h-8"></div>
-                <div class="h-8"></div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-green-100">1</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">2</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">3</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-green-100">4</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-green-100">5</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">6</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">7</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-green-100">8</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">9</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-green-100">10</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">11</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">12</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">13</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">14</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-green-100">15</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-green-100">16</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-green-100">17</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-green-100">18</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-green-100">19</div>
-                <div class="h-8 flex items-center justify-center rounded-full border-2 border-green-500">20</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">21</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">22</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">23</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">24</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">25</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">26</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">27</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">28</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">29</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">30</div>
-                <div class="h-8 flex items-center justify-center rounded-full bg-gray-100">31</div>
-              </div>
+              <div id="grid-div" class="grid grid-cols-7 gap-1 text-sm text-center"></div>
 
               <!-- 연속 출석 정보 -->
               <div class="flex items-center justify-between border-t pt-3 mt-3">
@@ -185,7 +149,7 @@
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                   </svg>
-                  <span class="font-medium ml-1">7일</span>
+                  <span id="cont-attend" class="font-medium ml-1">7일</span>
                 </div>
               </div>
             </div>

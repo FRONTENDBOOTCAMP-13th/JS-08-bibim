@@ -193,4 +193,91 @@ document.addEventListener('DOMContentLoaded', () => {
     section?.classList.toggle('max-h-[1000px]');
     icon?.classList.toggle('rotate-180');
   });
+
+  // 달력 만들기
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  const cals = generateCalendar(year, month);
+  const gridElem = document.getElementById('grid-div');
+
+  // 출석한 날짜들 불러오기!
+  const dateLog = JSON.parse(localStorage.getItem('pointLog') || '[]') as { date: string; log: string }[];
+
+  cals.forEach(cal => {
+    let cellElem;
+    if (cal == null) {
+      cellElem = document.createElement('div');
+      cellElem.className = 'h-8';
+    } else {
+      cellElem = document.createElement('div');
+      if (cal <= day) {
+        const isExist = dateLog.some(entry => entry.log.includes(`출석 포인트 적립`) && entry.date.includes(`${year}-${String(month).padStart(2, '0')}-${String(cal).padStart(2, '0')}`));
+
+        // 미출석
+        if (!isExist) {
+          cellElem.className = 'h-8 flex items-center justify-center rounded-full bg-gray-100';
+        } else {
+          cellElem.className = 'h-8 flex items-center justify-center rounded-full bg-green-100';
+        }
+      } else {
+        cellElem.className = 'h-8 flex items-center justify-center rounded-full';
+      }
+      cellElem.textContent = `${cal}`;
+    }
+
+    gridElem?.appendChild(cellElem);
+  });
+
+  const contAttend = document.getElementById('cont-attend');
+  const arr = [] as number[];
+  dateLog.forEach(data => {
+    if (data.log == `출석 포인트 적립`) {
+      arr.push(Number(data.date.slice(8, 10)));
+    }
+  });
+
+  let maxLength = 1;
+  console.log(arr);
+  arr.reverse();
+  console.log(arr);
+
+  for (let i = 0; i < arr.length; i++) {
+    if (i + 1 == arr.length) {
+      break;
+    }
+    if (arr[i] == arr[i + 1] + 1) {
+      maxLength += 1;
+    } else {
+      break;
+    }
+  }
+
+  if (contAttend) contAttend.textContent = `${maxLength}일`;
 });
+
+function generateCalendar(year: number, month: number): number[] {
+  const calendar = [];
+
+  // 1일이 무슨 요일인지 확인 (0: 일요일, ..., 6: 토요일)
+  const firstDay = new Date(year, month - 1, 1).getDay();
+
+  // 해당 월의 마지막 날짜 구하기
+  const lastDate = new Date(year, month, 0).getDate();
+
+  // 총 셀 수 = 앞 빈칸 + 날짜 수 → 주 단위(7의 배수)로 만들기
+  const totalCells = Math.ceil((firstDay + lastDate) / 7) * 7;
+
+  for (let i = 0; i < totalCells; i++) {
+    const date = i - firstDay + 1;
+    if (i < firstDay || date > lastDate) {
+      calendar.push(null); // 빈칸
+    } else {
+      calendar.push(date);
+    }
+  }
+
+  return calendar as number[];
+}
