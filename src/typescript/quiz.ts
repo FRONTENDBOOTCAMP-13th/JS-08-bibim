@@ -2,11 +2,56 @@ import axios from 'axios';
 import { updatePoint } from './updatePoint.ts';
 
 console.log('hello');
-const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", ""]');
+const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", "", "", ""]');
 
 const title = quizStorage[0];
 const description = quizStorage[1];
+const arr = quizStorage[2];
 
+// 가져온 10개 중에 지금 기사랑 중복되는게 있으면 제거
+for (let i = 0; i < arr.length; i++) {
+  if (arr[i].title == title) {
+    arr.splice(i, 1);
+    break;
+  }
+}
+
+console.log(title, description, arr);
+
+function makeCleanTxt(value: string) {
+  const txt = document.createElement('textarea');
+  txt.innerHTML = value;
+  const decoded = txt.value;
+
+  // <b>와 </b> 태그만 제거
+  const cleanText = decoded.replace(/<\/?b>/g, '');
+
+  // 텍스트 노드로 변환
+  // const title = document.createTextNode(cleanText);
+
+  return cleanText;
+}
+
+// 여기는 맞춤 뉴스 기사
+document.addEventListener('DOMContentLoaded', () => {
+  const recommandTitle = document.querySelectorAll('.recommand-title');
+  const recommandDescription = document.querySelectorAll('.recommand-description');
+  const recommandDate = document.querySelectorAll('.recommand-date');
+
+  for (let i = 0; i < 8; i++) {
+    console.log(makeCleanTxt(arr[i].title));
+
+    recommandTitle[i].textContent = makeCleanTxt(arr[i].title);
+    recommandDescription[i].textContent = makeCleanTxt(arr[i].description);
+    recommandDate[i].textContent = arr[i].date;
+
+    recommandTitle[i].parentElement?.addEventListener('click', () => {
+      window.open(`${arr[i].link}`, '_blank');
+    });
+  }
+});
+
+// 아래는 퀴즈 section
 // const API_KEY = `${import.meta.env.VITE_DEEPSEEK_API_KEY}`;
 const API_KEY = ``;
 const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
