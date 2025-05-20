@@ -55,6 +55,14 @@ const getTimeIndicator = (pubDate: string): { color: string; tooltip: string } =
     };
   }
 };
+/**
+ * 객체가 NaverNewsItem 타입인지 확인하는 타입 가드 함수
+ * @param item - 확인할 항목
+ * @returns 항목이 NaverNewsItem 타입인지 여부
+ */
+function isNaverNewsItem(item: unknown): item is NaverNewsItem {
+  return item !== null && typeof item === 'object' && 'link' in item && typeof (item as Record<string, unknown>).link === 'string';
+}
 
 /**
  * 뉴스 기사를 시각적으로 표시하는 카드 요소 생성
@@ -65,10 +73,23 @@ const renderCard = (article: NaverNewsItem) => {
   // 발행 시간에 따른 점 색상과 툴팁 결정
   const { color: dotColor, tooltip: dotTooltip } = getTimeIndicator(article.pubDate);
 
-  // article 요소로 변경 (시맨틱하게 뉴스 콘텐츠를 나타냄)
+  // 히스토리에서 현재 기사가 있는지 확인
+  const history = JSON.parse(localStorage.getItem('history') || '[]') as unknown[];
+  const isInHistory = history.some(item => isNaverNewsItem(item) && item.link === article.link);
+
+  // article 요소 생성 (시맨틱하게 뉴스 콘텐츠를 나타냄)
   const card = document.createElement('article');
-  card.className = 'relative flex flex-col rounded-lg overflow-hidden shadow-md bg-white h-full transition-transform hover:scale-[1.01]';
+
+  // 히스토리에 있으면 배경색을 gray-300, 아니면 white로 설정
+  const bgColorClass = isInHistory ? 'bg-gray-300' : 'bg-white';
+
+  card.className = `relative flex flex-col rounded-lg overflow-hidden shadow-md ${bgColorClass} h-full transition-transform hover:scale-[1.01]`;
   card.setAttribute('tabindex', '0'); // 키보드 포커스 가능하도록 설정
+
+  // 웹 접근성 향상을 위한 속성 추가
+  if (isInHistory) {
+    card.setAttribute('aria-label', '읽은 기사');
+  }
 
   card.innerHTML = `
   <div class="relative h-40 overflow-hidden bg-blue-500">
@@ -138,7 +159,36 @@ const renderCard = (article: NaverNewsItem) => {
       return;
     }
 
-    // 그 외의 경우 자세히 보기 링크로 이동
+    // 히스토리에 기사 추가
+    const isDuplicate = history.some(item => isNaverNewsItem(item) && item.link === article.link);
+
+    if (!isDuplicate) {
+      history.push(article);
+      localStorage.setItem('history', JSON.stringify(history));
+
+      // UI 업데이트 - 배경색 변경
+      card.classList.remove('bg-white');
+      card.classList.add('bg-gray-300');
+
+      // 웹 접근성을 위한 aria-label 추가
+      card.setAttribute('aria-label', '읽은 기사');
+
+      // 스크린 리더 사용자를 위한 알림
+      const srAnnouncement = document.createElement('span');
+      srAnnouncement.className = 'sr-only';
+      srAnnouncement.setAttribute('aria-live', 'polite');
+      srAnnouncement.textContent = '기사를 읽음 처리했습니다.';
+      document.body.appendChild(srAnnouncement);
+
+      // 잠시 후 알림 요소 제거
+      setTimeout(() => {
+        if (document.body.contains(srAnnouncement)) {
+          document.body.removeChild(srAnnouncement);
+        }
+      }, 1000);
+    }
+
+    // 자세히 보기 링크로 이동
     window.open(article.link, '_blank', 'noopener,noreferrer');
   });
 
@@ -291,15 +341,6 @@ const renderCard = (article: NaverNewsItem) => {
     localStorage.setItem('quiz', JSON.stringify(quizStorage));
 
     window.location.href = '/src/pages/quiz.html';
-  });
-
-  // 누른 카드뉴스를 로그에 입력
-  card.addEventListener('click', () => {
-    const history = JSON.parse(localStorage.getItem('history') || '[]') as unknown[];
-    if (!history.includes(article)) {
-      history.push(article);
-      localStorage.setItem('history', JSON.stringify(history));
-    }
   });
 
   return card;
