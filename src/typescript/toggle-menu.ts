@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       cellElem = document.createElement('div');
       if (cal <= day) {
-        const isExist = dateLog.some(entry => entry.log.includes(`출석 포인트 적립`) && entry.date.includes(`${year}-${String(month).padStart(2, '0')}-${String(cal).padStart(2, '0')}`));
+        const isExist = dateLog.some(entry => entry.log?.includes(`출석 포인트 적립`) && entry.date?.includes(`${year}-${String(month).padStart(2, '0')}-${String(cal).padStart(2, '0')}`));
 
         // 미출석
         if (!isExist) {
@@ -240,9 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   let maxLength = 1;
-  console.log(arr);
   arr.reverse();
-  console.log(arr);
 
   for (let i = 0; i < arr.length; i++) {
     if (i + 1 == arr.length) {
