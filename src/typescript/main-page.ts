@@ -55,6 +55,7 @@ const getTimeIndicator = (pubDate: string): { color: string; tooltip: string } =
     };
   }
 };
+
 /**
  * 객체가 NaverNewsItem 타입인지 확인하는 타입 가드 함수
  * @param item - 확인할 항목
@@ -63,8 +64,6 @@ const getTimeIndicator = (pubDate: string): { color: string; tooltip: string } =
 function isNaverNewsItem(item: unknown): item is NaverNewsItem {
   return item !== null && typeof item === 'object' && 'link' in item && typeof (item as Record<string, unknown>).link === 'string';
 }
-
-const arr = [] as { title: string; description: string; date: string; link: string }[];
 
 /**
  * 뉴스 기사를 시각적으로 표시하는 카드 요소 생성
@@ -93,8 +92,11 @@ const renderCard = (article: NaverNewsItem) => {
     card.setAttribute('aria-label', '읽은 기사');
   }
 
+  // 히스토리에 있는 기사는 헤더 배경을 비활성화된 연한 회색(bg-gray-400)으로 설정
+  const headerBgClass = isInHistory ? 'bg-gray-400' : 'bg-blue-500';
+
   card.innerHTML = `
-  <div class="relative h-40 overflow-hidden bg-blue-500">
+  <div class="relative h-40 overflow-hidden ${headerBgClass}">
     <div 
       class="w-[15px] h-[15px] absolute top-3 left-4 rounded-full cursor-help" 
       style="background-color: ${dotColor};"
@@ -154,10 +156,6 @@ const renderCard = (article: NaverNewsItem) => {
   </div>
   `;
 
-  if (arr.length < 10) {
-    arr.push({ title: article.title, description: article.description, date: article.pubDate, link: article.link });
-  }
-
   // 카드 클릭 이벤트 , 안의 세부a태그를 클릭했을경우 카드 전체를 클릭한경우와 중복되지 않도록 처리해줌
   card.addEventListener('click', event => {
     // 이미 버튼이나 링크 클릭 이벤트가 처리 중이면 카드 클릭 무시
@@ -175,6 +173,13 @@ const renderCard = (article: NaverNewsItem) => {
       // UI 업데이트 - 배경색 변경
       card.classList.remove('bg-white');
       card.classList.add('bg-gray-300');
+
+      // 헤더 배경 색상도 업데이트 - 파란색에서 연한 회색으로
+      const headerElement = card.querySelector('div.relative.h-40');
+      if (headerElement) {
+        headerElement.classList.remove('bg-blue-500');
+        headerElement.classList.add('bg-gray-400');
+      }
 
       // 웹 접근성을 위한 aria-label 추가
       card.setAttribute('aria-label', '읽은 기사');
@@ -341,10 +346,9 @@ const renderCard = (article: NaverNewsItem) => {
   // 퀴즈 풀러 가기
   const quizBtn = card.querySelector('.quiz-button');
   quizBtn?.addEventListener('click', () => {
-    const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", "", "", ""]');
+    const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", ""]');
     quizStorage[0] = article.title;
     quizStorage[1] = article.description;
-    quizStorage[2] = arr;
     localStorage.setItem('quiz', JSON.stringify(quizStorage));
 
     window.location.href = '/src/pages/quiz.html';
@@ -459,6 +463,8 @@ const searchNews = async (searchKeyword: string): Promise<void> => {
  * 페이지 초기화 및 이벤트 리스너 설정
  */
 document.addEventListener('DOMContentLoaded', () => {
+  //먼저 초기화면 설정을 반드시 실행
+  setupInitialView();
   updatePoint(10, '출석 포인트 적립');
   // 검색 폼 이벤트 리스너 추가
   const searchForm = document.querySelector('form');
