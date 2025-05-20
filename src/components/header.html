@@ -15,12 +15,15 @@
     <script type="module" src="/src/main.ts"></script>
   </head>
   <body>
-    <nav class="flex items-center px-4 py-2 max-w-6xl mx-auto">
-      <!-- 로고 이미지 -->
-      <a href="/">
+    <!-- 헤더 네비게이션 바 -->
+    <div
+      class="max-w-7xl mx-auto px-4 py-3 grid grid-cols-[auto_1fr_auto] items-center"
+    >
+      <!-- 로고 -->
+      <a href="/" class="block h-10 w-44 pt-1">
         <svg
-          width="180"
-          height="60"
+          width="150"
+          height="45"
           viewBox="0 0 180 60"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -44,14 +47,32 @@
           </text>
         </svg>
       </a>
-      <div class="flex gap-4 ml-auto">
-        <!-- HOME -->
-        <a href="/">HOME</a>
-        <!-- MYPAGE -->
-        <a href="/">MYPAGE</a>
-        <!-- GAME -->
-        <a href="/">GAME</a>
-      </div>
-    </nav>
+
+      <!-- 가운데 여백 -->
+      <div></div>
+
+      <!-- 우측 메뉴 -->
+      <nav class="absolute top-6 right-6">
+        <ul class="flex items-center gap-10 text-sm font-medium">
+          <li>
+            <a href="#" class="text-[#0070F3] hover:underline">HOME</a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="text-gray-800 hover:text-[#0070F3] hover:underline"
+              >MYPAGE</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="text-gray-800 hover:text-[#0070F3] hover:underline pr-[25px]"
+              >GAME</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
   </body>
 </html>
