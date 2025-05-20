@@ -7,7 +7,8 @@ const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", ""]');
 const title = quizStorage[0];
 const description = quizStorage[1];
 
-const API_KEY = `${import.meta.env.VITE_DEEPSEEK_API_KEY}`;
+// const API_KEY = `${import.meta.env.VITE_DEEPSEEK_API_KEY}`;
+const API_KEY = ``;
 const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 const headers = {
@@ -93,7 +94,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const retryBtns = document.querySelectorAll('.retry');
 
   const points = JSON.parse(localStorage.getItem('points') || '[0]');
-  const pointLog = JSON.parse(localStorage.getItem('pointLog') || '[]') as { date: string; log: string }[];
+  const pointLog = JSON.parse(localStorage.getItem('pointLog') || '[]') as {
+    date: string;
+    log: string;
+  }[];
 
   axios.post(API_URL, data, { headers }).then(response => {
     console.log('전체 응답:', response.data);
@@ -300,10 +304,20 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     } catch (err) {
       console.error(err);
-      console.log('bye');
-      quizProblems.forEach(data => {
-        if (data) data.textContent = `퀴즈를 불러오는 도중 문제가 생겼습니다. 새로고침을 눌러주세요!`;
-      });
+
+      // 에러 이미지 생성
+      const errorImg = document.createElement('img');
+      errorImg.src = '/src/pages/webp/503error.webp';
+      errorImg.alt = '서비스 에러 이미지';
+      errorImg.className = 'w-full max-w-md mx-auto mt-10';
+
+      // Main Content 내 퀴즈 섹션을 찾아서 내용 비우고 이미지 삽입
+      const quizSection = document.querySelector('div.lg\\:col-span-2 section') as HTMLElement;
+
+      if (quizSection) {
+        quizSection.innerHTML = ''; // 기존 퀴즈 내용 제거
+        quizSection.appendChild(errorImg);
+      }
     }
   });
 });
