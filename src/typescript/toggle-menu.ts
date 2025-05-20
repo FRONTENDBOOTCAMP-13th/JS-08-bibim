@@ -28,6 +28,62 @@ document.addEventListener('DOMContentLoaded', () => {
   const toggleBtn = document.getElementById('toggle-point');
   const section = document.getElementById('point-section');
   const icon = document.getElementById('point-toggle-icon');
+  const pointView = document.getElementById('point-view');
+
+  const details = document.querySelector('.point-details');
+  // 포인트 설정
+  const points = JSON.parse(localStorage.getItem('points') || '[0]');
+  if (pointView) pointView.textContent = `${points[0]} P`;
+
+  const pointLogs = JSON.parse(localStorage.getItem('pointLog') || '[]') as { date: string; log: string }[];
+
+  const reversedLogs = pointLogs.slice().reverse();
+
+  for (let i = 0; i < reversedLogs.length; i++) {
+    if (i >= 8) break;
+
+    const pointLog = reversedLogs[i];
+    const spanElemLog = document.createElement('span');
+    let logTxt;
+    if (pointLog.log === `출석 포인트 적립`) {
+      logTxt = document.createTextNode(pointLog.log);
+    } else {
+      if (pointLog.log.length > 10) {
+        logTxt = document.createTextNode(`${pointLog.log.substring(0, 3)}... 퀴즈 정답`);
+        spanElemLog.className = 'cursor-help'; // 마우스 커서 스타일 추가
+        spanElemLog.title = pointLog.log; // 툴팁 내용 설정
+      } else {
+        logTxt = document.createTextNode(`${pointLog.log} 퀴즈 정답`);
+      }
+    }
+    spanElemLog.appendChild(logTxt);
+
+    const spanElemDate = document.createElement('span');
+    const dateTxt = document.createTextNode(pointLog.date);
+    spanElemDate.appendChild(dateTxt);
+    spanElemDate.className = 'text-gray-400 ml-2 text-xs';
+
+    const innerDiv = document.createElement('div');
+    innerDiv.appendChild(spanElemLog);
+    innerDiv.appendChild(spanElemDate);
+
+    const pointDiv = document.createElement('div');
+    let pointTxt;
+    if (pointLog.log === `출석 포인트 적립`) {
+      pointTxt = document.createTextNode('+10 P');
+    } else {
+      pointTxt = document.createTextNode('+50 P');
+    }
+    pointDiv.appendChild(pointTxt);
+    pointDiv.className = 'font-medium text-green-600';
+
+    const midDiv = document.createElement('div');
+    midDiv.appendChild(innerDiv);
+    midDiv.appendChild(pointDiv);
+    midDiv.className = 'flex justify-between';
+
+    details?.appendChild(midDiv);
+  }
 
   toggleBtn?.addEventListener('click', () => {
     section?.classList.toggle('max-h-0');

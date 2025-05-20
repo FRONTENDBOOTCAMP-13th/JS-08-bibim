@@ -1,5 +1,6 @@
 import { naverNews } from './naverapi.ts';
 import type { NaverNewsItem } from './naverapi.ts';
+import { updatePoint } from './updatePoint.ts';
 
 /**
  * 현재 선택된 뉴스 카테고리 또는 검색어
@@ -410,6 +411,7 @@ const searchNews = async (searchKeyword: string): Promise<void> => {
  * 페이지 초기화 및 이벤트 리스너 설정
  */
 document.addEventListener('DOMContentLoaded', () => {
+  updatePoint(10, '출석 포인트 적립');
   // 검색 폼 이벤트 리스너 추가
   const searchForm = document.querySelector('form');
   const searchInput = document.getElementById('search') as HTMLInputElement; //타입스크립트에서 이게 input이라는 결 명시해주는 타입단언
