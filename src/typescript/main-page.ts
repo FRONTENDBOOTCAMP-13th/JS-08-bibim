@@ -1,5 +1,6 @@
 import { naverNews } from './naverapi.ts';
 import type { NaverNewsItem } from './naverapi.ts';
+import { updatePoint } from './updatePoint.ts';
 
 /**
  * 현재 선택된 뉴스 카테고리 또는 검색어
@@ -148,25 +149,134 @@ const renderCard = (article: NaverNewsItem) => {
     }
   });
 
+  const bookMark = JSON.parse(localStorage.getItem('bookMark') || '[]');
   // 즐겨찾기 버튼 이벤트 리스너 추가, 즐겨찾기 기능 추가 예정
   const favoriteButton = card.querySelector('.favorite-button');
+  const favoriteIcon = favoriteButton?.querySelector('.favorite-icon');
+  for (let i = 0; i < bookMark.length; i++) {
+    if (bookMark[i][0] === article.link) {
+      favoriteIcon?.setAttribute('fill', 'white');
+    }
+  }
+
+  const section = document.getElementById('article-panel');
   favoriteButton?.addEventListener('click', event => {
+    const bookMark = JSON.parse(localStorage.getItem('bookMark') || '[]');
     event.preventDefault();
     event.stopPropagation();
 
-    const favoriteIcon = favoriteButton.querySelector('.favorite-icon');
     const isFavorite = favoriteIcon?.getAttribute('fill') === 'white'; //하트의 fill 속성이 "white"면 이미 즐겨찾기 되어 있는 상태로 판단
 
     if (isFavorite) {
       // 즐겨찾기 해제
       favoriteIcon?.setAttribute('fill', 'none');
-      favoriteButton.setAttribute('aria-label', '즐겨찾기에 추가');
-      favoriteButton.setAttribute('title', '즐겨찾기에 추가');
+      favoriteButton.setAttribute('aria-label', '즐겨찾기에 제거');
+      favoriteButton.setAttribute('title', '즐겨찾기에 제거');
+
+      // 북마크에서 해당 기사 제거
+      for (let i = 0; i < bookMark.length; i++) {
+        if (bookMark[i][0] === article.link) {
+          bookMark.splice(i, 1); // 배열에서 제거
+          localStorage.setItem('bookMark', JSON.stringify(bookMark));
+
+          const section = document.querySelector('#article-panel');
+          const targetDiv = section?.querySelector(`[data-link="${article.link}"]`);
+          if (targetDiv) {
+            section?.removeChild(targetDiv);
+          }
+
+          break;
+        }
+      }
+
+      // 변경된 북마크 저장
+      localStorage.setItem('bookMark', JSON.stringify(bookMark));
     } else {
       // 즐겨찾기 추가
       favoriteIcon?.setAttribute('fill', 'white');
-      favoriteButton.setAttribute('aria-label', '즐겨찾기에서 제거');
-      favoriteButton.setAttribute('title', '즐겨찾기에서 제거');
+      favoriteButton.setAttribute('aria-label', '즐겨찾기에서 추가');
+      favoriteButton.setAttribute('title', '즐겨찾기에서 추가');
+      const arr = [] as string[];
+      arr.push(article.link);
+      arr.push(article.title);
+      arr.push(article.pubDate);
+
+      bookMark.push(arr);
+      localStorage.setItem('bookMark', JSON.stringify(bookMark));
+
+      const linkElem = document.createElement('a');
+
+      const txt = document.createElement('textarea');
+      txt.innerHTML = article.title;
+      const decoded = txt.value;
+
+      // <b>와 </b> 태그만 제거
+      const cleanText = decoded.replace(/<\/?b>/g, '');
+
+      // 텍스트 노드로 변환
+      const title = document.createTextNode(cleanText);
+
+      const dateElem = document.createElement('span');
+      const date = document.createTextNode(article.pubDate);
+
+      linkElem.setAttribute('href', article.link);
+      linkElem.setAttribute('target', '_blank');
+      linkElem.setAttribute('rel', 'noopener noreferrer');
+      linkElem.appendChild(title);
+      linkElem.className = 'text-sm text-gray-900 hover:underline block';
+
+      dateElem.appendChild(date);
+      dateElem.className = 'text-xs text-gray-500';
+
+      // 감싸기 시작
+      const innerDiv = document.createElement('div');
+      const midDiv = document.createElement('div');
+      const outerDiv = document.createElement('div');
+      outerDiv.setAttribute('data-link', article.link);
+
+      midDiv.className = 'flex justify-between items-start';
+      outerDiv.className = 'py-2 px-4 border-b border-gray-100';
+
+      innerDiv.appendChild(linkElem);
+      innerDiv.appendChild(dateElem);
+      midDiv.appendChild(innerDiv);
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.setAttribute('type', 'button');
+      deleteBtn.setAttribute('class', 'cursor-pointer');
+      deleteBtn.setAttribute('class', 'delete-btn');
+      deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
+
+      deleteBtn.addEventListener('click', () => {
+        // 즐겨찾기 해제
+        favoriteIcon?.setAttribute('fill', 'none');
+        favoriteButton.setAttribute('aria-label', '즐겨찾기에 제거');
+        favoriteButton.setAttribute('title', '즐겨찾기에 제거');
+
+        // 북마크에서 해당 기사 제거
+        for (let i = 0; i < bookMark.length; i++) {
+          if (bookMark[i][0] === article.link) {
+            bookMark.splice(i, 1); // 배열에서 제거
+            localStorage.setItem('bookMark', JSON.stringify(bookMark));
+
+            const section = document.querySelector('#article-panel');
+            const targetDiv = section?.querySelector(`[data-link="${article.link}"]`);
+            if (targetDiv) {
+              section?.removeChild(targetDiv);
+            }
+
+            break;
+          }
+        }
+
+        // 변경된 북마크 저장
+        localStorage.setItem('bookMark', JSON.stringify(bookMark));
+      });
+      midDiv.appendChild(deleteBtn);
+      outerDiv.append(midDiv);
+
+      // 최종 반영
+      section?.appendChild(outerDiv);
     }
 
     // 즐겨찾기 상태 저장 로직
@@ -301,6 +411,7 @@ const searchNews = async (searchKeyword: string): Promise<void> => {
  * 페이지 초기화 및 이벤트 리스너 설정
  */
 document.addEventListener('DOMContentLoaded', () => {
+  updatePoint(10, '출석 포인트 적립');
   // 검색 폼 이벤트 리스너 추가
   const searchForm = document.querySelector('form');
   const searchInput = document.getElementById('search') as HTMLInputElement; //타입스크립트에서 이게 input이라는 결 명시해주는 타입단언
