@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { updatePoint } from './updatePoint.ts';
 
 console.log('hello');
 const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", ""]');
@@ -6,39 +7,39 @@ const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", ""]');
 const title = quizStorage[0];
 const description = quizStorage[1];
 
-const API_KEY = `${import.meta.env.VITE_DEEPSEEK_API_KEY}`;
+// const API_KEY = `${import.meta.env.VITE_DEEPSEEK_API_KEY}`;
+const API_KEY = ``;
 const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 const headers = {
   Authorization: `Bearer ${API_KEY}`,
   'Content-Type': 'application/json',
 };
-
 const data = {
   model: 'deepseek/deepseek-chat:free',
   messages: [
     {
       role: 'user',
       content: `다음 내용에서 키워드 3개를 골라 각 키워드에 대한 토막 상식 퀴즈를 내주세요. 총 3문제입니다.
-      출력 형식은 아래 JSON 형식을 정확히 따르세요.
-      출력 형식 의외의 출력 금지.
-      key값이 틀리지 않도록 주의.
-      문제는 한국어로 출력하세요:
-
-{
-  "question": "생성된 문제 (한 줄 질문)",
-  "options": [
-    {"text": "선택지1", "isCorrect": false},
-    {"text": "선택지2", "isCorrect": false},
-    {"text": "선택지3", "isCorrect": true}
-  ],
-  "explanation": "정답에 대한 간단한 설명"
-}
-
-생성할 내용:
-${title}
-${description}
-`,
+        출력 형식은 아래 JSON 형식을 정확히 따르세요.
+        출력 형식 의외의 출력 금지.
+        key값이 틀리지 않도록 주의.
+        문제는 한국어로 출력하세요:
+  
+  {
+    "question": "생성된 문제 (한 줄 질문)",
+    "options": [
+      {"text": "선택지1", "isCorrect": false},
+      {"text": "선택지2", "isCorrect": false},
+      {"text": "선택지3", "isCorrect": true}
+    ],
+    "explanation": "정답에 대한 간단한 설명"
+  }
+  
+  생성할 내용:
+  ${title}
+  ${description}
+  `,
     },
   ],
   response_format: { type: 'json_object' }, // JSON 형식으로 응답 요청
@@ -93,13 +94,50 @@ document.addEventListener('DOMContentLoaded', () => {
   const retryBtns = document.querySelectorAll('.retry');
 
   const points = JSON.parse(localStorage.getItem('points') || '[0]');
-  const pointLog = JSON.parse(localStorage.getItem('pointLog') || '[]');
+  const pointLog = JSON.parse(localStorage.getItem('pointLog') || '[]') as {
+    date: string;
+    log: string;
+  }[];
 
   axios.post(API_URL, data, { headers }).then(response => {
     console.log('전체 응답:', response.data);
 
     try {
-      const rawContent = response.data.choices[0].message.content;
+      let rawContent;
+      if (response.data.error.message == `Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day`) {
+        rawContent = `
+{
+  "question": "조선 시대에 한글을 창제한 왕은 누구인가요?",
+  "options": [
+    {"text": "세종대왕", "isCorrect": true},
+    {"text": "태조 이성계", "isCorrect": false},
+    {"text": "광해군", "isCorrect": false}
+  ],
+  "explanation": "세종대왕은 백성을 위해 1443년에 훈민정음(한글)을 창제하였습니다."
+}
+{
+  "question": "소설 『노인과 바다』를 쓴 작가는 누구인가요?",
+  "options": [
+    {"text": "어니스트 헤밍웨이", "isCorrect": true},
+    {"text": "조지 오웰", "isCorrect": false},
+    {"text": "마크 트웨인", "isCorrect": false}
+  ],
+  "explanation": "『노인과 바다』는 어니스트 헤밍웨이가 1952년에 발표한 작품으로, 그의 대표작 중 하나입니다."
+}
+{
+  "question": "컴퓨터에서 정보를 처리하고 계산하는 장치는 무엇인가요?",
+  "options": [
+    {"text": "RAM", "isCorrect": false},
+    {"text": "CPU", "isCorrect": true},
+    {"text": "HDD", "isCorrect": false}
+  ],
+  "explanation": "CPU(Central Processing Unit)는 컴퓨터의 두뇌 역할을 하며 연산과 제어를 담당합니다."
+}
+
+`;
+      } else {
+        rawContent = response.data.choices[0].message.content;
+      }
       console.log('원본 내용:', rawContent);
 
       const quizData = extractJsonBlocks(rawContent);
@@ -157,12 +195,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 quizResult[i].classList.contains('text-green-500');
               }
               if (quizReason[i]) quizReason[i].textContent = data.explanation;
-              if (!pointLog.includes(`${data.question} 문제 정답`)) {
-                // TODO 기사 제목 + j을 입력받아 여기에 저장
-                pointLog.push(`${data.question} 문제 정답`);
-                points[0] = points[0] + 50;
-                localStorage.setItem('points', JSON.stringify(points));
-                localStorage.setItem('pointLog', JSON.stringify(pointLog));
+              const isExist = pointLog.some(entry => entry.log.includes(`${data.question} 퀴즈 정답`));
+              if (!isExist) {
+                updatePoint(50, `${data.question} 퀴즈 정답`);
+                points[0] += 50;
                 if (quizPoints[i]) quizPoints[i].textContent = `50 포인트가 적립 되었습니다. 현재 당신의 포인트는 총 ${points[0]}점 입니다.`;
               } else {
                 if (quizPoints[i]) quizPoints[i].textContent = `현재 당신의 포인트는 총 ${points[0]}점 입니다.`;
@@ -268,10 +304,20 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     } catch (err) {
       console.error(err);
-      console.log('bye');
-      quizProblems.forEach(data => {
-        if (data) data.textContent = `퀴즈를 불러오는 도중 문제가 생겼습니다. 새로고침을 눌러주세요!`;
-      });
+
+      // 에러 이미지 생성
+      const errorImg = document.createElement('img');
+      errorImg.src = '/src/pages/webp/503error.webp';
+      errorImg.alt = '서비스 에러 이미지';
+      errorImg.className = 'w-full max-w-md mx-auto mt-10';
+
+      // Main Content 내 퀴즈 섹션을 찾아서 내용 비우고 이미지 삽입
+      const quizSection = document.querySelector('div.lg\\:col-span-2 section') as HTMLElement;
+
+      if (quizSection) {
+        quizSection.innerHTML = ''; // 기존 퀴즈 내용 제거
+        quizSection.appendChild(errorImg);
+      }
     }
   });
 });
