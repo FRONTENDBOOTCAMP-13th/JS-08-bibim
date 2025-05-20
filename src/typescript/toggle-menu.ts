@@ -85,6 +85,25 @@ document.addEventListener('DOMContentLoaded', () => {
     details?.appendChild(midDiv);
   }
 
+  // 트로피
+  const gold = document.getElementById('gold-trophy');
+  const silver = document.getElementById('silver-trophy');
+  const bronze = document.getElementById('bronze-trophy');
+
+  // 트로피 로직
+  if (points[0] >= 10 && bronze) {
+    bronze.removeAttribute('hidden');
+    bronze.style.display = 'block';
+  }
+  if (points[0] >= 500 && silver) {
+    silver.removeAttribute('hidden');
+    silver.style.display = 'block';
+  }
+  if (points[0] >= 1000 && gold) {
+    gold.removeAttribute('hidden');
+    gold.style.display = 'block';
+  }
+
   toggleBtn?.addEventListener('click', () => {
     section?.classList.toggle('max-h-0');
     section?.classList.toggle('max-h-[1000px]');
