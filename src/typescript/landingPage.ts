@@ -3,6 +3,7 @@ import { Mousewheel, EffectCards } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/mousewheel';
 import 'swiper/css/effect-cards';
+import { saveViewedLink, isViewed } from '../storage.ts';
 
 // 뉴스 데이터 인터페이스
 interface NewsData {
@@ -65,13 +66,15 @@ function updateSwiperSlides(newsData: NewsData[], query: string): void {
     slideElement.classList.add('swiper-slide');
 
     const bgColorClass = bgColors[index % bgColors.length];
+    const isAlreadyViewed = isViewed(news.link); // ✅ 확인
+    const opacityClass = isAlreadyViewed ? 'opacity-50' : '';
 
     slideElement.innerHTML = `
-      <div class="relative ${bgColorClass} rounded-2xl p-8 md:p-10 text-left text-white shadow-lg">
+      <div class="relative ${bgColorClass} ${opacityClass} rounded-2xl p-8 md:p-10 text-left text-white shadow-lg ">
         <div class="text-xl text-orange-500">${query}</div>
         <div class="text-4xl pretendard mb-4">${news.title}</div>
         <p class="text-lg md:text-xl mb-6">${news.description}</p>
-        <a href="${news.link}" target="_blank" class="mt-3 text-gray-300">Read More</a>
+        <a href="${news.link}" target="_blank" class="mt-3 text-gray-300 read-more">Read More</a>
         <div class="h-1 w-full max-w-xs bg-gradient-to-r from-orange-500 to-orange-600 mt-3"></div>
       </div>
     `;
@@ -131,4 +134,63 @@ window.addEventListener('DOMContentLoaded', async () => {
       }
     });
   }
+
+  document.addEventListener('click', e => {
+    const target = e.target as HTMLElement;
+
+    if (target.matches('.read-more')) {
+      e.preventDefault(); // 링크 이동 막기
+      const link = (target as HTMLAnchorElement).href;
+
+      // 🔐 저장
+      saveViewedLink(link);
+
+      // 🎨 카드 색 변경
+      const slide = target.closest('.swiper-slide');
+      if (slide) {
+        const title = slide.querySelector('.pretendard.mb-4');
+        const desc = slide.querySelector('p');
+        const tag = slide.querySelector('.text-orange-500'); // query 텍스트
+        const gradient = slide.querySelector('.bg-gradient-to-r'); // 밑줄 div
+        const card = target.closest('.relative');
+
+        // ✅ query 텍스트 색상 회색으로
+        if (tag) {
+          tag.classList.remove('text-orange-500');
+          tag.classList.add('text-gray-500');
+        }
+
+        // ✅ 하단 선 색상 회색으로 변경
+        if (gradient) {
+          gradient.classList.remove(
+            'bg-gradient-to-r',
+            'from-orange-500',
+            'to-orange-600',
+          );
+          gradient.classList.add('bg-gray-500');
+        }
+
+        // ✅ 텍스트 흐림 처리
+        title?.classList.remove('text-white');
+        title?.classList.add('text-gray-500');
+
+        desc?.classList.remove('text-white');
+        desc?.classList.add('text-gray-500');
+
+        // ✅ 배경도 흐리게
+        if (card) {
+          card.classList.remove(
+            'bg-blue-500',
+            'bg-indigo-700',
+            'bg-blue-800',
+            'bg-sky-900',
+          );
+          card.classList.add('bg-gray-400');
+        }
+      }
+
+      // ✅ 이동은 수동으로
+      window.open(link, '_blank');
+    }
+  });
 });
