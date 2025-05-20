@@ -64,8 +64,7 @@ function isNaverNewsItem(item: unknown): item is NaverNewsItem {
   return item !== null && typeof item === 'object' && 'link' in item && typeof (item as Record<string, unknown>).link === 'string';
 }
 
-const arr = [] as { title: string; description: string; date: string; link: string }[];
-
+let arrQuiz = [] as { title: string; description: string; date: string; link: string }[];
 /**
  * 뉴스 기사를 시각적으로 표시하는 카드 요소 생성
  * @param {NaverNewsItem} article - 표시할 뉴스 기사 정보
@@ -154,8 +153,8 @@ const renderCard = (article: NaverNewsItem) => {
   </div>
   `;
 
-  if (arr.length < 10) {
-    arr.push({ title: article.title, description: article.description, date: article.pubDate, link: article.link });
+  if (arrQuiz.length < 10) {
+    arrQuiz.push({ title: article.title, description: article.description, date: article.pubDate, link: article.link });
   }
 
   // 카드 클릭 이벤트 , 안의 세부a태그를 클릭했을경우 카드 전체를 클릭한경우와 중복되지 않도록 처리해줌
@@ -344,7 +343,7 @@ const renderCard = (article: NaverNewsItem) => {
     const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", "", "", ""]');
     quizStorage[0] = article.title;
     quizStorage[1] = article.description;
-    quizStorage[2] = arr;
+    quizStorage[2] = arrQuiz;
     localStorage.setItem('quiz', JSON.stringify(quizStorage));
 
     window.location.href = '/src/pages/quiz.html';
@@ -427,6 +426,7 @@ const searchNews = async (searchKeyword: string): Promise<void> => {
         newsGrid.innerHTML = `<div class="col-span-full text-center py-8" aria-live="polite">'${keyword}'에 관한 뉴스를 찾을 수 없습니다.</div>`;
         return;
       }
+      arrQuiz = [];
 
       // 기사 렌더링
       articles.forEach(article => {
