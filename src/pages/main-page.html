@@ -11,11 +11,12 @@
     <script src="/src/typescript/main-page.ts" type="module"></script>
     <script type="module" src="/src/typescript/toggle-menu.ts"></script>
   </head>
-  <body class="bg-gray-100 flex flex-col min-h-screen">
-    <header class="bg-white border-b w-full fixed top-0 left-0 z-50">
+
+  <body class="flex flex-col min-h-screen max-w-screen-xl mx-auto px-4">
+    <header class="bg-white border-b w-full">
       <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         <!-- 로고 -->
-        <a href="/" class="block h-10 w-44">
+        <a href="/src/pages/main-page.html" class="block h-10 w-44">
           <svg aria-hidden="true" aria-label="홈페이지로 이동" width="150" height="45" viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg">
             <!-- 아이콘 -->
             <rect x="0" y="0" width="60" height="60" rx="12" fill="#E0F0FF" />
@@ -33,16 +34,16 @@
 
         <ul class="flex items-center gap-10 text-sm font-medium">
           <li>
-            <a href="#" class="text-gray-800 hover:text-[#0070F3] hover:underline"> CARD </a>
+            <a href="/src/pages/landingPage.html" class="text-gray-800 hover:text-[#0070F3] hover:underline"> CARD </a>
           </li>
           <li>
-            <a href="#" class="text-[#0070F3] hover:underline">MAIN</a>
+            <a href="/src/pages/main-page.html" class="text-gray-800 hover:text-[#0070F3] hover:underline">MAIN</a>
           </li>
           <li>
-            <a href="#" class="text-gray-800 hover:text-[#0070F3] hover:underline pr-[20px]"> GAME </a>
+            <a href="/src/pages/question-game.html" class="text-gray-800 hover:text-[#0070F3] hover:underline pr-[20px]"> GAME </a>
           </li>
           <!-- toggle menu btn -->
-          <li>
+          <li class="pr-[25px]">
             <!-- toggle menu -->
             <button id="open-sidebar" class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100" aria-label="메뉴 열기">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -55,7 +56,7 @@
 
       <!-- 사이드바 영역 -->
       <aside id="sidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
-        <nav class="p-4 border-b flex justify-between items-center">
+        <nav class="p-4 border-b border-gray-400 flex justify-between items-center">
           <h2 class="text-xl font-semibold">마이 페이지</h2>
           <button id="close-sidebar" class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100" aria-label="사이드바 닫기">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,7 +85,7 @@
                 <p class="text-sm text-gray-500 mb-1">현재 포인트</p>
                 <p id="point-view" class="text-2xl font-bold text-yellow-600">0 P</p>
               </div>
-              <div class="border-t pt-3 pb-4">
+              <div class="border-t border-gray-400 pt-3 pb-4">
                 <p class="text-sm font-medium mb-2.5">최근 포인트 내역</p>
                 <div class="space-y-1 text-sm point-details"></div>
               </div>
@@ -140,7 +141,7 @@
               <div id="grid-div" class="grid grid-cols-7 gap-1 text-sm text-center"></div>
 
               <!-- 연속 출석 정보 -->
-              <div class="flex items-center justify-between border-t pt-3 mt-3">
+              <div class="flex items-center justify-between border-t border-gray-400 pt-3 mt-3">
                 <div class="text-sm">현재 연속 출석</div>
                 <div class="flex items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
@@ -176,7 +177,7 @@
       </aside>
 
       <form action="" class="w-full flex justify-center">
-        <div class="w-1/2 my-2 border-gray-300 border-2 rounded-full px-4 flex justify-between focus-within:border-black">
+        <div class="w-1/2 my-2 border-gray-400 border-2 rounded-full px-4 flex justify-between focus-within:border-[#0070F3]">
           <label for="search" class="sr-only">검색어 입력</label>
           <input type="search" id="search" placeholder="검색어를 입력하세요" class="py-2 w-1/2 outline-none basis-[170px] grow" />
           <button type="submit">
@@ -189,29 +190,29 @@
       </form>
 
       <!-- 카테고리 탭 -->
-      <div class="category-container grid place-items-center pb-[15px]">
+      <div class="category-container grid place-items-center pt-[10px] pb-[15px]">
         <div class="relative">
           <nav id="categoryNav" class="flex flex-wrap justify-center gap-10" aria-label="뉴스 카테고리">
-            <a href="/detail.html?category=KBO야구" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="KBO야구"> KBO 야구 </a>
-            <a href="/detail.html?category=축구" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="축구"> 축구 </a>
-            <a href="/detail.html?category=연예" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="연예"> 연예 </a>
-            <a href="/detail.html?category=사회/문화" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="사회/문화"> 사회/문화 </a>
-            <a href="/detail.html?category=IT/과학" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="IT/과학"> IT/과학 </a>
-            <a href="/detail.html?category=경제" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="경제"> 경제 </a>
-            <a href="/detail.html?category=정치" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="정치"> 정치 </a>
+            <a href="/src/pages/main-page.html?category=KBO야구" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="KBO야구"> KBO 야구 </a>
+            <a href="/src/pages/main-page.html?category=축구" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="축구"> 축구 </a>
+            <a href="/src/pages/main-page.html?category=연예" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="연예"> 연예 </a>
+            <a href="/src/pages/main-page.html?category=사회/문화" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="사회/문화"> 사회/문화 </a>
+            <a href="/src/pages/main-page.html?category=IT/과학" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="IT/과학"> IT/과학 </a>
+            <a href="/src/pages/main-page.html?category=경제" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="경제"> 경제 </a>
+            <a href="/src/pages/main-page.html?category=정치" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="정치"> 정치 </a>
           </nav>
         </div>
       </div>
     </header>
 
-    <main class="max-w-7xl mx-auto mt-[128px] pt-16 flex-grow">
+    <main class="bg-gray-100 w-full max-w-7xl mx-auto pt-6 flex-grow">
       <h1 class="text-2xl font-bold text-gray-800 mb-6"></h1>
       <div id="newsGrid" aria-label="뉴스목록" role="region" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- 카드 렌더링 위치 -->
       </div>
     </main>
 
-    <footer class="min-w-[561px] h-[100px] pt-2 bg-[#E0F0FF] mt-4">
+    <footer class="min-w-[561px] h-[50px] pt-2 bg-[#E0F0FF] mt-4">
       <div class="flex justify-between px-12 gap-4">
         <nav aria-label="사이트 정책">
           <ul class="flex gap-6">
