@@ -64,6 +64,8 @@ function isNaverNewsItem(item: unknown): item is NaverNewsItem {
   return item !== null && typeof item === 'object' && 'link' in item && typeof (item as Record<string, unknown>).link === 'string';
 }
 
+const arr = [] as { title: string; description: string; date: string; link: string }[];
+
 /**
  * 뉴스 기사를 시각적으로 표시하는 카드 요소 생성
  * @param {NaverNewsItem} article - 표시할 뉴스 기사 정보
@@ -151,6 +153,10 @@ const renderCard = (article: NaverNewsItem) => {
     </div>
   </div>
   `;
+
+  if (arr.length < 10) {
+    arr.push({ title: article.title, description: article.description, date: article.pubDate, link: article.link });
+  }
 
   // 카드 클릭 이벤트 , 안의 세부a태그를 클릭했을경우 카드 전체를 클릭한경우와 중복되지 않도록 처리해줌
   card.addEventListener('click', event => {
@@ -335,9 +341,10 @@ const renderCard = (article: NaverNewsItem) => {
   // 퀴즈 풀러 가기
   const quizBtn = card.querySelector('.quiz-button');
   quizBtn?.addEventListener('click', () => {
-    const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", ""]');
+    const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", "", "", ""]');
     quizStorage[0] = article.title;
     quizStorage[1] = article.description;
+    quizStorage[2] = arr;
     localStorage.setItem('quiz', JSON.stringify(quizStorage));
 
     window.location.href = '/src/pages/quiz.html';
