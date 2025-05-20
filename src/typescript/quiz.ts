@@ -52,10 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // 아래는 퀴즈 section
-// const API_KEY = `${import.meta.env.VITE_DEEPSEEK_API_KEY}`;
-const API_KEY = ``;
-// const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const API_URL = '';
+const API_KEY = `${import.meta.env.VITE_DEEPSEEK_API_KEY}`;
+// const API_KEY = ``;
+const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+// const API_URL = '';
 
 const headers = {
   Authorization: `Bearer ${API_KEY}`,
