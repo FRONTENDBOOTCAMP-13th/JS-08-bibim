@@ -15,127 +15,168 @@
   <body class="flex flex-col min-h-screen mx-auto">
     <!-- 토글 메뉴 센션 -->
     <aside id="sidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-[50] transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
-      <nav class="p-4 border-b border-gray-400 flex justify-between items-center">
-        <h2 class="text-xl font-semibold">마이 페이지</h2>
-        <button id="close-sidebar" class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100" aria-label="사이드바 닫기">
+      <!-- 토글 메뉴 탭 -->
+      <!-- 탭 버튼 -->
+      <div id="tab-container" class="relative flex border-b border-gray-200">
+        <button id="tab-mypage" class="flex-1 py-3 text-center">마이페이지</button>
+        <button id="tab-history" class="flex-1 py-3 text-center">History</button>
+        <!-- 하단 움직이는 바 -->
+        <div id="tab-indicator" class="absolute bottom-0 left-0 h-0.5 bg-black transition-all duration-300 ease-in-out" style="width: 50%"></div>
+        <!-- 닫기 버튼 -->
+        <button id="close-sidebar" class="p-2 rounded-md text-gray-600 hover:text-gray-900 pr-[15px]" aria-label="사이드바 닫기">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-      </nav>
+      </div>
 
-      <!-- Toggle point section (포인트 영역) -->
-      <section class="px-3 pt-4 pb-2 space-y-6" aria-labelledby="point-title">
-        <div class="bg-white rounded-lg shadow-md w-full max-w-md border border-gray-200">
-          <header id="toggle-point" class="flex justify-between items-center cursor-pointer p-4.5">
-            <div class="flex items-center gap-2 text-yellow-500">
-              <svg class="w-7 h-7 pt-1 pl-1" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="14" cy="13" r="14" fill="#fdf491" />
-                <text x="15" y="19" text-anchor="middle" fill="#EAB308" font-size="16" font-weight="bold" font-family="Arial, sans-serif">P</text>
-              </svg>
-              <h2 id="point-title" class="font-medium">내 포인트</h2>
-            </div>
-            <svg id="point-toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
-            </svg>
-          </header>
-          <div id="point-section" class="overflow-hidden transition-all duration-500 max-h-[1000px] border-gray-200 px-4">
-            <div class="mb-4">
-              <p class="text-sm text-gray-500 mb-1">현재 포인트</p>
-              <div class="flex justify-between">
-                <p id="point-view" class="text-2xl font-bold text-yellow-600">0 P</p>
-                <div id="trophy-section" class="flex"></div>
+      <!-- 탭 콘텐츠 -->
+      <!-- <div id="tab-content-mypage" class="space-y-6 px-3 pt-4 pb-4"> -->
+      <!-- 기존 마이페이지 내용: 포인트, 출석, 즐겨찾기 -->
+      <!-- 그대로 유지 -->
+      <!-- </div> -->
+
+      <!-- 마이페이지 콘텐츠 -->
+      <div id="tab-content-mypage" class="space-y-4 px-3 pt-4 pb-4">
+        <!-- Toggle point section (포인트 영역) -->
+        <section class="p-1" aria-labelledby="point-title">
+          <div class="bg-white rounded-lg shadow-md w-full max-w-md border border-gray-200">
+            <header id="toggle-point" class="flex justify-between items-center cursor-pointer p-4.5">
+              <div class="flex items-center gap-2 text-yellow-500">
+                <svg class="w-7 h-7 pt-1 pl-1" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="14" cy="13" r="14" fill="#fdf491" />
+                  <text x="15" y="19" text-anchor="middle" fill="#EAB308" font-size="16" font-weight="bold" font-family="Arial, sans-serif">P</text>
+                </svg>
+                <h2 id="point-title" class="font-medium">내 포인트</h2>
               </div>
-            </div>
-            <div class="border-t border-gray-400 pt-3 pb-4">
-              <p class="text-sm font-medium mb-2.5">최근 포인트 내역</p>
-              <div class="space-y-1 text-sm point-details"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Toggle attendance section (내 출석 영역) -->
-      <section class="px-3 pt-2 pb-2 space-y-6" aria-labelledby="attendance-heading">
-        <div class="bg-white rounded-lg shadow-md w-full max-w-md p-4 border border-gray-200">
-          <!-- 내 출석 토글 버튼 -->
-          <div class="flex justify-between items-center cursor-pointer p-1" id="toggle-attendance">
-            <div class="flex items-center gap-2 text-green-600">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              <svg id="point-toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
               </svg>
-              <h2 class="font-medium" id="attendance-heading">내 출석</h2>
-            </div>
-            <svg id="toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
-            </svg>
-          </div>
-
-          <!-- 토글 영역 -->
-          <div id="attendance-section" class="overflow-hidden transition-all duration-500 max-h-[1000px]">
-            <!-- 월/연도 및 범례 -->
-            <div class="flex justify-between items-center mt-4 mb-4">
-              <div class="text-gray-800"><span class="font-medium">5월</span> 2025</div>
-              <div class="flex items-center gap-4">
-                <div class="flex items-center gap-1">
-                  <div class="w-2 h-2 rounded-full bg-green-500"></div>
-                  <span class="text-sm">출석</span>
-                </div>
-                <div class="flex items-center gap-1">
-                  <div class="w-2 h-2 rounded-full bg-white border border-gray-300"></div>
-                  <span class="text-sm">미출석</span>
+            </header>
+            <div id="point-section" class="overflow-hidden transition-all duration-500 max-h-[1000px] border-gray-200 px-4">
+              <div class="mb-4">
+                <p class="text-sm text-gray-500 mb-1">현재 포인트</p>
+                <div class="flex justify-between">
+                  <p id="point-view" class="text-2xl font-bold text-yellow-600">0 P</p>
+                  <div id="trophy-section" class="flex"></div>
                 </div>
               </div>
+              <div class="border-t border-gray-400 pt-3 pb-4">
+                <p class="text-sm font-medium mb-2.5">최근 포인트 내역</p>
+                <div class="space-y-1 text-sm point-details"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Toggle attendance section (내 출석 영역) -->
+        <section class="pr-1" aria-labelledby="attendance-heading">
+          <div class="bg-white rounded-lg shadow-md w-full max-w-md p-4 border border-gray-200">
+            <!-- 내 출석 토글 버튼 -->
+            <div class="flex justify-between items-center cursor-pointer p-1" id="toggle-attendance">
+              <div class="flex items-center gap-2 text-green-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <h2 class="font-medium" id="attendance-heading">내 출석</h2>
+              </div>
+              <svg id="toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+              </svg>
             </div>
 
-            <!-- 요일 -->
-            <div class="grid grid-cols-7 mb-2 text-center text-sm font-medium text-gray-500">
-              <div class="text-red-500">일</div>
-              <div>월</div>
-              <div>화</div>
-              <div>수</div>
-              <div>목</div>
-              <div>금</div>
-              <div class="text-blue-500">토</div>
+            <!-- 토글 영역 -->
+            <div id="attendance-section" class="overflow-hidden transition-all duration-500 max-h-[1000px]">
+              <!-- 월/연도 및 범례 -->
+              <div class="flex justify-between items-center mt-4 mb-4">
+                <div class="text-gray-800"><span class="font-medium">5월</span> 2025</div>
+                <div class="flex items-center gap-4">
+                  <div class="flex items-center gap-1">
+                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                    <span class="text-sm">출석</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <div class="w-2 h-2 rounded-full bg-white border border-gray-300"></div>
+                    <span class="text-sm">미출석</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 요일 -->
+              <div class="grid grid-cols-7 mb-2 text-center text-sm font-medium text-gray-500">
+                <div class="text-red-500">일</div>
+                <div>월</div>
+                <div>화</div>
+                <div>수</div>
+                <div>목</div>
+                <div>금</div>
+                <div class="text-blue-500">토</div>
+              </div>
+
+              <!-- 달력 날짜 셀 -->
+              <div id="grid-div" class="grid grid-cols-7 gap-1 text-sm text-center"></div>
+
+              <!-- 연속 출석 정보 -->
+              <div class="flex items-center justify-between border-t border-gray-400 pt-3 mt-3">
+                <div class="text-sm">현재 연속 출석</div>
+                <div class="flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span id="cont-attend" class="font-medium ml-1">7일</span>
+                </div>
+              </div>
             </div>
+          </div>
+        </section>
+      </div>
 
-            <!-- 달력 날짜 셀 -->
-            <div id="grid-div" class="grid grid-cols-7 gap-1 text-sm text-center"></div>
-
-            <!-- 연속 출석 정보 -->
-            <div class="flex items-center justify-between border-t border-gray-400 pt-3 mt-3">
-              <div class="text-sm">현재 연속 출석</div>
+      <!-- history 컨텐츠 -->
+      <div id="tab-content-history" class="space-y-4 px-3 pt-4 pb-4 hidden">
+        <!-- Toggle article panel (즐겨찾기 기사 영역) -->
+        <section class="pr-1" aria-labelledby="article-title">
+          <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md">
+            <header id="toggle-header" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg p-5">
               <div class="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                </svg>
-                <span id="cont-attend" class="font-medium ml-1">7일</span>
+                <div class="text-[#e06666] mr-2">
+                  <!-- 하트모양 아이콘 -->
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                  </svg>
+                </div>
+                <h2 id="article-title" class="font-medium text-[#e06666]">내 즐겨찾기 기사</h2>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
+              <svg id="article-toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+              </svg>
+            </header>
+            <div id="article-panel" class="border-gray-200 overflow-hidden transition-all duration-500 max-h-[1000px]"></div>
+          </article>
+        </section>
 
-      <!-- Toggle article panel (즐겨찾기 기사 영역) -->
-      <section class="px-3 pt-2 pb-4 space-y-6" aria-labelledby="article-title">
-        <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md">
-          <header id="toggle-header" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg p-5">
-            <div class="flex items-center">
-              <div class="text-[#e06666] mr-2">
-                <!-- 하트모양 아이콘 -->
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-                  <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
-                </svg>
+        <!-- Toggle history panel (열람한 기사 영역) - 새로 추가된 부분 -->
+        <section class="pr-1" aria-labelledby="history-title">
+          <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md">
+            <header id="toggle-history" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg p-5">
+              <div class="flex items-center">
+                <div class="text-[#3d85c6] mr-2">
+                  <!-- 히스토리 아이콘 -->
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <h2 id="history-title" class="font-medium text-[#3d85c6]">내가 본 기사</h2>
               </div>
-              <h2 id="article-title" class="font-medium text-[#e06666]">내 즐겨찾기 기사</h2>
+              <svg id="history-toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+              </svg>
+            </header>
+            <div id="history-panel" class="border-gray-200 overflow-hidden transition-all duration-500 max-h-[1000px]">
+              <!-- 스크립트로 히스토리 항목이 추가될 위치 -->
             </div>
-            <svg id="article-toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
-            </svg>
-          </header>
-          <div id="article-panel" class="border-gray-200 overflow-hidden transition-all duration-500 max-h-[1000px]"></div>
-        </article>
-      </section>
+          </article>
+        </section>
+      </div>
     </aside>
 
     <!-- 토글 메뉴 ts와 연동된 설정 -->
@@ -161,13 +202,13 @@
         <!-- 우측 메뉴 -->
         <ul class="flex items-center gap-10 text-sm font-medium">
           <li>
-            <a href="/src/pages/landingPage.html" class="text-gray-800 hover:text-[#0070F3] hover:underline"> CARD </a>
+            <a href="/" class="text-gray-800 hover:text-[#0070F3] hover:underline"> CARD </a>
           </li>
           <li>
             <a href="/src/pages/main-page.html" class="text-[#0070F3] hover:underline">MAIN</a>
           </li>
           <li>
-            <a href="/src/pages/question-game.html" class="text-gray-800 hover:text-[#0070F3] hover:underline pr-[20px]"> GAME </a>
+            <a href="/src/pages/game/game-page.html" class="text-gray-800 hover:text-[#0070F3] hover:underline pr-[20px]"> GAME </a>
           </li>
           <li class="pr-[25px]">
             <!-- 토글 메뉴 버튼 -->
@@ -180,23 +221,18 @@
         </ul>
       </div>
 
-      <!-- 기존 aside (토글 메뉴)위치 -->
-
       <form action="" class="w-full flex justify-center">
-        <div class="w-1/2 my-2 border-gray-400 border-2 rounded-full px-4 flex justify-between focus-within:border-[#0070F3]">
-          <label for="search" class="sr-only">검색어 입력</label>
-          <input type="search" id="search" placeholder="검색어를 입력하세요" class="py-2 w-1/2 outline-none basis-[170px] grow" />
-          <button type="submit">
-            <span class="sr-only">검색하기</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </button>
+        <div class="relative w-full max-w-2xl mx-auto my-3">
+          <input id="searchInput" type="search" placeholder="키워드를 입력하세요!" class="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-full text-lg shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+          <!-- 🔍 검색 아이콘 (왼쪽) -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+          </svg>
         </div>
       </form>
 
       <!-- 카테고리 탭 -->
-      <div class="w-full category-container grid place-items-center pt-[10px] pb-[15px] border-b border-gray-200">
+      <div class="w-full category-container grid place-items-center pt-[10px] pb-[15px] border-b border-[#e2e8f0]">
         <div class="relative">
           <nav id="categoryNav" class="flex flex-wrap justify-center gap-10" aria-label="뉴스 카테고리">
             <a href="/src/pages/main-page.html?category=KBO야구" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="KBO야구"> KBO 야구 </a>
@@ -210,15 +246,14 @@
         </div>
       </div>
     </header>
-
-    <main class="w-full mx-auto py-6 flex-grow">
+    <main class="w-full mx-auto py-6 flex-grow bg-slate-100">
       <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-4">
         <!-- Main Content -->
         <div class="lg:col-span-2">
           <h1 class="text-xl font-bold text-[#005DBA] mb-4">뉴스 퀴즈</h1>
 
           <!-- 퀴즈 섹션 -->
-          <section class="p-6 bg-[#E8F4FF]">
+          <section class="p-6 bg-[#CFE9FF] shadow-md rounded-lg">
             <ul class="space-y-6">
               <!-- 퀴즈1 -->
               <li class="bg-white p-4 rounded shadow">

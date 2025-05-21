@@ -50,23 +50,16 @@ async function fetchNaverNewsViaProxy(query: string): Promise<NewsData[]> {
 
 // ✅ 슬라이드 업데이트 함수
 function updateSwiperSlides(newsData: NewsData[], query: string): void {
-  const swiperWrapper = document.querySelector(
-    '.swiper-wrapper',
-  ) as HTMLElement;
+  const swiperWrapper = document.querySelector('.swiper-wrapper') as HTMLElement;
   if (!swiperWrapper) return;
 
   swiperWrapper.innerHTML = '';
 
-  const bgColors = [
-    'bg-blue-500',
-    'bg-indigo-700',
-    'bg-blue-800',
-    'bg-sky-900',
-  ];
+  const bgColors = ['bg-[#0d75f3]', 'bg-[#0a5dc2]', 'bg-[#074691]', 'bg-[#052e61]', 'bg-[#074691]', 'bg-[#0a5dc2]'];
 
   newsData.forEach((news, index) => {
     const slideElement = document.createElement('div');
-    slideElement.classList.add('swiper-slide');
+    slideElement.classList.add('swiper-slide', 'shadow-2xl');
 
     const bgColorClass = bgColors[index % bgColors.length];
     const isAlreadyViewed = isViewed(news.link);
@@ -76,12 +69,10 @@ function updateSwiperSlides(newsData: NewsData[], query: string): void {
     const titleColorClass = isAlreadyViewed ? 'text-gray-500' : 'text-white';
     const descColorClass = isAlreadyViewed ? 'text-gray-500' : 'text-white';
     const tagColorClass = isAlreadyViewed ? 'text-gray-500' : 'text-orange-500';
-    const underlineClass = isAlreadyViewed
-      ? 'bg-gray-500'
-      : 'bg-gradient-to-r from-orange-500 to-orange-600';
+    const underlineClass = isAlreadyViewed ? 'bg-gray-500' : 'bg-gradient-to-r from-orange-500 to-orange-600';
 
     slideElement.innerHTML = `
-    <div class="relative ${cardBgClass} rounded-2xl p-8 md:p-10 text-left shadow-lg">
+    <div class="relative ${cardBgClass} rounded-2xl p-8 md:p-10 text-left transition-all">
       <div class="text-xl ${tagColorClass}">${query}</div>
       <div class="text-4xl pretendard mb-4 ${titleColorClass}">${news.title}</div>
       <p class="text-lg md:text-xl mb-6 ${descColorClass}">${news.description}</p>
@@ -93,22 +84,6 @@ function updateSwiperSlides(newsData: NewsData[], query: string): void {
     swiperWrapper.appendChild(slideElement);
   });
 
-  // if (window.swiperInstance) {
-  //   window.swiperInstance.update();
-  // } else {
-  //   window.swiperInstance = new Swiper('.mySwiper', {
-  //     modules: [Mousewheel, EffectCards],
-  //     effect: 'cards',
-  //     grabCursor: true,
-  //     loop: true,
-  //     mousewheel: {
-  //       forceToAxis: false,
-  //       invert: false,
-  //       sensitivity: 1,
-  //       releaseOnEdges: true,
-  //     },
-  //   });
-  // }
   new Swiper('.mySwiper', {
     modules: [Mousewheel, EffectCards],
     effect: 'cards',
@@ -120,6 +95,9 @@ function updateSwiperSlides(newsData: NewsData[], query: string): void {
       sensitivity: 1,
       releaseOnEdges: true,
     },
+    cardsEffect: {
+      slideShadows: false, // 🔥 그림자 네모 생성 금지!
+    },
   });
 }
 
@@ -127,6 +105,8 @@ function updateSwiperSlides(newsData: NewsData[], query: string): void {
 async function fetchAndRenderNews(query: string) {
   const news = await fetchNaverNewsViaProxy(query); // ✅ 함수 이름 주의! 네가 fetchNaverNewsViaProxy로 사용 중
   updateSwiperSlides(news, query);
+  const arr = document.querySelectorAll('.swiper-slide');
+  console.log(arr);
 }
 
 // ✅ DOM이 로드되면 초기화 + 검색 이벤트 바인딩
@@ -134,9 +114,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   const defaultQuery = '경제';
   await fetchAndRenderNews(defaultQuery);
 
-  const inputElement = document.getElementById(
-    'searchInput',
-  ) as HTMLInputElement;
+  const inputElement = document.getElementById('searchInput') as HTMLInputElement;
   if (inputElement) {
     inputElement.addEventListener('change', async () => {
       const keyword = inputElement.value.trim();
@@ -185,11 +163,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
         // ✅ 하단 선 색상 회색으로 변경
         if (gradient) {
-          gradient.classList.remove(
-            'bg-gradient-to-r',
-            'from-orange-500',
-            'to-orange-600',
-          );
+          gradient.classList.remove('bg-gradient-to-r', 'from-orange-500', 'to-orange-600');
           gradient.classList.add('bg-gray-500');
         }
 
@@ -202,12 +176,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
         // ✅ 배경도 흐리게
         if (card) {
-          card.classList.remove(
-            'bg-blue-500',
-            'bg-indigo-700',
-            'bg-blue-800',
-            'bg-sky-900',
-          );
+          card.classList.remove('bg-[#0d75f3]', 'bg-[#0a5dc2]', 'bg-[#074691]', 'bg-[#052e61]', 'bg-[#074691]', 'bg-[#0a5dc2]');
           card.classList.add('bg-gray-400');
         }
       }
