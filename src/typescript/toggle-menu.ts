@@ -38,6 +38,49 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+// Toggle tab section
+document.addEventListener('DOMContentLoaded', () => {
+  const tabMypage = document.getElementById('tab-mypage');
+  const tabHistory = document.getElementById('tab-history');
+  const contentMypage = document.getElementById('tab-content-mypage');
+  const contentHistory = document.getElementById('tab-content-history');
+
+  tabMypage?.addEventListener('click', () => {
+    tabMypage.classList.add('border-black', 'font-medium');
+    tabMypage.classList.remove('border-transparent', 'text-gray-500');
+    tabHistory?.classList.remove('border-black', 'font-medium');
+    tabHistory?.classList.add('border-transparent', 'text-gray-500');
+
+    contentMypage?.classList.remove('hidden');
+    contentHistory?.classList.add('hidden');
+  });
+
+  tabHistory?.addEventListener('click', () => {
+    tabHistory.classList.add('border-black', 'font-medium');
+    tabHistory.classList.remove('border-transparent', 'text-gray-500');
+    tabMypage?.classList.remove('border-black', 'font-medium');
+    tabMypage?.classList.add('border-transparent', 'text-gray-500');
+
+    contentHistory?.classList.remove('hidden');
+    contentMypage?.classList.add('hidden');
+  });
+});
+
+// Toggle tab moving bar
+document.addEventListener('DOMContentLoaded', () => {
+  const tabIndicator = document.getElementById('tab-indicator') as HTMLDivElement;
+  const tabMypage = document.getElementById('tab-mypage') as HTMLButtonElement;
+  const tabHistory = document.getElementById('tab-history') as HTMLButtonElement;
+
+  tabMypage.addEventListener('click', () => {
+    tabIndicator.style.left = '0%';
+  });
+
+  tabHistory.addEventListener('click', () => {
+    tabIndicator.style.left = '50%';
+  });
+});
+
 document.body.style.overflow = 'hidden'; // open 시
 document.body.style.overflow = ''; // close 시
 
