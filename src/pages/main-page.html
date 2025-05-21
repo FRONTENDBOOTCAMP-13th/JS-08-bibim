@@ -221,14 +221,13 @@
         </ul>
       </div>
 
-      <form action="" class="w-full flex justify-center">
+      <form action="" class="w-full flex justify-center" role="search">
         <div class="relative w-full max-w-2xl mx-auto my-3">
           <label for="search" class="sr-only">검색어 입력</label>
-          <input id="search" type="search" placeholder="키워드를 입력하세요!" class="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-full text-lg shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-          <button class="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-            <span class="sr-only">검색하기</span>
+          <input id="search" name="q" type="search" placeholder="키워드를 입력하세요!" class="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-full text-lg shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+          <button type="sumbit" aria-label="검색하기" class="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2">
             <!-- 🔍 검색 아이콘 (왼쪽) -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
             </svg>
           </button>
