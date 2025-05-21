@@ -65,55 +65,35 @@
     </style>
   </head>
   <body>
-    <!-- SVG Logo in Top-Left Corner -->
-
-    <header class="bg-white w-full mb-12">
-      <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-        <!-- 로고 -->
-        <a href="/src/pages/main-page.html" class="block h-10 w-44">
-          <svg aria-hidden="true" aria-label="홈페이지로 이동" width="150" height="45" viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg">
-            <!-- 아이콘 -->
-            <rect x="0" y="0" width="60" height="60" rx="12" fill="#E0F0FF" />
-            <rect x="12" y="12" width="36" height="8" rx="2" fill="#0070F3" />
-            <rect x="12" y="24" width="24" height="4" rx="2" fill="#0070F3" />
-            <rect x="12" y="32" width="36" height="4" rx="2" fill="#0070F3" />
-            <rect x="12" y="40" width="20" height="4" rx="2" fill="#0070F3" />
-
-            <!-- 텍스트 -->
-            <text x="70" y="40" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#0070F3">wagle</text>
+    <!-- 토글 메뉴 센션 -->
+    <aside id="sidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-[50] transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
+      <!-- 토글 메뉴 탭 -->
+      <!-- 탭 버튼 -->
+      <div id="tab-container" class="relative flex border-b border-gray-200">
+        <button id="tab-mypage" class="flex-1 py-3 text-center">마이페이지</button>
+        <button id="tab-history" class="flex-1 py-3 text-center">History</button>
+        <!-- 하단 움직이는 바 -->
+        <div id="tab-indicator" class="absolute bottom-0 left-0 h-0.5 bg-black transition-all duration-300 ease-in-out" style="width: 50%"></div>
+        <!-- 닫기 버튼 -->
+        <button id="close-sidebar" class="p-2 rounded-md text-gray-600 hover:text-gray-900 pr-[15px]" aria-label="사이드바 닫기">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
-        </a>
-
-        <!-- 우측 메뉴 -->
-
-        <ul class="flex items-center gap-10 text-sm font-medium">
-          <!-- toggle menu btn -->
-          <li class="pr-[25px]">
-            <!-- toggle menu -->
-            <button id="open-sidebar" class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100" aria-label="메뉴 열기">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </li>
-        </ul>
+        </button>
       </div>
 
-      <!-- 사이드바 영역 -->
-      <aside id="sidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
-        <nav class="p-4 border-b border-gray-400 flex justify-between items-center">
-          <h2 class="text-xl font-semibold">마이 페이지</h2>
-          <button id="close-sidebar" class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100" aria-label="사이드바 닫기">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </nav>
+      <!-- 탭 콘텐츠 -->
+      <!-- <div id="tab-content-mypage" class="space-y-6 px-3 pt-4 pb-4"> -->
+      <!-- 기존 마이페이지 내용: 포인트, 출석, 즐겨찾기 -->
+      <!-- 그대로 유지 -->
+      <!-- </div> -->
 
+      <!-- 마이페이지 콘텐츠 -->
+      <div id="tab-content-mypage" class="space-y-4 px-3 pt-4 pb-4">
         <!-- Toggle point section (포인트 영역) -->
-        <section class="px-4 pt-4 pb-2 space-y-6" aria-labelledby="point-title">
+        <section class="p-1" aria-labelledby="point-title">
           <div class="bg-white rounded-lg shadow-md w-full max-w-md border border-gray-200">
-            <header id="toggle-point" class="flex justify-between items-center cursor-pointer p-4">
+            <header id="toggle-point" class="flex justify-between items-center cursor-pointer p-4.5">
               <div class="flex items-center gap-2 text-yellow-500">
                 <svg class="w-7 h-7 pt-1 pl-1" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="14" cy="13" r="14" fill="#fdf491" />
@@ -142,17 +122,17 @@
         </section>
 
         <!-- Toggle attendance section (내 출석 영역) -->
-        <section class="px-4 pt-2 pb-4 space-y-6" aria-labelledby="attendance-heading">
+        <section class="pr-1" aria-labelledby="attendance-heading">
           <div class="bg-white rounded-lg shadow-md w-full max-w-md p-4 border border-gray-200">
             <!-- 내 출석 토글 버튼 -->
-            <div class="flex justify-between items-center cursor-pointer" id="toggle-attendance">
+            <div class="flex justify-between items-center cursor-pointer p-1" id="toggle-attendance">
               <div class="flex items-center gap-2 text-green-600">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
                 <h2 class="font-medium" id="attendance-heading">내 출석</h2>
               </div>
-              <svg id="toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg id="toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
               </svg>
             </div>
@@ -201,11 +181,14 @@
             </div>
           </div>
         </section>
+      </div>
 
+      <!-- history 컨텐츠 -->
+      <div id="tab-content-history" class="space-y-4 px-3 pt-4 pb-4 hidden">
         <!-- Toggle article panel (즐겨찾기 기사 영역) -->
-        <section class="py-2 px-4 space-y-6" aria-labelledby="article-title">
+        <section class="pr-1" aria-labelledby="article-title">
           <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md">
-            <header id="toggle-header" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg p-4 border-gray-200">
+            <header id="toggle-header" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg p-5">
               <div class="flex items-center">
                 <div class="text-[#e06666] mr-2">
                   <!-- 하트모양 아이콘 -->
@@ -215,14 +198,76 @@
                 </div>
                 <h2 id="article-title" class="font-medium text-[#e06666]">내 즐겨찾기 기사</h2>
               </div>
-              <svg id="article-toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg id="article-toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
               </svg>
             </header>
             <div id="article-panel" class="border-gray-200 overflow-hidden transition-all duration-500 max-h-[1000px]"></div>
           </article>
         </section>
-      </aside>
+
+        <!-- Toggle history panel (열람한 기사 영역) - 새로 추가된 부분 -->
+        <section class="pr-1" aria-labelledby="history-title">
+          <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md">
+            <header id="toggle-history" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg p-5">
+              <div class="flex items-center">
+                <div class="text-[#3d85c6] mr-2">
+                  <!-- 히스토리 아이콘 -->
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <h2 id="history-title" class="font-medium text-[#3d85c6]">내가 본 기사</h2>
+              </div>
+              <svg id="history-toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+              </svg>
+            </header>
+            <div id="history-panel" class="border-gray-200 overflow-hidden transition-all duration-500 max-h-[1000px]">
+              <!-- 스크립트로 히스토리 항목이 추가될 위치 -->
+            </div>
+          </article>
+        </section>
+      </div>
+    </aside>
+
+    <!-- 토글 메뉴 ts와 연동된 설정 -->
+    <div id="backdrop" class="fixed inset-0 bg-black/50 z-[40] hidden transition-opacity duration-300"></div>
+
+    <header class="bg-white w-full z-[10]">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+        <!-- 로고 -->
+        <a href="/src/pages/main-page.html" class="block h-10 w-44">
+          <svg aria-hidden="true" aria-label="홈페이지로 이동" width="150" height="45" viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg">
+            <!-- 아이콘 -->
+            <rect x="0" y="0" width="60" height="60" rx="12" fill="#E0F0FF" />
+            <rect x="12" y="12" width="36" height="8" rx="2" fill="#0070F3" />
+            <rect x="12" y="24" width="24" height="4" rx="2" fill="#0070F3" />
+            <rect x="12" y="32" width="36" height="4" rx="2" fill="#0070F3" />
+            <rect x="12" y="40" width="20" height="4" rx="2" fill="#0070F3" />
+
+            <!-- 텍스트 -->
+            <text x="70" y="40" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#0070F3">wagle</text>
+          </svg>
+        </a>
+
+        <!-- 우측 메뉴 -->
+        <ul class="flex items-center gap-6 text-sm font-medium">
+          <li>
+            <div class="w-full flex justify-center">
+              <a href="/src/pages/main-page.html" class="px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-sky-600 text-white text-sm font-semibold shadow-lg hover:brightness-125 transition-all duration-200"> 메인으로 이동하기 </a>
+            </div>
+          </li>
+          <li class="pr-[25px]">
+            <!-- 토글 메뉴 버튼 -->
+            <button id="open-sidebar" class="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100" aria-label="메뉴 열기">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </div>
     </header>
 
     <!-- Centered Container -->
@@ -232,12 +277,6 @@
         뉴스가 모이는 곳<br />
         <div style="color: #0170f3">Wagle!</div>
       </h1>
-
-      <!-- 메인 페이지 이동 버튼 -->
-      <div class="w-full flex justify-center">
-        <a href="/src/pages/main-page.html" class="px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-sky-600 text-white text-lg font-semibold shadow-lg hover:brightness-125 transition-all duration-200"> 메인으로 이동하기 </a>
-      </div>
-
       <!-- Search Input -->
       <div class="my-6 relative w-full max-w-md mx-auto mb-14">
         <input id="searchInput" type="search" placeholder="키워드를 입력하세요!" class="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-full text-lg shadow-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
@@ -308,7 +347,7 @@
         </div>
       </div>
 
-      <button id="toggleButton" class="mt-10 w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+      <button id="toggleButton" class="mt-10 w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center shadow-xl transition-all">
         <!-- ▶️ (재생 아이콘) -->
         <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
           <path d="M5 3v18l15-9L5 3z" />
