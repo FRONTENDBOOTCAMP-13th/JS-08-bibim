@@ -3,18 +3,51 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>카테고리 게임</title>
+    <title>카테고리 게임 - wagle</title>
     <link rel="icon" href="/public/iconLogo.svg" type="image/x-icon" />
     <script type="module" src="/src/main.ts"></script>
     <script src="/src/typescript/question-game.ts" type="module"></script>
   </head>
-  <body class="bg-gray-50 min-h-screen mx-auto pt-8 max-w-3xl flex flex-col">
-    <header class="text-center mb-8">
+  <body class="bg-gray-50 min-h-screen mx-auto flex flex-col">
+    <header class="bg-white w-full z-10 border-b mb-8">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+        <!-- 로고 -->
+        <a href="/src/pages/main-page.html" class="block h-10 w-44">
+          <span class="sr-only">wagle 홈페이지로 이동</span>
+          <svg width="150" height="45" viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- 아이콘 -->
+            <rect x="0" y="0" width="60" height="60" rx="12" fill="#E0F0FF" />
+            <rect x="12" y="12" width="36" height="8" rx="2" fill="#0070F3" />
+            <rect x="12" y="24" width="24" height="4" rx="2" fill="#0070F3" />
+            <rect x="12" y="32" width="36" height="4" rx="2" fill="#0070F3" />
+            <rect x="12" y="40" width="20" height="4" rx="2" fill="#0070F3" />
+
+            <!-- 텍스트 -->
+            <text x="70" y="40" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#0070F3">wagle</text>
+          </svg>
+        </a>
+        <!-- 우측 메뉴 -->
+        <nav aria-label="메인 네비게이션">
+          <ul class="flex items-center gap-10 text-sm font-medium">
+            <li>
+              <a href="/" class="text-gray-800 hover:text-[#0070F3] hover:underline focus:underline focus:text-[#0070F3] py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0070F3]"> CARD </a>
+            </li>
+            <li>
+              <a href="/src/pages/main-page.html" class="text-gray-800 hover:text-[#0070F3] hover:underline focus:underline focus:text-[#0070F3] py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0070F3]"> MAIN </a>
+            </li>
+            <li>
+              <a href="/src/pages/game/game-page.html" class="text-[#0070F3] hover:underline focus:underline py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0070F3]" aria-current="page"> GAME </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div class="text-center mb-8">
       <h1 class="text-3xl font-bold text-blue-500 mb-2">당신에게 맞는 뉴스 카테고리 테스트</h1>
       <p class="text-gray-600">14개의 질문에 답하고 나에게 맞는 뉴스 카테고리를 찾아보세요!</p>
-    </header>
+    </div>
 
-    <main class="flex-grow flex flex-col">
+    <main class="flex-grow flex flex-col w-1/2 mx-auto">
       <div id="progressContainer" class="mb-6 w-full bg-gray-200 rounded-full h-4" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
         <div id="progressBar" class="bg-blue-500 h-4 rounded-full progress-bar" style="width: 0%"></div>
       </div>
