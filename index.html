@@ -232,7 +232,7 @@
     </header>
 
     <!-- Centered Container -->
-    <div class="flex flex-col items-center justify-center min-h-screen px-4 text-center">
+    <div class="flex flex-col items-center justify-center min-h-screen px-4 pb-20 text-center">
       <!-- Title -->
       <h1 class="text-4xl md:text-5xl font-medium text-gray-600 mb-12">
         뉴스가 모이는 곳<br />
@@ -311,29 +311,27 @@
           <img src="/src/pages/svg/YTN_2014_logo.svg" class="h-10 mx-6" />
         </div>
       </div>
-      <footer class="mt-16 min-w-[561px] h-[50px]">
-        <div class="flex justify-between px-12 gap-4">
-          <nav aria-label="사이트 정책">
-            <ul class="flex gap-6">
-              <li class="inline-block">
-                <a href="/" title="개인정보처리방침 페이지로 이동">개인정보처리 방침</a>
-              </li>
-              <li class="inline-block">
-                <a href="/" title="이용약관 페이지로 이동">이용약관</a>
-              </li>
-            </ul>
-          </nav>
-          <address>
-            <p class="inline-block">
-              <span>Copyrights © 2025 | 8joBibim</span>
-            </p>
-            <p class="inline-block">
-              <span>Website by kyungmin, yeono, hyunji, sunjin</span>
-            </p>
-          </address>
-        </div>
-      </footer>
     </div>
+    <footer class="min-w-[561px] py-6 bg-[#E0F0FF]">
+      <div class="flex justify-between px-12 gap-4">
+        <nav aria-label="사이트 정책">
+          <ul class="flex gap-6">
+            <li class="inline-block">
+              <a href="/" title="개인정보처리방침 페이지로 이동">개인정보처리 방침</a>
+            </li>
+            <li class="inline-block">
+              <a href="/" title="이용약관 페이지로 이동">이용약관</a>
+            </li>
+          </ul>
+        </nav>
+        <address>
+          <p class="inline-block"><span>Copyrights © 2025 | 8joBibim</span></p>
+          <p class="inline-block">
+            <span>Website by kyungmin, yeono, hyunji, sunjin</span>
+          </p>
+        </address>
+      </div>
+    </footer>
     <script>
       const track = document.getElementById('marqueeTrack');
       const logos = [...track.children];
