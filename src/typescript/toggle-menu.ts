@@ -19,14 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   openBtn?.addEventListener('click', e => {
-    e.stopPropagation(); // 이벤트 전파 방지
+    e.stopPropagation();
     openSidebar();
   });
 
   closeBtn?.addEventListener('click', closeSidebar);
   backdrop?.addEventListener('click', closeSidebar);
 
-  // ⭐ 문서 클릭 시 사이드바 외부 클릭 여부 체크
   document.addEventListener('click', event => {
     const target = event.target as HTMLElement;
     const isInsideSidebar = sidebar?.contains(target);
@@ -38,8 +37,43 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-document.body.style.overflow = 'hidden'; // open 시
-document.body.style.overflow = ''; // close 시
+// Toggle tab section & indicator animation
+document.addEventListener('DOMContentLoaded', () => {
+  const tabMypage = document.getElementById('tab-mypage') as HTMLButtonElement;
+  const tabHistory = document.getElementById('tab-history') as HTMLButtonElement;
+  const contentMypage = document.getElementById('tab-content-mypage');
+  const contentHistory = document.getElementById('tab-content-history');
+  const tabIndicator = document.getElementById('tab-indicator') as HTMLDivElement;
+
+  const switchTab = (selected: HTMLButtonElement, deselected: HTMLButtonElement, show: HTMLElement | null, hide: HTMLElement | null) => {
+    selected.classList.add('font-medium');
+    selected.classList.remove('text-gray-500');
+    deselected.classList.remove('font-medium');
+    deselected.classList.add('text-gray-500');
+
+    show?.classList.remove('hidden');
+    hide?.classList.add('hidden');
+
+    // 인디케이터 이동 (width 및 left 계산)
+    const offsetLeft = selected.offsetLeft;
+    const width = selected.offsetWidth;
+
+    tabIndicator.style.width = `${width}px`;
+    tabIndicator.style.left = `${offsetLeft}px`;
+  };
+
+  tabMypage?.addEventListener('click', () => switchTab(tabMypage, tabHistory, contentMypage, contentHistory));
+  tabHistory?.addEventListener('click', () => switchTab(tabHistory, tabMypage, contentHistory, contentMypage));
+
+  // 초기 위치 설정
+  window.addEventListener('load', () => {
+    const activeTab = document.querySelector('#tab-mypage') as HTMLButtonElement;
+    if (activeTab && tabIndicator) {
+      tabIndicator.style.width = `${activeTab.offsetWidth}px`;
+      tabIndicator.style.left = `${activeTab.offsetLeft}px`;
+    }
+  });
+});
 
 // Toggle point section
 document.addEventListener('DOMContentLoaded', () => {
@@ -104,22 +138,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 트로피
-  const gold = document.getElementById('gold-trophy');
-  const silver = document.getElementById('silver-trophy');
-  const bronze = document.getElementById('bronze-trophy');
+  const gold = document.createElement('div');
+  const silver = document.createElement('div');
+  const bronze = document.createElement('div');
+  bronze.innerHTML = `<svg width="30" height="30" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"> <g fill="#cd7f32"> <rect x="26" y="48" width="12" height="8" /> <rect x="22" y="56" width="20" height="4" /> <path d="M16 16c0 11 6 20 16 20s16-9 16-20V8H16v8z" /> <path d="M8 8v8c0 5 4 9 9 9V21c-3 0-5-2-5-5V8H8zm48 0v8c0 3-2 5-5 5v4c5 0 9-4 9-9V8h-4z" /> </g> </svg>`;
+  silver.innerHTML = `<svg width="30" height="30" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"> <g fill="silver"> <rect x="26" y="48" width="12" height="8" /> <rect x="22" y="56" width="20" height="4" /> <path d="M16 16c0 11 6 20 16 20s16-9 16-20V8H16v8z" /> <path d="M8 8v8c0 5 4 9 9 9V21c-3 0-5-2-5-5V8H8zm48 0v8c0 3-2 5-5 5v4c5 0 9-4 9-9V8h-4z" /> </g> </svg>`;
+  gold.innerHTML = `<svg width="30" height="30" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"> <g fill="gold"> <rect x="26" y="48" width="12" height="8" /> <rect x="22" y="56" width="20" height="4" /> <path d="M16 16c0 11 6 20 16 20s16-9 16-20V8H16v8z" /> <path d="M8 8v8c0 5 4 9 9 9V21c-3 0-5-2-5-5V8H8zm48 0v8c0 3-2 5-5 5v4c5 0 9-4 9-9V8h-4z" /> </g> </svg>`;
+  bronze.setAttribute('title', `Wagle 비기너(10P 달성 업적)`);
+  bronze.setAttribute('class', `cursor-help`);
+  silver.setAttribute('title', `Wagle 달인(500P 달성 업적)`);
+  silver.setAttribute('class', `cursor-help`);
+  gold.setAttribute('title', `Wagle 신(1000P 달성 업적)`);
+  gold.setAttribute('class', `cursor-help`);
+
+  const trophySection = document.getElementById('trophy-section');
 
   // 트로피 로직
   if (points[0] >= 10 && bronze) {
-    bronze.removeAttribute('hidden');
-    bronze.style.display = 'block';
+    trophySection?.appendChild(bronze);
   }
   if (points[0] >= 500 && silver) {
-    silver.removeAttribute('hidden');
-    silver.style.display = 'block';
+    trophySection?.appendChild(silver);
   }
   if (points[0] >= 1000 && gold) {
-    gold.removeAttribute('hidden');
-    gold.style.display = 'block';
+    trophySection?.appendChild(gold);
   }
 
   toggleBtn?.addEventListener('click', () => {
