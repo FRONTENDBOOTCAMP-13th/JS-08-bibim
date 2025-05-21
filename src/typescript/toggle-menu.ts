@@ -4,24 +4,42 @@ document.addEventListener('DOMContentLoaded', () => {
   const openBtn = document.getElementById('open-sidebar');
   const closeBtn = document.getElementById('close-sidebar');
 
-  openBtn?.addEventListener('click', () => {
+  const openSidebar = () => {
     sidebar?.classList.remove('translate-x-full');
     sidebar?.classList.add('translate-x-0');
     backdrop?.classList.remove('hidden');
-  });
+    document.body.style.overflow = 'hidden';
+  };
 
-  closeBtn?.addEventListener('click', () => {
+  const closeSidebar = () => {
     sidebar?.classList.remove('translate-x-0');
     sidebar?.classList.add('translate-x-full');
     backdrop?.classList.add('hidden');
+    document.body.style.overflow = '';
+  };
+
+  openBtn?.addEventListener('click', e => {
+    e.stopPropagation(); // 이벤트 전파 방지
+    openSidebar();
   });
 
-  backdrop?.addEventListener('click', () => {
-    sidebar?.classList.remove('translate-x-0');
-    sidebar?.classList.add('translate-x-full');
-    backdrop.classList.add('hidden');
+  closeBtn?.addEventListener('click', closeSidebar);
+  backdrop?.addEventListener('click', closeSidebar);
+
+  // ⭐ 문서 클릭 시 사이드바 외부 클릭 여부 체크
+  document.addEventListener('click', event => {
+    const target = event.target as HTMLElement;
+    const isInsideSidebar = sidebar?.contains(target);
+    const isToggleButton = openBtn?.contains(target);
+
+    if (!isInsideSidebar && !isToggleButton && !backdrop?.classList.contains('hidden')) {
+      closeSidebar();
+    }
   });
 });
+
+document.body.style.overflow = 'hidden'; // open 시
+document.body.style.overflow = ''; // close 시
 
 // Toggle point section
 document.addEventListener('DOMContentLoaded', () => {
