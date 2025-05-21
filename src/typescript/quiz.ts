@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { updatePoint } from './updatePoint.ts';
+import { renderPoint } from './updatePoint.ts';
 
 console.log('hello');
 const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", "", "", ""]');
@@ -237,7 +238,10 @@ document.addEventListener('DOMContentLoaded', () => {
               if (!isExist) {
                 updatePoint(50, `${data.question} 퀴즈 정답`);
                 points[0] += 50;
-                if (quizPoints[i]) quizPoints[i].textContent = `50 포인트가 적립 되었습니다. 현재 당신의 포인트는 총 ${points[0]}점 입니다.`;
+                if (quizPoints[i]) {
+                  quizPoints[i].textContent = `50 포인트가 적립 되었습니다. 현재 당신의 포인트는 총 ${points[0]}점 입니다.`;
+                  renderPoint();
+                }
               } else {
                 if (quizPoints[i]) quizPoints[i].textContent = `현재 당신의 포인트는 총 ${points[0]}점 입니다.`;
               }
