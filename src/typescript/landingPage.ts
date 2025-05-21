@@ -3,13 +3,16 @@ import { Mousewheel, EffectCards } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/mousewheel';
 import 'swiper/css/effect-cards';
-import { saveViewedLink, isViewed } from '../storage.ts';
+import { saveViewedNews, isViewed } from '../storage.ts';
 
 // 뉴스 데이터 인터페이스
 interface NewsData {
+  link: string;
   title: string;
   description: string;
-  link: string;
+  originallink: string;
+  pubDate: string; // ISO 문자열 (날짜)
+  keyword?: string; // 검색어
 }
 
 // ✅ 네이버 뉴스 API를 프록시를 통해 fetch하는 함수
@@ -66,17 +69,25 @@ function updateSwiperSlides(newsData: NewsData[], query: string): void {
     slideElement.classList.add('swiper-slide');
 
     const bgColorClass = bgColors[index % bgColors.length];
-    const isAlreadyViewed = isViewed(news.link); // ✅ 확인
-    const opacityClass = isAlreadyViewed ? 'opacity-50' : '';
+    const isAlreadyViewed = isViewed(news.link);
+
+    // 조건에 따라 클래스 설정
+    const cardBgClass = isAlreadyViewed ? 'bg-gray-400' : bgColorClass;
+    const titleColorClass = isAlreadyViewed ? 'text-gray-500' : 'text-white';
+    const descColorClass = isAlreadyViewed ? 'text-gray-500' : 'text-white';
+    const tagColorClass = isAlreadyViewed ? 'text-gray-500' : 'text-orange-500';
+    const underlineClass = isAlreadyViewed
+      ? 'bg-gray-500'
+      : 'bg-gradient-to-r from-orange-500 to-orange-600';
 
     slideElement.innerHTML = `
-      <div class="relative ${bgColorClass} ${opacityClass} rounded-2xl p-8 md:p-10 text-left text-white shadow-lg ">
-        <div class="text-xl text-orange-500">${query}</div>
-        <div class="text-4xl pretendard mb-4">${news.title}</div>
-        <p class="text-lg md:text-xl mb-6">${news.description}</p>
-        <a href="${news.link}" target="_blank" class="mt-3 text-gray-300 read-more">Read More</a>
-        <div class="h-1 w-full max-w-xs bg-gradient-to-r from-orange-500 to-orange-600 mt-3"></div>
-      </div>
+    <div class="relative ${cardBgClass} rounded-2xl p-8 md:p-10 text-left shadow-lg">
+      <div class="text-xl ${tagColorClass}">${query}</div>
+      <div class="text-4xl pretendard mb-4 ${titleColorClass}">${news.title}</div>
+      <p class="text-lg md:text-xl mb-6 ${descColorClass}">${news.description}</p>
+      <a href="${news.link}" target="_blank" class="mt-3 text-gray-300 read-more">Read More</a>
+      <div class="h-1 w-full max-w-xs mt-3 ${underlineClass}"></div>
+    </div>
     `;
 
     swiperWrapper.appendChild(slideElement);
@@ -142,11 +153,23 @@ window.addEventListener('DOMContentLoaded', async () => {
       e.preventDefault(); // 링크 이동 막기
       const link = (target as HTMLAnchorElement).href;
 
-      // 🔐 저장
-      saveViewedLink(link);
+      const slide = target.closest('.swiper-slide');
+      const title = slide?.querySelector('.pretendard')?.textContent ?? '';
+      const description = slide?.querySelector('p')?.textContent ?? '';
+      const keyword = slide?.querySelector('.text-xl')?.textContent ?? ''; // query 텍스트
+
+      // 저장
+      saveViewedNews({
+        link,
+        title,
+        description,
+        originallink: link,
+        pubDate: new Date().toISOString(), // 현재 날짜로 설정
+        keyword,
+      });
 
       // 🎨 카드 색 변경
-      const slide = target.closest('.swiper-slide');
+
       if (slide) {
         const title = slide.querySelector('.pretendard.mb-4');
         const desc = slide.querySelector('p');
