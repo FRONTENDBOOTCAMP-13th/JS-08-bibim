@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>타격 타이밍 게임 - wagle</title>
+    <link rel="icon" href="/public/iconLogo.svg" type="image/x-icon" />
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        text-align: center;
+        background-color: #f0f0f0;
+
+        overflow-x: hidden;
+      }
+
+      h1 {
+        font-size: 3rem;
+
+        margin-bottom: 20px;
+      }
+
+      button {
+        font-size: 1.2rem;
+        padding: 15px 30px;
+        margin: 10px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+      }
+
+      button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+      }
+
+      .bar-labels {
+        width: 80%;
+        margin: 0 auto 10px auto;
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        color: #333;
+      }
+
+      .label-hot {
+        color: red;
+        font-weight: bold;
+      }
+
+      .bar-container {
+        position: relative;
+        width: 80%;
+        height: 30px;
+        background-color: #e0e0e0;
+        border-radius: 15px;
+        margin: 0 auto 20px auto;
+        overflow: hidden;
+      }
+
+      .bar-fill {
+        position: absolute;
+        height: 100%;
+        width: 0%;
+        background-color: green;
+        border-radius: 15px;
+        transition: width 0.01s linear;
+        z-index: 3;
+      }
+
+      #ballIcon {
+        position: absolute;
+        right: -18px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.8rem;
+        pointer-events: none;
+      }
+
+      .zone {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        z-index: 1;
+      }
+
+      .miss-zone-left {
+        width: 15%;
+        left: 0;
+        background-color: rgba(255, 0, 0, 0.2);
+      }
+
+      .homerun-zone {
+        width: 15%;
+        left: 15%;
+        background-color: rgba(255, 215, 0, 0.6);
+        border-left: 2px solid #ff0;
+        border-right: 2px solid #ff0;
+      }
+
+      .hit-zone {
+        width: 20%;
+        left: 30%;
+        background-color: rgba(0, 255, 0, 0.2);
+      }
+
+      .miss-zone-right {
+        width: 50%;
+        left: 50%;
+        background-color: rgba(255, 0, 0, 0.2);
+      }
+
+      #timingPrompt {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: red;
+        height: 30px;
+      }
+
+      #message {
+        font-size: 1.5rem;
+        margin-top: 30px;
+        min-height: 2em;
+      }
+
+      #resultEffect {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-top: 40px;
+        height: 60px;
+        position: relative;
+      }
+
+      .homerun {
+        animation: flyUp 1s ease-out forwards;
+        color: gold;
+      }
+      .hit {
+        animation: slideRight 1s ease-out forwards;
+        color: green;
+      }
+      .miss {
+        animation: shake 0.5s ease-in-out;
+        color: red;
+      }
+
+      @keyframes flyUp {
+        0% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-120px);
+          opacity: 0;
+        }
+      }
+
+      @keyframes slideRight {
+        0% {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(200px);
+          opacity: 0;
+        }
+      }
+
+      @keyframes shake {
+        0% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-10px);
+        }
+        50% {
+          transform: translateX(10px);
+        }
+        75% {
+          transform: translateX(-10px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+    </style>
+    <script type="module" src="/src/typescript/baseball-game.ts"></script>
+    <link rel="preload" as="font" href="/font/woff2/PretendardVariable.woff2" type="font/woff2" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/font/pretendardvariable.css" />
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <header class="bg-white w-full z-10 border-b">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+        <!-- 로고 -->
+        <a href="/src/pages/main-page.html" class="block h-10 w-44">
+          <span class="sr-only">wagle 홈페이지로 이동</span>
+          <svg width="150" height="45" viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- 아이콘 -->
+            <rect x="0" y="0" width="60" height="60" rx="12" fill="#E0F0FF" />
+            <rect x="12" y="12" width="36" height="8" rx="2" fill="#0070F3" />
+            <rect x="12" y="24" width="24" height="4" rx="2" fill="#0070F3" />
+            <rect x="12" y="32" width="36" height="4" rx="2" fill="#0070F3" />
+            <rect x="12" y="40" width="20" height="4" rx="2" fill="#0070F3" />
+
+            <!-- 텍스트 -->
+            <text x="70" y="40" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#0070F3">wagle</text>
+          </svg>
+        </a>
+        <!-- 우측 메뉴 -->
+        <nav aria-label="메인 네비게이션">
+          <ul class="flex items-center gap-10 text-sm font-medium">
+            <li>
+              <a href="/" class="text-gray-800 hover:text-[#0070F3] hover:underline focus:underline focus:text-[#0070F3] py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0070F3]"> CARD </a>
+            </li>
+            <li>
+              <a href="/src/pages/main-page.html" class="text-gray-800 hover:text-[#0070F3] hover:underline focus:underline focus:text-[#0070F3] py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0070F3]"> MAIN </a>
+            </li>
+            <li>
+              <a href="/src/pages/game/game-page.html" class="text-[#0070F3] hover:underline focus:underline py-2 px-3 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0070F3]" aria-current="page"> GAME </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main class="mt-6 grow">
+      <h1>⚾ 타격 타이밍 게임</h1>
+      <button id="startBtn">게임 시작</button>
+      <button id="swingBtn" disabled>스윙!</button>
+      <div class="bar-labels">
+        <span>0ms</span>
+        <span>150ms</span>
+        <span class="label-hot">홈런 타이밍🔥</span>
+        <span>300ms</span>
+        <span>500ms</span>
+        <span>1000ms</span>
+      </div>
+      <div class="bar-container">
+        <div class="zone miss-zone-left"></div>
+        <div class="zone homerun-zone"></div>
+        <div class="zone hit-zone"></div>
+        <div class="zone miss-zone-right"></div>
+        <div class="bar-fill" id="barFill">
+          <span id="ballIcon">⚾</span>
+        </div>
+      </div>
+      <div id="timingPrompt"></div>
+      <div id="message">게임을 시작해보세요!</div>
+      <div id="resultEffect"></div>
+    </main>
+
+    <footer class="py-4 bg-[#E0F0FF]">
+      <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between gap-4">
+        <nav aria-label="사이트 정책">
+          <ul class="flex flex-wrap gap-6">
+            <li>
+              <a href="/privacy-policy" class="hover:underline focus:underline focus:outline-none focus:ring-2 focus:ring-[#0070F3] py-1 px-2 rounded-md"> 개인정보처리방침 </a>
+            </li>
+            <li>
+              <a href="/terms" class="hover:underline focus:underline focus:outline-none focus:ring-2 focus:ring-[#0070F3] py-1 px-2 rounded-md"> 이용약관 </a>
+            </li>
+          </ul>
+        </nav>
+        <address class="not-italic text-sm text-gray-700">
+          <p>Copyrights © 2025 | 8joBibim</p>
+          <p>Website by kyungmin, yeono, hyunji, sunjin</p>
+        </address>
+      </div>
+    </footer>
+  </body>
+</html>
