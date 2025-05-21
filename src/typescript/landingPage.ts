@@ -111,7 +111,7 @@ async function fetchAndRenderNews(query: string) {
 
 // ✅ DOM이 로드되면 초기화 + 검색 이벤트 바인딩
 window.addEventListener('DOMContentLoaded', async () => {
-  const defaultQuery = '경제';
+  const defaultQuery = '[종합]';
   await fetchAndRenderNews(defaultQuery);
 
   const inputElement = document.getElementById('searchInput') as HTMLInputElement;
