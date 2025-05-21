@@ -19,14 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   openBtn?.addEventListener('click', e => {
-    e.stopPropagation(); // 이벤트 전파 방지
+    e.stopPropagation();
     openSidebar();
   });
 
   closeBtn?.addEventListener('click', closeSidebar);
   backdrop?.addEventListener('click', closeSidebar);
 
-  // ⭐ 문서 클릭 시 사이드바 외부 클릭 여부 체크
   document.addEventListener('click', event => {
     const target = event.target as HTMLElement;
     const isInsideSidebar = sidebar?.contains(target);
@@ -38,51 +37,43 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Toggle tab section
+// Toggle tab section & indicator animation
 document.addEventListener('DOMContentLoaded', () => {
-  const tabMypage = document.getElementById('tab-mypage');
-  const tabHistory = document.getElementById('tab-history');
-  const contentMypage = document.getElementById('tab-content-mypage');
-  const contentHistory = document.getElementById('tab-content-history');
-
-  tabMypage?.addEventListener('click', () => {
-    tabMypage.classList.add('border-black', 'font-medium');
-    tabMypage.classList.remove('border-transparent', 'text-gray-500');
-    tabHistory?.classList.remove('border-black', 'font-medium');
-    tabHistory?.classList.add('border-transparent', 'text-gray-500');
-
-    contentMypage?.classList.remove('hidden');
-    contentHistory?.classList.add('hidden');
-  });
-
-  tabHistory?.addEventListener('click', () => {
-    tabHistory.classList.add('border-black', 'font-medium');
-    tabHistory.classList.remove('border-transparent', 'text-gray-500');
-    tabMypage?.classList.remove('border-black', 'font-medium');
-    tabMypage?.classList.add('border-transparent', 'text-gray-500');
-
-    contentHistory?.classList.remove('hidden');
-    contentMypage?.classList.add('hidden');
-  });
-});
-
-// Toggle tab moving bar
-document.addEventListener('DOMContentLoaded', () => {
-  const tabIndicator = document.getElementById('tab-indicator') as HTMLDivElement;
   const tabMypage = document.getElementById('tab-mypage') as HTMLButtonElement;
   const tabHistory = document.getElementById('tab-history') as HTMLButtonElement;
+  const contentMypage = document.getElementById('tab-content-mypage');
+  const contentHistory = document.getElementById('tab-content-history');
+  const tabIndicator = document.getElementById('tab-indicator') as HTMLDivElement;
 
-  tabMypage.addEventListener('click', () => {
-    tabIndicator.style.left = '0%';
-  });
+  const switchTab = (selected: HTMLButtonElement, deselected: HTMLButtonElement, show: HTMLElement | null, hide: HTMLElement | null) => {
+    selected.classList.add('font-medium');
+    selected.classList.remove('text-gray-500');
+    deselected.classList.remove('font-medium');
+    deselected.classList.add('text-gray-500');
 
-  tabHistory.addEventListener('click', () => {
-    tabIndicator.style.left = '50%';
+    show?.classList.remove('hidden');
+    hide?.classList.add('hidden');
+
+    // 인디케이터 이동 (width 및 left 계산)
+    const offsetLeft = selected.offsetLeft;
+    const width = selected.offsetWidth;
+
+    tabIndicator.style.width = `${width}px`;
+    tabIndicator.style.left = `${offsetLeft}px`;
+  };
+
+  tabMypage?.addEventListener('click', () => switchTab(tabMypage, tabHistory, contentMypage, contentHistory));
+  tabHistory?.addEventListener('click', () => switchTab(tabHistory, tabMypage, contentHistory, contentMypage));
+
+  // 초기 위치 설정
+  window.addEventListener('load', () => {
+    const activeTab = document.querySelector('#tab-mypage') as HTMLButtonElement;
+    if (activeTab && tabIndicator) {
+      tabIndicator.style.width = `${activeTab.offsetWidth}px`;
+      tabIndicator.style.left = `${activeTab.offsetLeft}px`;
+    }
   });
 });
-
-document.body.style.overflow = 'hidden'; // open 시
-document.body.style.overflow = ''; // close 시
 
 // Toggle point section
 document.addEventListener('DOMContentLoaded', () => {
