@@ -55,11 +55,11 @@ function updateSwiperSlides(newsData: NewsData[], query: string): void {
 
   swiperWrapper.innerHTML = '';
 
-  const bgColors = ['bg-blue-500', 'bg-indigo-700', 'bg-blue-800', 'bg-sky-900'];
+  const bgColors = ['bg-[#0d75f3]', 'bg-[#0a5dc2]', 'bg-[#074691]', 'bg-[#052e61]', 'bg-[#074691]', 'bg-[#0a5dc2]'];
 
   newsData.forEach((news, index) => {
     const slideElement = document.createElement('div');
-    slideElement.classList.add('swiper-slide');
+    slideElement.classList.add('swiper-slide', 'shadow-2xl');
 
     const bgColorClass = bgColors[index % bgColors.length];
     const isAlreadyViewed = isViewed(news.link);
@@ -72,7 +72,7 @@ function updateSwiperSlides(newsData: NewsData[], query: string): void {
     const underlineClass = isAlreadyViewed ? 'bg-gray-500' : 'bg-gradient-to-r from-orange-500 to-orange-600';
 
     slideElement.innerHTML = `
-    <div class="relative ${cardBgClass} rounded-2xl p-8 md:p-10 text-left shadow-xl">
+    <div class="relative ${cardBgClass} rounded-2xl p-8 md:p-10 text-left transition-all">
       <div class="text-xl ${tagColorClass}">${query}</div>
       <div class="text-4xl pretendard mb-4 ${titleColorClass}">${news.title}</div>
       <p class="text-lg md:text-xl mb-6 ${descColorClass}">${news.description}</p>
@@ -176,7 +176,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
         // ✅ 배경도 흐리게
         if (card) {
-          card.classList.remove('bg-blue-500', 'bg-indigo-700', 'bg-blue-800', 'bg-sky-900');
+          card.classList.remove('bg-[#0d75f3]', 'bg-[#0a5dc2]', 'bg-[#074691]', 'bg-[#052e61]', 'bg-[#074691]', 'bg-[#0a5dc2]');
           card.classList.add('bg-gray-400');
         }
       }

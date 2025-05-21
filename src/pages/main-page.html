@@ -202,7 +202,7 @@
         <!-- 우측 메뉴 -->
         <ul class="flex items-center gap-10 text-sm font-medium">
           <li>
-            <a href="/" class="text-gray-800 hover:text-[#0070F3] hover:underline"> CARD </a>
+            <a href="/index.html" class="text-gray-800 hover:text-[#0070F3] hover:underline"> CARD </a>
           </li>
           <li>
             <a href="/src/pages/main-page.html" class="text-[#0070F3] hover:underline">MAIN</a>
@@ -221,16 +221,22 @@
         </ul>
       </div>
 
-      <form action="" class="w-full flex justify-center" role="search">
-        <div class="relative w-full max-w-2xl mx-auto my-3">
+      <form action="" class="w-full flex justify-center">
+        <div class="relative w-full max-w-2xl mx-auto my-6">
           <label for="search" class="sr-only">검색어 입력</label>
-          <input id="search" name="q" type="search" placeholder="키워드를 입력하세요!" class="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-full text-lg shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none" />
-          <button type="sumbit" aria-label="검색하기" class="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2">
-            <!-- 🔍 검색 아이콘 (왼쪽) -->
-            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
-            </svg>
-          </button>
+
+          <!-- 뉴모피즘 스타일 wrapper -->
+          <div class="relative w-full rounded-full bg-[#f1f3f6] border border-[#f5f5f5] shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] before:content-[''] before:absolute before:inset-0 before:rounded-full before:shadow-[inset_2px_2px_5px_rgba(255,255,255,0.6)] before:pointer-events-none">
+            <!-- 검색 input -->
+            <input id="search" type="search" placeholder="키워드를 입력하세요!" class="w-full pl-12 pr-4 py-2 bg-[#f1f3f6] text-gray-600 rounded-full text-base outline-none placeholder:text-gray-400" />
+
+            <!-- 아이콘 -->
+            <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#0d75f3] pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+              </svg>
+            </div>
+          </div>
         </div>
       </form>
 
