@@ -161,13 +161,13 @@
         <!-- 우측 메뉴 -->
         <ul class="flex items-center gap-10 text-sm font-medium">
           <li>
-            <a href="/src/pages/landingPage.html" class="text-gray-800 hover:text-[#0070F3] hover:underline"> CARD </a>
+            <a href="/index.html" class="text-gray-800 hover:text-[#0070F3] hover:underline"> CARD </a>
           </li>
           <li>
             <a href="/src/pages/main-page.html" class="text-[#0070F3] hover:underline">MAIN</a>
           </li>
           <li>
-            <a href="/src/pages/question-game.html" class="text-gray-800 hover:text-[#0070F3] hover:underline pr-[20px]"> GAME </a>
+            <a href="/src/pages/game/game-page.html" class="text-gray-800 hover:text-[#0070F3] hover:underline pr-[20px]"> GAME </a>
           </li>
           <li class="pr-[25px]">
             <!-- 토글 메뉴 버튼 -->
@@ -183,20 +183,17 @@
       <!-- 기존 aside (토글 메뉴)위치 -->
 
       <form action="" class="w-full flex justify-center">
-        <div class="w-1/2 my-2 border-gray-400 border-2 rounded-full px-4 flex justify-between focus-within:border-[#0070F3]">
-          <label for="search" class="sr-only">검색어 입력</label>
-          <input type="search" id="search" placeholder="검색어를 입력하세요" class="py-2 w-1/2 outline-none basis-[170px] grow" />
-          <button type="submit">
-            <span class="sr-only">검색하기</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </button>
+        <div class="relative w-full max-w-2xl mx-auto my-3">
+          <input id="searchInput" type="search" placeholder="키워드를 입력하세요!" class="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-full text-lg shadow-md focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+          <!-- 🔍 검색 아이콘 (왼쪽) -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+          </svg>
         </div>
       </form>
 
       <!-- 카테고리 탭 -->
-      <div class="w-full category-container grid place-items-center pt-[10px] pb-[15px] border-b border-gray-200">
+      <div class="w-full category-container grid place-items-center pt-[10px] pb-[15px] border-b border-slate-200">
         <div class="relative">
           <nav id="categoryNav" class="flex flex-wrap justify-center gap-10" aria-label="뉴스 카테고리">
             <a href="/src/pages/main-page.html?category=KBO야구" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="KBO야구"> KBO 야구 </a>
@@ -211,14 +208,14 @@
       </div>
     </header>
 
-    <main class="w-full mx-auto py-6 flex-grow">
+    <main class="w-full mx-auto py-6 flex-grow bg-slate-100">
       <section class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-4">
         <!-- Main Content -->
         <div class="lg:col-span-2">
           <h1 class="text-xl font-bold text-[#005DBA] mb-4">뉴스 퀴즈</h1>
 
           <!-- 퀴즈 섹션 -->
-          <section class="p-6 bg-[#E8F4FF]">
+          <section class="p-6 bg-[#CFE9FF] shadow-md rounded-lg">
             <ul class="space-y-6">
               <!-- 퀴즈1 -->
               <li class="bg-white p-4 rounded shadow">
