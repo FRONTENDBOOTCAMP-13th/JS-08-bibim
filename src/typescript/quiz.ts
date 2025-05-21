@@ -260,13 +260,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
 
           if (data.options[j].isCorrect) {
-            liElem.classList.add('bg-green-300');
+            liElem.classList.add('bg-green-300', 'border-2', 'border-green-500');
 
             // 피드백
             //  + '\n' + data.explanation
             if (quizResult[i]) {
               quizResult[i].textContent = '축하드립니다! 정답을 맞히셨습니다!';
-              quizResult[i].classList.contains('text-green-500 hover:border-[#22c55e]/50');
+              quizResult[i].classList.contains('text-green-500');
             }
             if (quizReason[i]) quizReason[i].textContent = data.explanation;
             const isExist = pointLog.some(entry => entry.log.includes(`${data.question} 퀴즈 정답`));
@@ -281,11 +281,11 @@ document.addEventListener('DOMContentLoaded', async () => {
               if (quizPoints[i]) quizPoints[i].textContent = `현재 당신의 포인트는 총 ${points[0]}점 입니다.`;
             }
           } else {
-            liElem.classList.add('bg-red-300');
+            liElem.classList.add('bg-red-300', 'border-2', 'border-red-500');
             // 피드백
             if (quizResult[i]) {
               quizResult[i].textContent = '정답이 아닙니다. 다시 선택 해주세요.';
-              quizResult[i].classList.contains('text-red-500 hover:border-[#ef4444]/50');
+              quizResult[i].classList.contains('text-red-500 ');
             }
           }
 
@@ -357,14 +357,14 @@ document.addEventListener('DOMContentLoaded', async () => {
               circleDiv.appendChild(checkSpan);
 
               if (currentData.options[j].isCorrect) {
-                liElem.classList.add('bg-green-300', 'hover:border-[#22c55e]/50');
+                liElem.classList.add('bg-green-300', 'border-2', 'border-green-500');
                 if (quizResult[index]) quizResult[index].textContent = '축하드립니다! 정답을 맞히셨습니다!';
                 if (quizReason[index]) quizReason[index].textContent = currentData.explanation;
                 if (quizPoints[index]) {
                   quizPoints[index].textContent = `현재 당신의 포인트는 총 ${points[0]}점 입니다.`;
                 }
               } else {
-                liElem.classList.add('bg-red-300', 'hover:border-[#ef4444]/50');
+                liElem.classList.add('bg-red-300', 'border-2', 'border-red-500');
                 if (quizResult[index]) quizResult[index].textContent = '정답이 아닙니다. 다시 선택 해주세요.';
                 if (quizReason[index]) quizReason[index].textContent = currentData.explanation;
               }
@@ -384,12 +384,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const errorImg = document.createElement('img');
     errorImg.src = '/src/pages/webp/503error.webp';
     errorImg.alt = '서비스 에러 이미지';
-    errorImg.className = 'w-full max-w-md mx-auto mt-10';
+    errorImg.className = 'w-full max-w-md mx-auto mt-10 rounded-lg';
 
     // 에러 메시지
     const errorMsg = document.createElement('div');
     errorMsg.innerHTML = `AI가 데이터를 제대로 출력하지 못했습니다.<br/>새로고침을 눌러주세요.`;
-    errorMsg.classList = 'w-full max-w-md mx-auto text-center mt-10 shadow bg-white py-5';
+    errorMsg.classList = 'w-full max-w-md mx-auto text-center mt-10 shadow bg-white py-5 rounded-lg';
 
     // Main Content 내 퀴즈 섹션을 찾아서 내용 비우고 이미지 삽입
     const quizSection = document.querySelector('div.lg\\:col-span-2 section') as HTMLElement;
