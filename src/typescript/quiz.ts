@@ -329,10 +329,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             const circleDiv = document.createElement('div');
             circleDiv.className = 'h-5 w-5 rounded-full border border-gray-200 mr-3 flex items-center justify-center';
 
-            const checkSpan = document.createElement('span');
-            checkSpan.textContent = '✓';
-            checkSpan.className = 'text-sm text-[#005DBA]';
-
             const spanElem = document.createElement('span');
             const textElem = document.createTextNode(currentData.options[j].text);
             spanElem.appendChild(textElem);
@@ -345,28 +341,30 @@ document.addEventListener('DOMContentLoaded', async () => {
               if (quizFeedbacks[index]) quizFeedbacks[index].classList.remove('hidden');
               if (options[index].classList.contains('answered')) return;
 
-              // 다른 선택지들 초기화 (체크 제거, 색상 제거)
+              // 다른 선택지 초기화
               const allLi = options[index].querySelectorAll('li');
               allLi.forEach(li => {
                 li.classList.remove('bg-green-300', 'bg-red-300');
                 const circle = li.querySelector('.h-5.w-5');
                 if (circle) circle.innerHTML = '';
-                li.style.pointerEvents = 'none'; // 클릭 비활성화
+                li.style.pointerEvents = 'none';
               });
 
-              // 현재 항목에 체크 추가
+              // 현재 항목에 체크 추가 (매번 새로운 span 생성)
+              const checkSpan = document.createElement('span');
+              checkSpan.textContent = '✓';
+              checkSpan.className = 'text-sm text-[#005DBA]';
               circleDiv.appendChild(checkSpan);
 
               if (currentData.options[j].isCorrect) {
-                liElem.classList.add('bg-green-300 hover:border-[#22c55e]/50');
+                liElem.classList.add('bg-green-300', 'hover:border-[#22c55e]/50');
                 if (quizResult[index]) quizResult[index].textContent = '축하드립니다! 정답을 맞히셨습니다!';
                 if (quizReason[index]) quizReason[index].textContent = currentData.explanation;
-
                 if (quizPoints[index]) {
                   quizPoints[index].textContent = `현재 당신의 포인트는 총 ${points[0]}점 입니다.`;
                 }
               } else {
-                liElem.classList.add('bg-red-300 hover:border-[#ef4444]/50');
+                liElem.classList.add('bg-red-300', 'hover:border-[#ef4444]/50');
                 if (quizResult[index]) quizResult[index].textContent = '정답이 아닙니다. 다시 선택 해주세요.';
                 if (quizReason[index]) quizReason[index].textContent = currentData.explanation;
               }
