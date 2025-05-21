@@ -134,8 +134,7 @@
       <!-- history 컨텐츠 -->
       <div id="tab-content-history" class="space-y-4 px-3 pt-4 pb-4 hidden">
         <!-- Toggle article panel (즐겨찾기 기사 영역) -->
-        <!-- <section class="px-3 pt-2 pb-4 space-y-6" aria-labelledby="article-title"> -->
-        <section class="pr-1" aria-labelledby="point-title">
+        <section class="pr-1" aria-labelledby="article-title">
           <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md">
             <header id="toggle-header" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg p-5">
               <div class="flex items-center">
@@ -154,12 +153,30 @@
             <div id="article-panel" class="border-gray-200 overflow-hidden transition-all duration-500 max-h-[1000px]"></div>
           </article>
         </section>
-      </div>
 
-      <!-- <nav class="p-4 border-b border-gray-400 flex justify-between items-center"> -->
-      <!-- <h2 class="text-xl font-semibold">마이 페이지</h2> -->
-      <!-- 닫기 버튼 -->
-      <!-- </nav> -->
+        <!-- Toggle history panel (열람한 기사 영역) - 새로 추가된 부분 -->
+        <section class="pr-1" aria-labelledby="history-title">
+          <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md">
+            <header id="toggle-history" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg p-5">
+              <div class="flex items-center">
+                <div class="text-[#3d85c6] mr-2">
+                  <!-- 히스토리 아이콘 -->
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6Z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <h2 id="history-title" class="font-medium text-[#3d85c6]">내가 본 기사</h2>
+              </div>
+              <svg id="history-toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+              </svg>
+            </header>
+            <div id="history-panel" class="border-gray-200 overflow-hidden transition-all duration-500 max-h-[1000px]">
+              <!-- 스크립트로 히스토리 항목이 추가될 위치 -->
+            </div>
+          </article>
+        </section>
+      </div>
     </aside>
 
     <!-- 토글 메뉴 ts와 연동된 설정 -->

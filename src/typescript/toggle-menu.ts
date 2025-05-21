@@ -1,3 +1,5 @@
+import type { NaverNewsItem } from './naverapi.ts';
+
 document.addEventListener('DOMContentLoaded', () => {
   const sidebar = document.getElementById('sidebar');
   const backdrop = document.getElementById('backdrop');
@@ -358,3 +360,142 @@ function generateCalendar(year: number, month: number): number[] {
 
   return calendar as number[];
 }
+
+// Toggle history panel (히스토리 섹션 토글 기능)
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleHistoryBtn = document.getElementById('toggle-history');
+  const historyPanel = document.getElementById('history-panel');
+  const historyIcon = document.getElementById('history-toggle-icon');
+
+  // 히스토리 패널 업데이트 함수 - 언제든 호출 가능
+  function updateHistoryPanel() {
+    if (!historyPanel) return;
+
+    // 패널 내용 초기화
+    historyPanel.innerHTML = '';
+
+    // 로컬 스토리지에서 히스토리 데이터 불러오기
+    const history = JSON.parse(localStorage.getItem('history') || '[]') as NaverNewsItem[];
+
+    // 역순으로 정렬 (최신 항목이 맨 위로)
+    const reversedHistory = [...history].reverse();
+
+    // 히스토리가 비어있을 때 메시지 표시
+    if (reversedHistory.length === 0) {
+      const emptyMessage = document.createElement('div');
+      emptyMessage.className = 'py-4 px-4 text-center text-gray-500';
+      emptyMessage.textContent = '아직 열람한 기사가 없습니다.';
+      emptyMessage.setAttribute('role', 'status');
+      emptyMessage.setAttribute('aria-live', 'polite');
+      historyPanel.appendChild(emptyMessage);
+    } else {
+      // 히스토리 항목 추가 (역순으로)
+      reversedHistory.forEach(article => {
+        // 내부 히스토리 내용
+        const linkElem = document.createElement('a');
+
+        const txt = document.createElement('textarea');
+        txt.innerHTML = article.title;
+        const decoded = txt.value;
+
+        // <b>와 </b> 태그만 제거
+        const cleanText = decoded.replace(/<\/?b>/g, '');
+
+        // 텍스트 노드로 변환
+        const title = document.createTextNode(cleanText);
+
+        const dateElem = document.createElement('span');
+        const date = document.createTextNode(article.pubDate);
+
+        linkElem.setAttribute('href', article.link);
+        linkElem.setAttribute('target', '_blank');
+        linkElem.setAttribute('rel', 'noopener noreferrer');
+        linkElem.appendChild(title);
+        linkElem.className = 'text-sm text-gray-900 hover:underline block';
+
+        dateElem.appendChild(date);
+        dateElem.className = 'text-xs text-gray-500';
+
+        // 감싸기 시작
+        const innerDiv = document.createElement('div');
+        const midDiv = document.createElement('div');
+        const outerDiv = document.createElement('div');
+        outerDiv.setAttribute('data-link', article.link);
+
+        midDiv.className = 'flex justify-between items-start';
+        outerDiv.className = 'py-2 px-4 border-b border-gray-100';
+
+        innerDiv.appendChild(linkElem);
+        innerDiv.appendChild(dateElem);
+        midDiv.appendChild(innerDiv);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.setAttribute('type', 'button');
+        deleteBtn.setAttribute('aria-label', '히스토리에서 삭제');
+        deleteBtn.setAttribute('class', 'cursor-pointer');
+        deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
+
+        deleteBtn.addEventListener('click', () => {
+          // 히스토리에서 해당 기사 제거
+          const updatedHistory = history.filter(item => item.link !== article.link);
+          localStorage.setItem('history', JSON.stringify(updatedHistory));
+
+          // 패널 업데이트
+          updateHistoryPanel();
+
+          // 스크린 리더를 위한 알림
+          const srAnnouncement = document.createElement('span');
+          srAnnouncement.className = 'sr-only';
+          srAnnouncement.setAttribute('aria-live', 'polite');
+          srAnnouncement.textContent = '히스토리에서 기사가 삭제되었습니다.';
+          document.body.appendChild(srAnnouncement);
+
+          // 잠시 후 알림 요소 제거
+          setTimeout(() => {
+            if (document.body.contains(srAnnouncement)) {
+              document.body.removeChild(srAnnouncement);
+            }
+          }, 1000);
+        });
+
+        midDiv.appendChild(deleteBtn);
+        outerDiv.append(midDiv);
+
+        // 최종 반영
+        historyPanel.appendChild(outerDiv);
+      });
+    }
+  }
+
+  // 초기 패널 업데이트
+  updateHistoryPanel();
+
+  // 로컬 스토리지 변경 감지 (다른 탭이나 창에서 변경된 경우 대응)
+  window.addEventListener('storage', event => {
+    if (event.key === 'history') {
+      updateHistoryPanel();
+    }
+  });
+
+  // 토글 버튼 이벤트 리스너
+  toggleHistoryBtn?.addEventListener('click', () => {
+    historyPanel?.classList.toggle('max-h-0');
+    historyPanel?.classList.toggle('max-h-[1000px]');
+    historyIcon?.classList.toggle('rotate-180');
+
+    // 토글 버튼 클릭 시에도 패널 내용 업데이트
+    updateHistoryPanel();
+  });
+
+  // 사이드바 열릴 때마다 히스토리 패널 업데이트
+  const openSidebarBtn = document.getElementById('open-sidebar');
+  openSidebarBtn?.addEventListener('click', () => {
+    updateHistoryPanel();
+  });
+
+  // 히스토리 탭 클릭 시 업데이트
+  const tabHistory = document.getElementById('tab-history');
+  tabHistory?.addEventListener('click', () => {
+    updateHistoryPanel();
+  });
+});
