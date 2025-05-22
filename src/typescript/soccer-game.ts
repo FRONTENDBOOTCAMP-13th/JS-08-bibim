@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (highContrastCheckbox.checked) {
       root.style.setProperty('--background-color', '#000000'); // 검정색
       root.style.setProperty('--player-color', '#ffffff'); // 흰색
-      root.style.setProperty('--opponent-color', '#ff0000'); // 빨간색
+      root.style.setProperty('--opponent-color', '#DF2020'); // 빨간색
       root.style.setProperty('--ball-color', '#ffff00'); // 노란색
       root.style.setProperty('--primary-color', '#00aaff'); // 밝은 파란색
       gameMessage.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       root.style.setProperty('--background-color', '#238e23'); // 잔디색
       root.style.setProperty('--player-color', '#ffffff'); // 흰색
-      root.style.setProperty('--opponent-color', '#ef4444'); // 빨간색
+      root.style.setProperty('--opponent-color', '#A41919'); // 빨간색
       root.style.setProperty('--ball-color', '#ffffff'); // 흰색
       root.style.setProperty('--primary-color', '#3b82f6'); // blue-500
       gameMessage.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
