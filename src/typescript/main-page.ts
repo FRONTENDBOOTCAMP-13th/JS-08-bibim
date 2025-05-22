@@ -99,65 +99,68 @@ const renderCard = (article: NaverNewsItem) => {
   const headerBgClass = isInHistory ? 'bg-gray-400' : 'bg-blue-500';
 
   card.innerHTML = `
-  <div class="relative h-40 overflow-hidden ${headerBgClass}">
-    <div 
-      class="w-[15px] h-[15px] absolute top-3 left-4 rounded-full cursor-help" 
-      style="background-color: ${dotColor};"
-      title="${dotTooltip}"
-      role="tooltip"
-      aria-label="${dotTooltip}"
-    ></div>
-    
-    <!-- 하트 아이콘 - 버튼으로 변경 -->
-    <button 
-      class="absolute top-3 right-4 z-10 bg-transparent border-0 p-0 favorite-button"
-      aria-label="즐겨찾기에 추가"
-      title="즐겨찾기에 추가"
-      data-article-id="${article.link}"
+<div class="relative h-40 overflow-hidden ${headerBgClass}">
+  <div 
+    class="w-[15px] h-[15px] absolute top-3 left-4 rounded-full cursor-help" 
+    style="background-color: ${dotColor};"
+    title="${dotTooltip}"
+    role="tooltip"
+    aria-label="${dotTooltip}"
+  ></div>
+  
+  <!-- 하트 아이콘 - 모든 효과 제거, 깔끔하게 -->
+  <button 
+    class="absolute top-3 right-4 z-10 bg-transparent border-0 p-0 favorite-button"
+    aria-label="즐겨찾기에 추가"
+    title="즐겨찾기에 추가"  
+    data-article-id="${article.link}"
+    style="outline: none; box-shadow: none;"
+  >
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      width="20" 
+      height="20" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="white" 
+      stroke-width="2" 
+      stroke-linecap="round" 
+      stroke-linejoin="round" 
+      class="favorite-icon drop-shadow-md"
+      aria-hidden="true"
+      style="pointer-events: none;"
     >
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        width="20" 
-        height="20" 
-        viewBox="0 0 24 24" 
-        fill="none" 
-        stroke="white" 
-        stroke-width="2" 
-        stroke-linecap="round" 
-        stroke-linejoin="round" 
-        class="favorite-icon drop-shadow-md hover:scale-125 transition-transform duration-300"
-      >
-        <path d="M12 21c-7-4-10.5-8.5-10.5-12.5C1.5,5,4,2.5,7.5,2.5c2,0,4,1,4.5,3.5c0.5-2.5,2.5-3.5,4.5-3.5c3.5,0,6,2.5,6,6C22.5,12.5,19,17,12,21z"/>
-      </svg>
-    </button>
-    
-    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
-      <div class="flex justify-between items-center">
-        <span class="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-md">${keyword}</span>
-        <time class="text-xs text-white" datetime="${article.pubDate}">${article.pubDate}</time>
-      </div>
-      <h3 class="text-white font-bold mt-1 line-clamp-2 h-[45px]">${article.title}</h3>
-    </div>
-  </div>
-  <div class="p-4 flex flex-col flex-grow">
-    <p class="text-sm text-gray-700 mb-4 flex-grow">${article.description}</p>
-    
-    <!-- 자세히 보기와 퀴즈 풀러가기 버튼 -->
+      <path d="M12 21c-7-4-10.5-8.5-10.5-12.5C1.5,5,4,2.5,7.5,2.5c2,0,4,1,4.5,3.5c0.5-2.5,2.5-3.5,4.5-3.5c3.5,0,6,2.5,6,6C22.5,12.5,19,17,12,21z"/>
+    </svg>
+  </button>
+  
+  <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
     <div class="flex justify-between items-center">
-      <a href="${article.link}" target="_blank" rel="noopener noreferrer" class="text-blue-500 text-sm flex items-center hover:underline read-more-link">
-        자세히 보기 →
-      </a>
-      <button class="text-green-500 text-sm flex items-center cursor-pointer hover:underline quiz-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1" aria-hidden="true">
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-          <line x1="12" y1="17" x2="12.01" y2="17"></line>
-        </svg>
-        퀴즈 풀러가기
-      </button>
+      <span class="text-xs bg-gray-100 text-gray-800 px-2 py-1 rounded-md">${keyword}</span>
+      <time class="text-xs text-white" datetime="${article.pubDate}">${article.pubDate}</time>
     </div>
+    <h3 class="text-white font-bold mt-1 line-clamp-2 h-[45px]">${article.title}</h3>
   </div>
-  `;
+</div>
+<div class="p-4 flex flex-col flex-grow">
+  <p class="text-sm text-gray-700 mb-4 flex-grow">${article.description}</p>
+  
+  <!-- 자세히 보기와 퀴즈 풀러가기 버튼 -->
+  <div class="flex justify-between items-center">
+    <a href="${article.link}" target="_blank" rel="noopener noreferrer" class="text-blue-500 text-sm flex items-center hover:underline read-more-link">
+      자세히 보기 →
+    </a>
+    <button class="text-green-500 text-sm flex items-center cursor-pointer hover:underline quiz-button" aria-label="퀴즈 풀러가기">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      퀴즈 풀러가기
+    </button>
+  </div>
+</div>
+`;
 
   if (arrQuiz.length < 10) {
     arrQuiz.push({ title: article.title, description: article.description, date: article.pubDate, link: article.link });
@@ -170,12 +173,14 @@ const renderCard = (article: NaverNewsItem) => {
       return;
     }
 
-    // 히스토리에 기사 추가
-    const isDuplicate = history.some(item => isNaverNewsItem(item) && item.link === article.link);
+    // 히스토리에 기사 추가 (수정된 부분)
+    const currentHistory = JSON.parse(localStorage.getItem('history') || '[]') as unknown[];
+    const isDuplicate = currentHistory.some(item => isNaverNewsItem(item) && item.link === article.link);
 
     if (!isDuplicate) {
-      history.push(article);
-      localStorage.setItem('history', JSON.stringify(history));
+      // 새로운 히스토리 배열 생성
+      const updatedHistory = [...currentHistory, article];
+      localStorage.setItem('history', JSON.stringify(updatedHistory));
 
       // UI 업데이트 - 배경색 변경
       card.classList.remove('bg-white');
@@ -190,12 +195,15 @@ const renderCard = (article: NaverNewsItem) => {
 
       // 웹 접근성을 위한 aria-label 추가
       card.setAttribute('aria-label', '읽은 기사');
+      card.setAttribute('aria-describedby', 'read-article-status');
 
-      // 스크린 리더 사용자를 위한 알림
-      const srAnnouncement = document.createElement('span');
+      // 스크린 리더 사용자를 위한 알림 (웹접근성 개선)
+      const srAnnouncement = document.createElement('div');
+      srAnnouncement.id = 'read-article-status';
       srAnnouncement.className = 'sr-only';
       srAnnouncement.setAttribute('aria-live', 'polite');
-      srAnnouncement.textContent = '기사를 읽음 처리했습니다.';
+      srAnnouncement.setAttribute('role', 'status');
+      srAnnouncement.textContent = '기사를 읽음 처리했습니다. 히스토리에 추가되었습니다.';
       document.body.appendChild(srAnnouncement);
 
       // 잠시 후 알림 요소 제거
@@ -203,7 +211,7 @@ const renderCard = (article: NaverNewsItem) => {
         if (document.body.contains(srAnnouncement)) {
           document.body.removeChild(srAnnouncement);
         }
-      }, 1000);
+      }, 2000);
     }
 
     // 자세히 보기 링크로 이동
@@ -213,6 +221,27 @@ const renderCard = (article: NaverNewsItem) => {
   // 키보드 접근성을 위한 Enter 키 이벤트, 내부요소가 아니라 카드 전체에 포커스되어 있을 경우에만 동작
   card.addEventListener('keydown', event => {
     if (event.key === 'Enter' && !(event.target as HTMLElement).closest('a, button')) {
+      // 히스토리 저장 로직도 여기에 동일하게 적용
+      const currentHistory = JSON.parse(localStorage.getItem('history') || '[]') as unknown[];
+      const isDuplicate = currentHistory.some(item => isNaverNewsItem(item) && item.link === article.link);
+
+      if (!isDuplicate) {
+        const updatedHistory = [...currentHistory, article];
+        localStorage.setItem('history', JSON.stringify(updatedHistory));
+
+        // UI 업데이트
+        card.classList.remove('bg-white');
+        card.classList.add('bg-gray-300');
+
+        const headerElement = card.querySelector('div.relative.h-40');
+        if (headerElement) {
+          headerElement.classList.remove('bg-blue-500');
+          headerElement.classList.add('bg-gray-400');
+        }
+
+        card.setAttribute('aria-label', '읽은 기사');
+      }
+
       window.open(article.link, '_blank', 'noopener,noreferrer');
     }
   });
@@ -227,25 +256,24 @@ const renderCard = (article: NaverNewsItem) => {
     }
   }
 
-  const section = document.getElementById('article-panel');
   favoriteButton?.addEventListener('click', event => {
-    const bookMark = JSON.parse(localStorage.getItem('bookMark') || '[]');
-    event.preventDefault();
-    event.stopPropagation();
+    event.preventDefault(); // ★ 기본 동작 방지
+    event.stopPropagation(); // ★ 이벤트 전파 중단
 
+    const currentBookMark = JSON.parse(localStorage.getItem('bookMark') || '[]');
     const isFavorite = favoriteIcon?.getAttribute('fill') === 'white'; //하트의 fill 속성이 "white"면 이미 즐겨찾기 되어 있는 상태로 판단
 
     if (isFavorite) {
       // 즐겨찾기 해제
       favoriteIcon?.setAttribute('fill', 'none');
-      favoriteButton.setAttribute('aria-label', '즐겨찾기에 제거');
-      favoriteButton.setAttribute('title', '즐겨찾기에 제거');
+      favoriteButton.setAttribute('aria-label', '즐겨찾기에 추가');
+      favoriteButton.setAttribute('title', '즐겨찾기에 추가');
 
       // 북마크에서 해당 기사 제거
-      for (let i = 0; i < bookMark.length; i++) {
-        if (bookMark[i][0] === article.link) {
-          bookMark.splice(i, 1); // 배열에서 제거
-          localStorage.setItem('bookMark', JSON.stringify(bookMark));
+      for (let i = 0; i < currentBookMark.length; i++) {
+        if (currentBookMark[i][0] === article.link) {
+          currentBookMark.splice(i, 1); // 배열에서 제거
+          localStorage.setItem('bookMark', JSON.stringify(currentBookMark));
 
           const section = document.querySelector('#article-panel');
           const targetDiv = section?.querySelector(`[data-link="${article.link}"]`);
@@ -253,24 +281,35 @@ const renderCard = (article: NaverNewsItem) => {
             section?.removeChild(targetDiv);
           }
 
+          // 웹접근성: 삭제 완료 알림
+          const srAnnouncement = document.createElement('div');
+          srAnnouncement.className = 'sr-only';
+          srAnnouncement.setAttribute('aria-live', 'polite');
+          srAnnouncement.setAttribute('role', 'status');
+          srAnnouncement.textContent = '즐겨찾기에서 기사가 삭제되었습니다.';
+          document.body.appendChild(srAnnouncement);
+
+          setTimeout(() => {
+            if (document.body.contains(srAnnouncement)) {
+              document.body.removeChild(srAnnouncement);
+            }
+          }, 2000);
+
           break;
         }
       }
-
-      // 변경된 북마크 저장
-      localStorage.setItem('bookMark', JSON.stringify(bookMark));
     } else {
       // 즐겨찾기 추가
       favoriteIcon?.setAttribute('fill', 'white');
-      favoriteButton.setAttribute('aria-label', '즐겨찾기에서 추가');
-      favoriteButton.setAttribute('title', '즐겨찾기에서 추가');
+      favoriteButton.setAttribute('aria-label', '즐겨찾기에서 제거');
+      favoriteButton.setAttribute('title', '즐겨찾기에서 제거');
       const arr = [] as string[];
       arr.push(article.link);
       arr.push(article.title);
       arr.push(article.pubDate);
 
-      bookMark.push(arr);
-      localStorage.setItem('bookMark', JSON.stringify(bookMark));
+      currentBookMark.push(arr);
+      localStorage.setItem('bookMark', JSON.stringify(currentBookMark));
 
       const linkElem = document.createElement('a');
 
@@ -290,8 +329,9 @@ const renderCard = (article: NaverNewsItem) => {
       linkElem.setAttribute('href', article.link);
       linkElem.setAttribute('target', '_blank');
       linkElem.setAttribute('rel', 'noopener noreferrer');
+      linkElem.setAttribute('aria-label', `즐겨찾기 기사: ${cleanText}`); // 웹접근성
       linkElem.appendChild(title);
-      linkElem.className = 'text-sm text-gray-900 hover:underline block';
+      linkElem.className = 'text-sm text-gray-900 hover:underline block focus:outline-none focus:ring-2 focus:ring-blue-500 rounded';
 
       dateElem.appendChild(date);
       dateElem.className = 'text-xs text-gray-500';
@@ -311,21 +351,26 @@ const renderCard = (article: NaverNewsItem) => {
 
       const deleteBtn = document.createElement('button');
       deleteBtn.setAttribute('type', 'button');
-      deleteBtn.setAttribute('class', 'cursor-pointer');
-      deleteBtn.setAttribute('class', 'delete-btn');
-      deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
+      deleteBtn.setAttribute('aria-label', '즐겨찾기에서 삭제'); // ★ 웹접근성
+      deleteBtn.setAttribute('title', '즐겨찾기에서 삭제'); // ★ 툴팁
+      deleteBtn.className = 'cursor-pointer p-1 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500'; // ★ 웹접근성 스타일
+      deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
 
-      deleteBtn.addEventListener('click', () => {
+      deleteBtn.addEventListener('click', deleteEvent => {
+        deleteEvent.stopPropagation(); // ★ 이벤트 전파 중단
+        deleteEvent.preventDefault(); // ★ 기본 동작 방지
+
         // 즐겨찾기 해제
         favoriteIcon?.setAttribute('fill', 'none');
-        favoriteButton.setAttribute('aria-label', '즐겨찾기에 제거');
-        favoriteButton.setAttribute('title', '즐겨찾기에 제거');
+        favoriteButton.setAttribute('aria-label', '즐겨찾기에 추가');
+        favoriteButton.setAttribute('title', '즐겨찾기에 추가');
 
         // 북마크에서 해당 기사 제거
-        for (let i = 0; i < bookMark.length; i++) {
-          if (bookMark[i][0] === article.link) {
-            bookMark.splice(i, 1); // 배열에서 제거
-            localStorage.setItem('bookMark', JSON.stringify(bookMark));
+        const latestBookMark = JSON.parse(localStorage.getItem('bookMark') || '[]');
+        for (let i = 0; i < latestBookMark.length; i++) {
+          if (latestBookMark[i][0] === article.link) {
+            latestBookMark.splice(i, 1);
+            localStorage.setItem('bookMark', JSON.stringify(latestBookMark));
 
             const section = document.querySelector('#article-panel');
             const targetDiv = section?.querySelector(`[data-link="${article.link}"]`);
@@ -333,26 +378,54 @@ const renderCard = (article: NaverNewsItem) => {
               section?.removeChild(targetDiv);
             }
 
+            // 웹접근성: 삭제 완료 알림
+            const srAnnouncement = document.createElement('div');
+            srAnnouncement.className = 'sr-only';
+            srAnnouncement.setAttribute('aria-live', 'polite');
+            srAnnouncement.setAttribute('role', 'status');
+            srAnnouncement.textContent = '즐겨찾기에서 기사가 삭제되었습니다.';
+            document.body.appendChild(srAnnouncement);
+
+            setTimeout(() => {
+              if (document.body.contains(srAnnouncement)) {
+                document.body.removeChild(srAnnouncement);
+              }
+            }, 2000);
+
             break;
           }
         }
-
-        // 변경된 북마크 저장
-        localStorage.setItem('bookMark', JSON.stringify(bookMark));
       });
+
       midDiv.appendChild(deleteBtn);
       outerDiv.append(midDiv);
 
       // 최종 반영
+      const section = document.getElementById('article-panel');
       section?.appendChild(outerDiv);
-    }
 
-    // 즐겨찾기 상태 저장 로직
+      // 웹접근성: 즐겨찾기 추가 완료 알림
+      const srAnnouncement = document.createElement('div');
+      srAnnouncement.className = 'sr-only';
+      srAnnouncement.setAttribute('aria-live', 'polite');
+      srAnnouncement.setAttribute('role', 'status');
+      srAnnouncement.textContent = '즐겨찾기에 기사가 추가되었습니다.';
+      document.body.appendChild(srAnnouncement);
+
+      setTimeout(() => {
+        if (document.body.contains(srAnnouncement)) {
+          document.body.removeChild(srAnnouncement);
+        }
+      }, 2000);
+    }
   });
 
   // 퀴즈 풀러 가기
   const quizBtn = card.querySelector('.quiz-button');
-  quizBtn?.addEventListener('click', () => {
+  quizBtn?.addEventListener('click', event => {
+    event.stopPropagation(); // ★ 이벤트 전파 중단
+    event.preventDefault(); // ★ 기본 동작 방지
+
     const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", ""]');
     quizStorage[0] = article.title;
     quizStorage[1] = article.description;
@@ -372,7 +445,7 @@ const renderCard = (article: NaverNewsItem) => {
 const setupInitialView = () => {
   const newsGrid = document.getElementById('newsGrid');
   if (newsGrid) {
-    newsGrid.innerHTML = '<div class="col-span-full text-center py-8">관심 있는 카테고리를 선택하거나 검색어를 입력하세요.</div>';
+    newsGrid.innerHTML = '<div class="col-span-full text-center py-8" role="status" aria-live="polite">관심 있는 카테고리를 선택하거나 검색어를 입력하세요.</div>';
   }
 
   // 페이지 제목 업데이트
@@ -416,7 +489,7 @@ const searchNews = async (searchKeyword: string): Promise<void> => {
   // 로딩 상태 표시
   const newsGrid = document.getElementById('newsGrid');
   if (newsGrid) {
-    newsGrid.innerHTML = '<div class="col-span-full text-center py-8" aria-live="polite">뉴스를 불러오는 중입니다...</div>';
+    newsGrid.innerHTML = '<div class="col-span-full text-center py-8" aria-live="polite" role="status">뉴스를 불러오는 중입니다...</div>';
   }
 
   // 페이지 제목 업데이트
@@ -436,7 +509,7 @@ const searchNews = async (searchKeyword: string): Promise<void> => {
 
       // 기사가 없을 경우
       if (!articles || articles.length === 0) {
-        newsGrid.innerHTML = `<div class="col-span-full text-center py-8" aria-live="polite">'${keyword}'에 관한 뉴스를 찾을 수 없습니다.</div>`;
+        newsGrid.innerHTML = `<div class="col-span-full text-center py-8" aria-live="polite" role="status">'${keyword}'에 관한 뉴스를 찾을 수 없습니다.</div>`;
         return;
       }
       arrQuiz = [];
@@ -447,9 +520,10 @@ const searchNews = async (searchKeyword: string): Promise<void> => {
       });
 
       // 스크린 리더 사용자를 위한 알림
-      const srAnnouncement = document.createElement('span');
+      const srAnnouncement = document.createElement('div');
       srAnnouncement.className = 'sr-only';
       srAnnouncement.setAttribute('aria-live', 'polite');
+      srAnnouncement.setAttribute('role', 'status');
       srAnnouncement.textContent = `${keyword}에 대한 검색 결과 ${articles.length}개를 찾았습니다.`;
       document.body.appendChild(srAnnouncement);
 
@@ -458,12 +532,12 @@ const searchNews = async (searchKeyword: string): Promise<void> => {
         if (document.body.contains(srAnnouncement)) {
           document.body.removeChild(srAnnouncement);
         }
-      }, 1000);
+      }, 2000);
     }
   } catch (error) {
     console.error('뉴스를 불러오는 중 오류가 발생했습니다:', error);
     if (newsGrid) {
-      newsGrid.innerHTML = '<div class="col-span-full text-center py-8 text-red-500" aria-live="assertive">뉴스를 불러오는 중 오류가 발생했습니다.</div>';
+      newsGrid.innerHTML = '<div class="col-span-full text-center py-8 text-red-500" aria-live="assertive" role="alert">뉴스를 불러오는 중 오류가 발생했습니다.</div>';
     }
   }
 };
@@ -581,7 +655,7 @@ categoryNav?.addEventListener('click', async event => {
   // 3. 로딩 상태 표시
   const newsGrid = document.getElementById('newsGrid');
   if (newsGrid) {
-    newsGrid.innerHTML = '<div class="col-span-full text-center py-8" aria-live="polite">뉴스를 불러오는 중입니다. 조금만 기다려주세요 >_<</div>';
+    newsGrid.innerHTML = '<div class="col-span-full text-center py-8" aria-live="polite" role="status">뉴스를 불러오는 중입니다. 조금만 기다려주세요 >_<</div>';
   }
 
   // 페이지 제목 업데이트
@@ -606,9 +680,12 @@ categoryNav?.addEventListener('click', async event => {
 
       // 기사가 없을 경우
       if (!articles || articles.length === 0) {
-        newsGrid.innerHTML = `<div class="col-span-full text-center py-8" aria-live="polite">${keyword}에 관한 뉴스를 찾을 수 없습니다.</div>`;
+        newsGrid.innerHTML = `<div class="col-span-full text-center py-8" aria-live="polite" role="status">${keyword}에 관한 뉴스를 찾을 수 없습니다.</div>`;
         return;
       }
+
+      // arrQuiz 초기화
+      arrQuiz = [];
 
       // 기사 렌더링
       articles.forEach(article => {
@@ -616,9 +693,10 @@ categoryNav?.addEventListener('click', async event => {
       });
 
       // 스크린 리더 사용자를 위한 알림
-      const srAnnouncement = document.createElement('span');
+      const srAnnouncement = document.createElement('div');
       srAnnouncement.className = 'sr-only';
       srAnnouncement.setAttribute('aria-live', 'polite');
+      srAnnouncement.setAttribute('role', 'status');
       srAnnouncement.textContent = `${keyword} 카테고리의 뉴스 ${articles.length}개를 불러왔습니다.`;
       document.body.appendChild(srAnnouncement);
 
@@ -627,12 +705,12 @@ categoryNav?.addEventListener('click', async event => {
         if (document.body.contains(srAnnouncement)) {
           document.body.removeChild(srAnnouncement);
         }
-      }, 1000);
+      }, 2000);
     }
   } catch (error) {
     console.error('뉴스를 불러오는 중 오류가 발생했습니다:', error);
     if (newsGrid) {
-      newsGrid.innerHTML = '<div class="col-span-full text-center py-8 text-red-500" aria-live="assertive">뉴스를 불러오는 중 오류가 발생했습니다.</div>';
+      newsGrid.innerHTML = '<div class="col-span-full text-center py-8 text-red-500" aria-live="assertive" role="alert">뉴스를 불러오는 중 오류가 발생했습니다.</div>';
     }
   }
 });
