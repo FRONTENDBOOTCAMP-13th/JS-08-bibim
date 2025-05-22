@@ -14,9 +14,7 @@
       }
 
       h1 {
-        font-size: 3rem;
-
-        margin-bottom: 20px;
+        margin-bottom: 38px;
       }
 
       #startBtn,
@@ -27,7 +25,7 @@
         border: none;
         border-radius: 8px;
         cursor: pointer;
-        background-color: #007bff;
+        background-color: #2b7fff;
         color: white;
       }
 
@@ -72,8 +70,8 @@
 
       #ballIcon {
         position: absolute;
-        right: -18px;
-        top: 50%;
+        right: 0px;
+        top: 55%;
         transform: translateY(-50%);
         font-size: 1.8rem;
         pointer-events: none;
@@ -121,7 +119,7 @@
 
       #message {
         font-size: 1.5rem;
-        margin-top: 30px;
+        margin-top: 60px;
         min-height: 2em;
       }
 
@@ -396,16 +394,17 @@
         </ul>
       </div>
     </header>
-    <main id="baseball-game" class="pt-6 grow border-t border-gray-200 bg-slate-100 pb-20">
-      <h1>⚾ 타격 타이밍 게임</h1>
+    <main id="baseball-game" class="py-[48px] grow border-t border-gray-200 bg-slate-100">
+      <h1 class="font-bold text-5xl text-blue-500">타격 타이밍 게임</h1>
       <button id="startBtn">게임 시작</button>
       <button id="swingBtn" disabled>스윙!</button>
-      <div class="bar-labels pt-12">
+      <div id="message">게임을 시작해보세요!</div>
+      <div class="bar-labels pt-10">
         <span>0ms</span>
-        <span>150ms</span>
         <span class="label-hot">홈런 타이밍🔥</span>
-        <span>300ms</span>
         <span>500ms</span>
+        <span class="label-hot">헛스윙존🥺</span>
+        <span>800ms</span>
         <span>1000ms</span>
       </div>
       <div class="bar-container">
@@ -418,7 +417,7 @@
         </div>
       </div>
       <div id="timingPrompt"></div>
-      <div id="message">게임을 시작해보세요!</div>
+
       <div id="resultEffect"></div>
     </main>
 
