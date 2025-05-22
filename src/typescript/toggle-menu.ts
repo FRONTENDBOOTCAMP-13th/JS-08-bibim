@@ -227,7 +227,8 @@ document.addEventListener('DOMContentLoaded', () => {
     deleteBtn.setAttribute('class', 'delete-btn');
     deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
 
-    deleteBtn.addEventListener('click', () => {
+    deleteBtn.addEventListener('click', event => {
+      event.stopPropagation(); // ★ 이벤트 전파 중단
       // 북마크에서 해당 기사 제거
       for (let i = 0; i < bookMark.length; i++) {
         if (bookMark[i][0] === data[0]) {
