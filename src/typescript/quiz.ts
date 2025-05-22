@@ -71,12 +71,12 @@ const data = {
     {
       role: 'user',
       content: `다음 내용에서 키워드 3개를 골라 각 키워드에 대한 토막 상식 퀴즈를 내주세요. 총 3문제입니다.
-        출력 형식은 아래 JSON 형식을 정확히 따르세요.
+        **출력 형식은 아래 JSON 형식을 정확히 따르세요.**
         텍스트로 적으세요.
         출력 형식 의외의 출력 절대 금지.
         정확히 따라주세요!! 특히 options를 잘 따라주세요.
         options의 isCorrect에서 2개는 false, 1개는 true로 설정하고, 잘 섞어주세요.
-        전부 한국어로 변환해서 출력하세요:
+        **전부 한국어로 변환해서 출력하세요**:
   
   {
     "question": "생성된 문제 (한 줄 질문)",
@@ -133,8 +133,43 @@ async function callApiWithKeys() {
       return ans; // 성공하면 결과 반환 후 종료
     } catch (error: unknown) {
       console.warn(`API 호출 실패, API_KEY 교체 시도 ${i + 1}:`, error);
+      await new Promise(r => setTimeout(r, 1000));
       // 실패 시 다음 API_KEY로 시도
     }
+  }
+
+  for (let i = 0; i < API_KEYS.length; i++) {
+    const API_KEY = API_KEYS[i];
+    const headers = {
+      Authorization: `Bearer ${API_KEY}`,
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      let ans = `데이터를 불러오지 못했습니다.`;
+      data.model = 'nousresearch/deephermes-3-mistral-24b-preview:free';
+      await axios.post(API_URL, data, { headers }).then(response => {
+        console.log('API 호출 성공:', response.data);
+        ans = response.data.choices[0].message.content;
+      });
+      return ans; // 성공하면 결과 반환 후 종료
+    } catch (error: unknown) {
+      console.warn(`API 호출 실패, API_KEY 교체 시도 ${i + 1}:`, error);
+      // 실패 시 다음 API_KEY로 시도
+    }
+  }
+
+  // 에러 메시지
+  const errorMsg = document.createElement('div');
+  errorMsg.innerHTML = `API 키에 다음과 같은 오류가 생겼습니다.<br/>1. API 키 요청 한도가 끝이 남.<br/>2. 일시적으로 모델의 사용량이 증가하여 제대로 동작을 하지 않음.<br/>새로고침을 눌러주세요.`;
+  errorMsg.classList = 'w-full max-w-md mx-auto text-center my-10 shadow bg-white py-5 rounded-lg';
+
+  // Main Content 내 퀴즈 섹션을 찾아서 내용 비우고 이미지 삽입
+  const quizSection = document.querySelector('div.lg\\:col-span-2 section') as HTMLElement;
+
+  if (quizSection) {
+    quizSection.innerHTML = ''; // 기존 퀴즈 내용 제거
+    quizSection.appendChild(errorMsg);
   }
   throw new Error('모든 API 호출이 실패했습니다.');
 }
