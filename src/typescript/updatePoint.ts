@@ -13,6 +13,9 @@ export function updatePoint(points: number, log: string) {
     if (!isExist) {
       pointsStorage[0] += points;
       logStorage.push({ date: today, log: log });
+      localStorage.setItem('points', JSON.stringify(pointsStorage));
+      localStorage.setItem('pointLog', JSON.stringify(logStorage));
+      renderPoint();
     }
   } else if (log.endsWith(`퀴즈 정답`)) {
     const isExist = logStorage.some(entry => entry.log.includes(log));
@@ -20,11 +23,10 @@ export function updatePoint(points: number, log: string) {
     if (!isExist) {
       pointsStorage[0] += points;
       logStorage.push({ date: today, log: log });
+      localStorage.setItem('points', JSON.stringify(pointsStorage));
+      localStorage.setItem('pointLog', JSON.stringify(logStorage));
     }
   }
-
-  localStorage.setItem('points', JSON.stringify(pointsStorage));
-  localStorage.setItem('pointLog', JSON.stringify(logStorage));
 }
 
 export function renderPoint() {
@@ -46,7 +48,8 @@ export function renderPoint() {
     const pointLog = reversedLogs[0];
     const spanElemLog = document.createElement('span');
     let logTxt;
-    if (pointLog.log === `출석 포인트 적립`) {
+
+    if (pointLog.log && pointLog.log === `출석 포인트 적립`) {
       logTxt = document.createTextNode(pointLog.log);
     } else {
       if (pointLog.log.length > 10) {
@@ -84,10 +87,5 @@ export function renderPoint() {
     midDiv.className = 'flex justify-between';
 
     details.insertBefore(midDiv, details.firstChild);
-
-    // if (details.children.length >= 8) {
-    //   details.children[7].remove();
-    //   details.appendChild();
-    // }
   }
 }

@@ -11,6 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
     sidebar?.classList.add('translate-x-0');
     backdrop?.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+
+    // 웹접근성: 사이드바 열림 상태 알림
+    sidebar?.setAttribute('aria-hidden', 'false');
+
+    // 첫 번째 포커스 가능한 요소로 포커스 이동
+    const firstFocusable = sidebar?.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (firstFocusable instanceof HTMLElement) {
+      firstFocusable.focus();
+    }
   };
 
   const closeSidebar = () => {
@@ -18,6 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
     sidebar?.classList.add('translate-x-full');
     backdrop?.classList.add('hidden');
     document.body.style.overflow = '';
+
+    // 웹접근성: 사이드바 닫힘 상태 알림
+    sidebar?.setAttribute('aria-hidden', 'true');
+
+    // 메뉴 버튼으로 포커스 복귀
+    if (openBtn instanceof HTMLElement) {
+      openBtn.focus();
+    }
   };
 
   openBtn?.addEventListener('click', e => {
@@ -27,6 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   closeBtn?.addEventListener('click', closeSidebar);
   backdrop?.addEventListener('click', closeSidebar);
+
+  // ESC 키로 사이드바 닫기 (웹접근성)
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !sidebar?.classList.contains('translate-x-full')) {
+      closeSidebar();
+    }
+  });
 
   document.addEventListener('click', event => {
     const target = event.target as HTMLElement;
@@ -50,11 +74,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const switchTab = (selected: HTMLButtonElement, deselected: HTMLButtonElement, show: HTMLElement | null, hide: HTMLElement | null) => {
     selected.classList.add('font-medium');
     selected.classList.remove('text-gray-500');
+    selected.setAttribute('aria-selected', 'true'); // 웹접근성
+    selected.setAttribute('tabindex', '0');
+
     deselected.classList.remove('font-medium');
     deselected.classList.add('text-gray-500');
+    deselected.setAttribute('aria-selected', 'false'); // 웹접근성
+    deselected.setAttribute('tabindex', '-1');
 
     show?.classList.remove('hidden');
+    show?.setAttribute('aria-hidden', 'false'); // 웹접근성
     hide?.classList.add('hidden');
+    hide?.setAttribute('aria-hidden', 'true'); // 웹접근성
 
     // 인디케이터 이동 (width 및 left 계산)
     const offsetLeft = selected.offsetLeft;
@@ -67,12 +98,35 @@ document.addEventListener('DOMContentLoaded', () => {
   tabMypage?.addEventListener('click', () => switchTab(tabMypage, tabHistory, contentMypage, contentHistory));
   tabHistory?.addEventListener('click', () => switchTab(tabHistory, tabMypage, contentHistory, contentMypage));
 
+  // 키보드 네비게이션 (웹접근성)
+  tabMypage?.addEventListener('keydown', event => {
+    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+      event.preventDefault();
+      tabHistory?.focus();
+      tabHistory?.click();
+    }
+  });
+
+  tabHistory?.addEventListener('keydown', event => {
+    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+      event.preventDefault();
+      tabMypage?.focus();
+      tabMypage?.click();
+    }
+  });
+
   // 초기 위치 설정
   window.addEventListener('load', () => {
     const activeTab = document.querySelector('#tab-mypage') as HTMLButtonElement;
     if (activeTab && tabIndicator) {
       tabIndicator.style.width = `${activeTab.offsetWidth}px`;
       tabIndicator.style.left = `${activeTab.offsetLeft}px`;
+
+      // 초기 접근성 속성 설정
+      activeTab.setAttribute('aria-selected', 'true');
+      activeTab.setAttribute('tabindex', '0');
+      tabHistory?.setAttribute('aria-selected', 'false');
+      tabHistory?.setAttribute('tabindex', '-1');
     }
   });
 });
@@ -106,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
         logTxt = document.createTextNode(`${pointLog.log.substring(0, 3)}... 퀴즈 정답`);
         spanElemLog.className = 'cursor-help'; // 마우스 커서 스타일 추가
         spanElemLog.title = pointLog.log; // 툴팁 내용 설정
+        spanElemLog.setAttribute('aria-label', pointLog.log); // 웹접근성
       } else {
         logTxt = document.createTextNode(`${pointLog.log} 퀴즈 정답`);
       }
@@ -143,15 +198,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const gold = document.createElement('div');
   const silver = document.createElement('div');
   const bronze = document.createElement('div');
-  bronze.innerHTML = `<svg width="30" height="30" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"> <g fill="#cd7f32"> <rect x="26" y="48" width="12" height="8" /> <rect x="22" y="56" width="20" height="4" /> <path d="M16 16c0 11 6 20 16 20s16-9 16-20V8H16v8z" /> <path d="M8 8v8c0 5 4 9 9 9V21c-3 0-5-2-5-5V8H8zm48 0v8c0 3-2 5-5 5v4c5 0 9-4 9-9V8h-4z" /> </g> </svg>`;
-  silver.innerHTML = `<svg width="30" height="30" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"> <g fill="silver"> <rect x="26" y="48" width="12" height="8" /> <rect x="22" y="56" width="20" height="4" /> <path d="M16 16c0 11 6 20 16 20s16-9 16-20V8H16v8z" /> <path d="M8 8v8c0 5 4 9 9 9V21c-3 0-5-2-5-5V8H8zm48 0v8c0 3-2 5-5 5v4c5 0 9-4 9-9V8h-4z" /> </g> </svg>`;
-  gold.innerHTML = `<svg width="30" height="30" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"> <g fill="gold"> <rect x="26" y="48" width="12" height="8" /> <rect x="22" y="56" width="20" height="4" /> <path d="M16 16c0 11 6 20 16 20s16-9 16-20V8H16v8z" /> <path d="M8 8v8c0 5 4 9 9 9V21c-3 0-5-2-5-5V8H8zm48 0v8c0 3-2 5-5 5v4c5 0 9-4 9-9V8h-4z" /> </g> </svg>`;
+  bronze.innerHTML = `<svg width="30" height="30" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <g fill="#cd7f32"> <rect x="26" y="48" width="12" height="8" /> <rect x="22" y="56" width="20" height="4" /> <path d="M16 16c0 11 6 20 16 20s16-9 16-20V8H16v8z" /> <path d="M8 8v8c0 5 4 9 9 9V21c-3 0-5-2-5-5V8H8zm48 0v8c0 3-2 5-5 5v4c5 0 9-4 9-9V8h-4z" /> </g> </svg>`;
+  silver.innerHTML = `<svg width="30" height="30" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <g fill="silver"> <rect x="26" y="48" width="12" height="8" /> <rect x="22" y="56" width="20" height="4" /> <path d="M16 16c0 11 6 20 16 20s16-9 16-20V8H16v8z" /> <path d="M8 8v8c0 5 4 9 9 9V21c-3 0-5-2-5-5V8H8zm48 0v8c0 3-2 5-5 5v4c5 0 9-4 9-9V8h-4z" /> </g> </svg>`;
+  gold.innerHTML = `<svg width="30" height="30" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"> <g fill="gold"> <rect x="26" y="48" width="12" height="8" /> <rect x="22" y="56" width="20" height="4" /> <path d="M16 16c0 11 6 20 16 20s16-9 16-20V8H16v8z" /> <path d="M8 8v8c0 5 4 9 9 9V21c-3 0-5-2-5-5V8H8zm48 0v8c0 3-2 5-5 5v4c5 0 9-4 9-9V8h-4z" /> </g> </svg>`;
   bronze.setAttribute('title', `Wagle 비기너(10P 달성 업적)`);
   bronze.setAttribute('class', `cursor-help`);
+  bronze.setAttribute('aria-label', 'Wagle 비기너 트로피 - 10포인트 달성'); // 웹접근성
   silver.setAttribute('title', `Wagle 달인(500P 달성 업적)`);
   silver.setAttribute('class', `cursor-help`);
+  silver.setAttribute('aria-label', 'Wagle 달인 트로피 - 500포인트 달성'); // 웹접근성
   gold.setAttribute('title', `Wagle 신(1000P 달성 업적)`);
   gold.setAttribute('class', `cursor-help`);
+  gold.setAttribute('aria-label', 'Wagle 신 트로피 - 1000포인트 달성'); // 웹접근성
 
   const trophySection = document.getElementById('trophy-section');
 
@@ -167,10 +225,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   toggleBtn?.addEventListener('click', () => {
+    const isExpanded = !section?.classList.contains('max-h-0');
+
     section?.classList.toggle('max-h-0');
     section?.classList.toggle('max-h-[1000px]');
     icon?.classList.toggle('rotate-180');
+
+    // 웹접근성: 확장/축소 상태 알림
+    toggleBtn?.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+    section?.setAttribute('aria-hidden', isExpanded ? 'true' : 'false');
   });
+
+  // 초기 접근성 속성 설정
+  toggleBtn?.setAttribute('aria-expanded', 'true');
+  section?.setAttribute('aria-hidden', 'false');
 });
 
 // Toggle article panel
@@ -202,8 +270,9 @@ document.addEventListener('DOMContentLoaded', () => {
     linkElem.setAttribute('href', data[0]);
     linkElem.setAttribute('target', '_blank');
     linkElem.setAttribute('rel', 'noopener noreferrer');
+    linkElem.setAttribute('aria-label', `즐겨찾기 기사: ${cleanText}`); // 웹접근성
     linkElem.appendChild(title);
-    linkElem.className = 'text-sm text-gray-900 hover:underline block';
+    linkElem.className = 'text-sm text-gray-900 hover:underline block focus:outline-none focus:ring-2 focus:ring-blue-500 rounded'; // 웹접근성 스타일
 
     dateElem.appendChild(date);
     dateElem.className = 'text-xs text-gray-500';
@@ -223,11 +292,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const deleteBtn = document.createElement('button');
     deleteBtn.setAttribute('type', 'button');
-    deleteBtn.setAttribute('class', 'cursor-pointer');
-    deleteBtn.setAttribute('class', 'delete-btn');
-    deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
+    deleteBtn.setAttribute('aria-label', '즐겨찾기에서 삭제'); // ★ 웹접근성
+    deleteBtn.setAttribute('title', '즐겨찾기에서 삭제'); // ★ 툴팁
+    deleteBtn.className = 'cursor-pointer p-1 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500'; // ★ 웹접근성 스타일
+    deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
 
-    deleteBtn.addEventListener('click', () => {
+    deleteBtn.addEventListener('click', event => {
+      event.stopPropagation(); // ★ 이벤트 전파 중단
+      event.preventDefault(); // ★ 기본 동작 방지 추가
+
       // 북마크에서 해당 기사 제거
       for (let i = 0; i < bookMark.length; i++) {
         if (bookMark[i][0] === data[0]) {
@@ -240,12 +313,23 @@ document.addEventListener('DOMContentLoaded', () => {
             section?.removeChild(targetDiv);
           }
 
+          // ★ 웹접근성: 삭제 완료 알림
+          const srAnnouncement = document.createElement('div');
+          srAnnouncement.className = 'sr-only';
+          srAnnouncement.setAttribute('aria-live', 'polite');
+          srAnnouncement.setAttribute('role', 'status');
+          srAnnouncement.textContent = '즐겨찾기에서 기사가 삭제되었습니다.';
+          document.body.appendChild(srAnnouncement);
+
+          setTimeout(() => {
+            if (document.body.contains(srAnnouncement)) {
+              document.body.removeChild(srAnnouncement);
+            }
+          }, 2000);
+
           break;
         }
       }
-
-      // 변경된 북마크 저장
-      localStorage.setItem('bookMark', JSON.stringify(bookMark));
     });
 
     midDiv.appendChild(deleteBtn);
@@ -257,10 +341,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 토글 로직
   toggleBtn?.addEventListener('click', () => {
+    const isExpanded = !section?.classList.contains('max-h-0');
+
     section?.classList.toggle('max-h-0');
     section?.classList.toggle('max-h-[1000px]');
     icon?.classList.toggle('rotate-180');
+
+    // 웹접근성: 확장/축소 상태 알림
+    toggleBtn?.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+    section?.setAttribute('aria-hidden', isExpanded ? 'true' : 'false');
   });
+
+  // 초기 접근성 속성 설정
+  toggleBtn?.setAttribute('aria-expanded', 'true');
+  section?.setAttribute('aria-hidden', 'false');
 });
 
 // Toggle attendance section
@@ -270,10 +364,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const icon = document.getElementById('toggle-icon');
 
   toggleBtn?.addEventListener('click', () => {
+    const isExpanded = !section?.classList.contains('max-h-0');
+
     section?.classList.toggle('max-h-0');
     section?.classList.toggle('max-h-[1000px]');
     icon?.classList.toggle('rotate-180');
+
+    // 웹접근성: 확장/축소 상태 알림
+    toggleBtn?.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+    section?.setAttribute('aria-hidden', isExpanded ? 'true' : 'false');
   });
+
+  // 초기 접근성 속성 설정
+  toggleBtn?.setAttribute('aria-expanded', 'true');
+  section?.setAttribute('aria-hidden', 'false');
 
   updateCalendar();
 });
@@ -297,19 +401,25 @@ export function updateCalendar() {
     if (cal == null) {
       cellElem = document.createElement('div');
       cellElem.className = 'h-8';
+      cellElem.setAttribute('aria-hidden', 'true'); // 웹접근성: 빈 셀 숨김
     } else {
       cellElem = document.createElement('div');
+      cellElem.setAttribute('role', 'gridcell'); // 웹접근성
+
       if (cal <= day) {
         const isExist = dateLog.some(entry => entry.log?.includes(`출석 포인트 적립`) && entry.date?.includes(`${year}-${String(month).padStart(2, '0')}-${String(cal).padStart(2, '0')}`));
 
         // 미출석
         if (!isExist) {
           cellElem.className = 'h-8 flex items-center justify-center rounded-full bg-gray-100';
+          cellElem.setAttribute('aria-label', `${month}월 ${cal}일 미출석`); // 웹접근성
         } else {
           cellElem.className = 'h-8 flex items-center justify-center rounded-full bg-green-100';
+          cellElem.setAttribute('aria-label', `${month}월 ${cal}일 출석완료`); // 웹접근성
         }
       } else {
         cellElem.className = 'h-8 flex items-center justify-center rounded-full';
+        cellElem.setAttribute('aria-label', `${month}월 ${cal}일`); // 웹접근성
       }
       cellElem.textContent = `${cal}`;
     }
@@ -339,9 +449,12 @@ export function updateCalendar() {
     }
   }
 
-  if (contAttend) contAttend.textContent = `${maxLength}일`;
+  if (contAttend) {
+    contAttend.textContent = `${maxLength}일`;
+    contAttend.setAttribute('aria-label', `현재 연속 출석 ${maxLength}일`); // 웹접근성
+  }
 
-  function generateCalendar(year: number, month: number): number[] {
+  function generateCalendar(year: number, month: number): (number | null)[] {
     const calendar = [];
 
     // 1일이 무슨 요일인지 확인 (0: 일요일, ..., 6: 토요일)
@@ -362,7 +475,7 @@ export function updateCalendar() {
       }
     }
 
-    return calendar as number[];
+    return calendar;
   }
 }
 
@@ -415,8 +528,9 @@ document.addEventListener('DOMContentLoaded', () => {
         linkElem.setAttribute('href', article.link);
         linkElem.setAttribute('target', '_blank');
         linkElem.setAttribute('rel', 'noopener noreferrer');
+        linkElem.setAttribute('aria-label', `열람한 기사: ${cleanText}`); // 웹접근성
         linkElem.appendChild(title);
-        linkElem.className = 'text-sm text-gray-900 hover:underline block';
+        linkElem.className = 'text-sm text-gray-900 hover:underline block focus:outline-none focus:ring-2 focus:ring-blue-500 rounded'; // 웹접근성 스타일
 
         dateElem.appendChild(date);
         dateElem.className = 'text-xs text-gray-500';
@@ -436,11 +550,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const deleteBtn = document.createElement('button');
         deleteBtn.setAttribute('type', 'button');
-        deleteBtn.setAttribute('aria-label', '히스토리에서 삭제');
-        deleteBtn.setAttribute('class', 'cursor-pointer');
-        deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
+        deleteBtn.setAttribute('aria-label', '히스토리에서 삭제'); // ★ 웹접근성
+        deleteBtn.setAttribute('title', '히스토리에서 삭제'); // ★ 툴팁
+        deleteBtn.className = 'cursor-pointer p-1 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500'; // ★ 웹접근성 스타일
+        deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
 
-        deleteBtn.addEventListener('click', () => {
+        deleteBtn.addEventListener('click', event => {
+          event.stopPropagation(); // ★ 이벤트 전파 중단
+          event.preventDefault(); // ★ 기본 동작 방지 추가
+
           // 히스토리에서 해당 기사 제거
           const updatedHistory = history.filter(item => item.link !== article.link);
           localStorage.setItem('history', JSON.stringify(updatedHistory));
@@ -448,19 +566,19 @@ document.addEventListener('DOMContentLoaded', () => {
           // 패널 업데이트
           updateHistoryPanel();
 
-          // 스크린 리더를 위한 알림
-          const srAnnouncement = document.createElement('span');
+          // ★ 웹접근성: 삭제 완료 알림
+          const srAnnouncement = document.createElement('div');
           srAnnouncement.className = 'sr-only';
           srAnnouncement.setAttribute('aria-live', 'polite');
+          srAnnouncement.setAttribute('role', 'status');
           srAnnouncement.textContent = '히스토리에서 기사가 삭제되었습니다.';
           document.body.appendChild(srAnnouncement);
 
-          // 잠시 후 알림 요소 제거
           setTimeout(() => {
             if (document.body.contains(srAnnouncement)) {
               document.body.removeChild(srAnnouncement);
             }
-          }, 1000);
+          }, 2000);
         });
 
         midDiv.appendChild(deleteBtn);
@@ -469,6 +587,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // 최종 반영
         historyPanel.appendChild(outerDiv);
       });
+
+      // 웹접근성: 히스토리 항목 수 알림
+      const countAnnouncement = document.createElement('div');
+      countAnnouncement.className = 'sr-only';
+      countAnnouncement.setAttribute('aria-live', 'polite');
+      countAnnouncement.setAttribute('role', 'status');
+      countAnnouncement.textContent = `총 ${reversedHistory.length}개의 히스토리 항목이 있습니다.`;
+      historyPanel.appendChild(countAnnouncement);
     }
   }
 
@@ -484,13 +610,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 토글 버튼 이벤트 리스너
   toggleHistoryBtn?.addEventListener('click', () => {
+    const isExpanded = !historyPanel?.classList.contains('max-h-0');
+
     historyPanel?.classList.toggle('max-h-0');
     historyPanel?.classList.toggle('max-h-[1000px]');
     historyIcon?.classList.toggle('rotate-180');
 
+    // 웹접근성: 확장/축소 상태 알림
+    toggleHistoryBtn?.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+    historyPanel?.setAttribute('aria-hidden', isExpanded ? 'true' : 'false');
+
     // 토글 버튼 클릭 시에도 패널 내용 업데이트
     updateHistoryPanel();
   });
+
+  // 초기 접근성 속성 설정
+  toggleHistoryBtn?.setAttribute('aria-expanded', 'true');
+  historyPanel?.setAttribute('aria-hidden', 'false');
 
   // 사이드바 열릴 때마다 히스토리 패널 업데이트
   const openSidebarBtn = document.getElementById('open-sidebar');

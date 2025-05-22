@@ -2,7 +2,7 @@
 <html lang="ko-KR">
   <head>
     <meta charset="UTF-8" />
-    <title>뉴스 카드 리스트 - wagle</title>
+    <title>Wagle - 메인</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/public/iconLogo.svg" type="image/x-icon" />
     <link rel="preload" as="font" href="/font/woff2/PretendardVariable.woff2" crossorigin="anonymous" />
@@ -30,17 +30,11 @@
         </button>
       </div>
 
-      <!-- 탭 콘텐츠 -->
-      <!-- <div id="tab-content-mypage" class="space-y-6 px-3 pt-4 pb-4"> -->
-      <!-- 기존 마이페이지 내용: 포인트, 출석, 즐겨찾기 -->
-      <!-- 그대로 유지 -->
-      <!-- </div> -->
-
       <!-- 마이페이지 콘텐츠 -->
-      <div id="tab-content-mypage" class="space-y-4 px-3 pt-4 pb-4">
+      <div id="tab-content-mypage" class="p-4">
         <!-- Toggle point section (포인트 영역) -->
-        <section class="p-1" aria-labelledby="point-title">
-          <div class="bg-white rounded-lg shadow-md w-full max-w-md border border-gray-200">
+        <section class="" aria-labelledby="point-title">
+          <div class="bg-white rounded-lg shadow-md w-full max-w-md border border-gray-200 mb-4">
             <header id="toggle-point" class="flex justify-between items-center cursor-pointer p-4.5">
               <div class="flex items-center gap-2 text-yellow-500">
                 <svg class="w-7 h-7 pt-1 pl-1" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -70,7 +64,7 @@
         </section>
 
         <!-- Toggle attendance section (내 출석 영역) -->
-        <section class="pr-1" aria-labelledby="attendance-heading">
+        <section class="" aria-labelledby="attendance-heading">
           <div class="bg-white rounded-lg shadow-md w-full max-w-md p-4 border border-gray-200">
             <!-- 내 출석 토글 버튼 -->
             <div class="flex justify-between items-center cursor-pointer p-1" id="toggle-attendance">
@@ -132,10 +126,11 @@
       </div>
 
       <!-- history 컨텐츠 -->
-      <div id="tab-content-history" class="space-y-4 px-3 pt-4 pb-4 hidden">
+      <div id="tab-content-history" class="p-4 hidden">
         <!-- Toggle article panel (즐겨찾기 기사 영역) -->
-        <section class="pr-1" aria-labelledby="article-title">
+        <section class="" aria-labelledby="article-title">
           <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md">
+            <!-- <header id="toggle-header" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg"> -->
             <header id="toggle-header" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg p-5">
               <div class="flex items-center">
                 <div class="text-[#e06666] mr-2">
@@ -155,8 +150,8 @@
         </section>
 
         <!-- Toggle history panel (열람한 기사 영역) - 새로 추가된 부분 -->
-        <section class="pr-1" aria-labelledby="history-title">
-          <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md">
+        <section class="" aria-labelledby="history-title">
+          <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md mt-4">
             <header id="toggle-history" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg p-5">
               <div class="flex items-center">
                 <div class="text-[#3d85c6] mr-2">

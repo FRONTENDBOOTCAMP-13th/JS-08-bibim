@@ -68,15 +68,16 @@ function updateSwiperSlides(newsData: NewsData[], query: string): void {
     const cardBgClass = isAlreadyViewed ? 'bg-gray-400' : bgColorClass;
     const titleColorClass = isAlreadyViewed ? 'text-gray-500' : 'text-white';
     const descColorClass = isAlreadyViewed ? 'text-gray-500' : 'text-white';
-    const tagColorClass = isAlreadyViewed ? 'text-gray-500' : 'text-orange-500';
-    const underlineClass = isAlreadyViewed ? 'bg-gray-500' : 'bg-gradient-to-r from-orange-500 to-orange-600';
+    const tagColorClass = isAlreadyViewed ? 'text-gray-500' : 'text-orange-400';
+    const linkColorClass = isAlreadyViewed ? 'bg-gray-500' : 'bg-gradient-to-r from-orange-500 to-blue-500';
+    const underlineClass = isAlreadyViewed ? 'bg-gray-500' : 'bg-gradient-to-r from-orange-400 to-orange-600';
 
     slideElement.innerHTML = `
     <div class="relative ${cardBgClass} rounded-2xl p-8 md:p-10 text-left transition-all">
-      <div class="text-xl ${tagColorClass}">${query}</div>
+      <div class="text-xl pretendard mb-4 ${tagColorClass}">${query}</div>
       <div class="text-4xl pretendard mb-4 ${titleColorClass}">${news.title}</div>
       <p class="text-lg md:text-xl mb-6 ${descColorClass}">${news.description}</p>
-      <a href="${news.link}" target="_blank" class="mt-3 text-gray-300 read-more">Read More</a>
+      <a href="${news.link}" target="_blank" class="mt-3 mb-6 ${linkColorClass} text-white hover:brightness-125 read-more border-0 px-3 py-1 rounded-full">Read More</a>
       <div class="h-1 w-full max-w-xs mt-3 ${underlineClass}"></div>
     </div>
     `;
@@ -150,26 +151,35 @@ window.addEventListener('DOMContentLoaded', async () => {
 
       if (slide) {
         const title = slide.querySelector('.pretendard.mb-4');
+        const title2 = slide.querySelector('.text-4xl.pretendard.mb-4');
         const desc = slide.querySelector('p');
-        const tag = slide.querySelector('.text-orange-500'); // query 텍스트
-        const gradient = slide.querySelector('.bg-gradient-to-r'); // 밑줄 div
+        const tag = slide.querySelector('.text-orange-400'); // query 텍스트
+        const gradient = slide.querySelector('div.h-1'); // 밑줄 div
         const card = target.closest('.relative');
 
         // ✅ query 텍스트 색상 회색으로
         if (tag) {
-          tag.classList.remove('text-orange-500');
+          tag.classList.remove('text-orange-400');
           tag.classList.add('text-gray-500');
         }
 
         // ✅ 하단 선 색상 회색으로 변경
         if (gradient) {
-          gradient.classList.remove('bg-gradient-to-r', 'from-orange-500', 'to-orange-600');
+          gradient.classList.forEach(cls => {
+            if (cls.startsWith('bg-gradient-') || cls.startsWith('from-') || cls.startsWith('to-') || cls.startsWith('bg-orange') || cls.startsWith('bg-blue')) {
+              gradient.classList.remove(cls);
+            }
+          });
+
           gradient.classList.add('bg-gray-500');
         }
 
         // ✅ 텍스트 흐림 처리
         title?.classList.remove('text-white');
         title?.classList.add('text-gray-500');
+
+        title2?.classList.remove('text-white');
+        title2?.classList.add('text-gray-500');
 
         desc?.classList.remove('text-white');
         desc?.classList.add('text-gray-500');
@@ -178,6 +188,12 @@ window.addEventListener('DOMContentLoaded', async () => {
         if (card) {
           card.classList.remove('bg-[#0d75f3]', 'bg-[#0a5dc2]', 'bg-[#074691]', 'bg-[#052e61]', 'bg-[#074691]', 'bg-[#0a5dc2]');
           card.classList.add('bg-gray-400');
+        }
+
+        // ✅ 버튼 테두리도 회색으로
+        if (target.classList.contains('read-more')) {
+          target.classList.remove('bg-gradient-to-r', 'from-orange-500', 'to-blue-500', 'text-white');
+          target.classList.add('bg-gray-500', 'text-gray-300', 'border', 'border-gray-500');
         }
       }
 

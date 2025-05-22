@@ -2,7 +2,7 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <title>타격 타이밍 게임 - wagle</title>
+    <title>Wagle - 야구 게임</title>
     <link rel="icon" href="/public/iconLogo.svg" type="image/x-icon" />
     <style>
       #baseball-game {
@@ -14,9 +14,7 @@
       }
 
       h1 {
-        font-size: 3rem;
-
-        margin-bottom: 20px;
+        margin-bottom: 38px;
       }
 
       #startBtn,
@@ -27,7 +25,7 @@
         border: none;
         border-radius: 8px;
         cursor: pointer;
-        background-color: #007bff;
+        background-color: #2b7fff;
         color: white;
       }
 
@@ -72,8 +70,8 @@
 
       #ballIcon {
         position: absolute;
-        right: -18px;
-        top: 50%;
+        right: 0px;
+        top: 55%;
         transform: translateY(-50%);
         font-size: 1.8rem;
         pointer-events: none;
@@ -121,7 +119,7 @@
 
       #message {
         font-size: 1.5rem;
-        margin-top: 30px;
+        margin-top: 60px;
         min-height: 2em;
       }
 
@@ -210,17 +208,11 @@
         </button>
       </div>
 
-      <!-- 탭 콘텐츠 -->
-      <!-- <div id="tab-content-mypage" class="space-y-6 px-3 pt-4 pb-4"> -->
-      <!-- 기존 마이페이지 내용: 포인트, 출석, 즐겨찾기 -->
-      <!-- 그대로 유지 -->
-      <!-- </div> -->
-
       <!-- 마이페이지 콘텐츠 -->
-      <div id="tab-content-mypage" class="space-y-4 px-3 pt-4 pb-4">
+      <div id="tab-content-mypage" class="p-4">
         <!-- Toggle point section (포인트 영역) -->
-        <section class="p-1" aria-labelledby="point-title">
-          <div class="bg-white rounded-lg shadow-md w-full max-w-md border border-gray-200">
+        <section class="" aria-labelledby="point-title">
+          <div class="bg-white rounded-lg shadow-md w-full max-w-md border border-gray-200 mb-4">
             <header id="toggle-point" class="flex justify-between items-center cursor-pointer p-4.5">
               <div class="flex items-center gap-2 text-yellow-500">
                 <svg class="w-7 h-7 pt-1 pl-1" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -250,7 +242,7 @@
         </section>
 
         <!-- Toggle attendance section (내 출석 영역) -->
-        <section class="pr-1" aria-labelledby="attendance-heading">
+        <section class="" aria-labelledby="attendance-heading">
           <div class="bg-white rounded-lg shadow-md w-full max-w-md p-4 border border-gray-200">
             <!-- 내 출석 토글 버튼 -->
             <div class="flex justify-between items-center cursor-pointer p-1" id="toggle-attendance">
@@ -312,10 +304,11 @@
       </div>
 
       <!-- history 컨텐츠 -->
-      <div id="tab-content-history" class="space-y-4 px-3 pt-4 pb-4 hidden">
+      <div id="tab-content-history" class="p-4 hidden">
         <!-- Toggle article panel (즐겨찾기 기사 영역) -->
-        <section class="pr-1" aria-labelledby="article-title">
+        <section class="" aria-labelledby="article-title">
           <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md">
+            <!-- <header id="toggle-header" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg"> -->
             <header id="toggle-header" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg p-5">
               <div class="flex items-center">
                 <div class="text-[#e06666] mr-2">
@@ -335,8 +328,8 @@
         </section>
 
         <!-- Toggle history panel (열람한 기사 영역) - 새로 추가된 부분 -->
-        <section class="pr-1" aria-labelledby="history-title">
-          <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md">
+        <section class="" aria-labelledby="history-title">
+          <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md mt-4">
             <header id="toggle-history" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg p-5">
               <div class="flex items-center">
                 <div class="text-[#3d85c6] mr-2">
@@ -401,16 +394,17 @@
         </ul>
       </div>
     </header>
-    <main id="baseball-game" class="pt-6 grow border-t border-gray-200 bg-slate-100 pb-20">
-      <h1>⚾ 타격 타이밍 게임</h1>
+    <main id="baseball-game" class="py-[48px] grow border-t border-gray-200 bg-slate-100">
+      <h1 class="font-bold text-5xl text-blue-500">타격 타이밍 게임</h1>
       <button id="startBtn">게임 시작</button>
       <button id="swingBtn" disabled>스윙!</button>
-      <div class="bar-labels pt-12">
+      <div id="message">게임을 시작해보세요!</div>
+      <div class="bar-labels pt-10">
         <span>0ms</span>
-        <span>150ms</span>
         <span class="label-hot">홈런 타이밍🔥</span>
-        <span>300ms</span>
         <span>500ms</span>
+        <span class="label-hot">헛스윙존🥺</span>
+        <span>800ms</span>
         <span>1000ms</span>
       </div>
       <div class="bar-container">
@@ -423,7 +417,7 @@
         </div>
       </div>
       <div id="timingPrompt"></div>
-      <div id="message">게임을 시작해보세요!</div>
+
       <div id="resultEffect"></div>
     </main>
 
