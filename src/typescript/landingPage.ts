@@ -112,7 +112,7 @@ async function fetchAndRenderNews(query: string) {
 
 // ✅ DOM이 로드되면 초기화 + 검색 이벤트 바인딩
 window.addEventListener('DOMContentLoaded', async () => {
-  const defaultQuery = '[종합]';
+  const defaultQuery = '종합';
   await fetchAndRenderNews(defaultQuery);
 
   const inputElement = document.getElementById('searchInput') as HTMLInputElement;
@@ -133,7 +133,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       const link = (target as HTMLAnchorElement).href;
 
       const slide = target.closest('.swiper-slide');
-      const title = slide?.querySelector('.pretendard')?.textContent ?? '';
+      const title = slide?.querySelector('.text-4xl.pretendard.mb-4')?.textContent ?? '';
       const description = slide?.querySelector('p')?.textContent ?? '';
       const keyword = slide?.querySelector('.text-xl')?.textContent ?? ''; // query 텍스트
 
