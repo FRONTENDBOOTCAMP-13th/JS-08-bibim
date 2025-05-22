@@ -221,18 +221,17 @@
         </ul>
       </div>
 
-      <form action="" class="w-full flex justify-center">
+      <form action="" class="w-full flex justify-center" role="search">
         <div class="relative w-full max-w-2xl mx-auto my-6">
-          <label for="search" class="sr-only">검색어 입력</label>
-
           <!-- 뉴모피즘 스타일 wrapper -->
           <div class="relative w-full rounded-full bg-[#f1f3f6] border border-[#f5f5f5] shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] before:content-[''] before:absolute before:inset-0 before:rounded-full before:shadow-[inset_2px_2px_5px_rgba(255,255,255,0.6)] before:pointer-events-none">
             <!-- 검색 input -->
+            <label for="search" class="sr-only">검색어 입력</label>
             <input id="search" type="search" placeholder="키워드를 입력하세요!" class="w-full pl-12 pr-4 py-2 bg-[#f1f3f6] text-gray-600 rounded-full text-base outline-none placeholder:text-gray-400" />
 
             <!-- 아이콘 -->
             <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-[#0d75f3] pointer-events-none">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
               </svg>
             </div>
