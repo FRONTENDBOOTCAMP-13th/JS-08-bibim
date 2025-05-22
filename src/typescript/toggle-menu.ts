@@ -143,7 +143,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const points = JSON.parse(localStorage.getItem('points') || '[0]');
   if (pointView) pointView.textContent = `${points[0]} P`;
 
-  const pointLogs = JSON.parse(localStorage.getItem('pointLog') || '[]') as { date: string; log: string }[];
+  const pointLogs = JSON.parse(localStorage.getItem('pointLog') || '[]') as {
+    date: string;
+    log: string;
+  }[];
 
   const reversedLogs = pointLogs.slice().reverse();
 
@@ -241,102 +244,141 @@ document.addEventListener('DOMContentLoaded', () => {
   section?.setAttribute('aria-hidden', 'false');
 });
 
-// Toggle article panel
-// 초기 내용
+// 북마크 데이터 타입 정의
+type BookmarkData = [string, string, string]; // [url, title, date]
+
+// Toggle article panel - 개선된 버전
 document.addEventListener('DOMContentLoaded', () => {
   const toggleBtn = document.getElementById('toggle-header');
-  // 즐찾 기사를 감싸는 div
   const section = document.getElementById('article-panel');
   const icon = document.getElementById('article-toggle-icon');
 
-  const bookMark = JSON.parse(localStorage.getItem('bookMark') || '[]');
-  bookMark.forEach((data: string[]) => {
-    // 내부 즐겨찾기 내용
-    const linkElem = document.createElement('a');
+  // 즐겨찾기 패널 업데이트 함수
+  function updateBookmarkPanel() {
+    if (!section) return;
 
-    const txt = document.createElement('textarea');
-    txt.innerHTML = data[1];
-    const decoded = txt.value;
+    // 패널 내용 초기화
+    section.innerHTML = '';
 
-    // <b>와 </b> 태그만 제거
-    const cleanText = decoded.replace(/<\/?b>/g, '');
+    const bookMark = JSON.parse(localStorage.getItem('bookMark') || '[]') as BookmarkData[];
 
-    // 텍스트 노드로 변환
-    const title = document.createTextNode(cleanText);
+    // 즐겨찾기가 비어있을 때 메시지 표시
+    if (bookMark.length === 0) {
+      const emptyMessage = document.createElement('div');
+      emptyMessage.className = 'py-4 px-4 text-center text-gray-500';
+      emptyMessage.textContent = '아직 즐겨찾기한 기사가 없습니다.';
+      emptyMessage.setAttribute('role', 'status'); // 웹접근성
+      emptyMessage.setAttribute('aria-live', 'polite'); // 웹접근성
+      section.appendChild(emptyMessage);
+      return;
+    }
 
-    const dateElem = document.createElement('span');
-    const date = document.createTextNode(data[2]);
+    // 즐겨찾기 항목들 추가
+    bookMark.forEach((data: BookmarkData) => {
+      // 내부 즐겨찾기 내용
+      const linkElem = document.createElement('a');
 
-    linkElem.setAttribute('href', data[0]);
-    linkElem.setAttribute('target', '_blank');
-    linkElem.setAttribute('rel', 'noopener noreferrer');
-    linkElem.setAttribute('aria-label', `즐겨찾기 기사: ${cleanText}`); // 웹접근성
-    linkElem.appendChild(title);
-    linkElem.className = 'text-sm text-gray-900 hover:underline block focus:outline-none focus:ring-2 focus:ring-blue-500 rounded'; // 웹접근성 스타일
+      const txt = document.createElement('textarea');
+      txt.innerHTML = data[1];
+      const decoded = txt.value;
 
-    dateElem.appendChild(date);
-    dateElem.className = 'text-xs text-gray-500';
+      // <b>와 </b> 태그만 제거
+      const cleanText = decoded.replace(/<\/?b>/g, '');
 
-    // 감싸기 시작
-    const innerDiv = document.createElement('div');
-    const midDiv = document.createElement('div');
-    const outerDiv = document.createElement('div');
-    outerDiv.setAttribute('data-link', data[0]);
+      // 텍스트 노드로 변환
+      const title = document.createTextNode(cleanText);
 
-    midDiv.className = 'flex justify-between items-start';
-    outerDiv.className = 'py-2 px-4 border-b border-gray-100';
+      const dateElem = document.createElement('span');
+      const date = document.createTextNode(data[2]);
 
-    innerDiv.appendChild(linkElem);
-    innerDiv.appendChild(dateElem);
-    midDiv.appendChild(innerDiv);
+      linkElem.setAttribute('href', data[0]);
+      linkElem.setAttribute('target', '_blank');
+      linkElem.setAttribute('rel', 'noopener noreferrer');
+      linkElem.setAttribute('aria-label', `즐겨찾기 기사: ${cleanText}`); // 웹접근성
+      linkElem.appendChild(title);
+      linkElem.className = 'text-sm text-gray-900 hover:underline block focus:outline-none focus:ring-2 focus:ring-blue-500 rounded'; // 웹접근성 스타일
 
-    const deleteBtn = document.createElement('button');
-    deleteBtn.setAttribute('type', 'button');
-    deleteBtn.setAttribute('aria-label', '즐겨찾기에서 삭제'); // ★ 웹접근성
-    deleteBtn.setAttribute('title', '즐겨찾기에서 삭제'); // ★ 툴팁
-    deleteBtn.className = 'cursor-pointer p-1 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500'; // ★ 웹접근성 스타일
-    deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
+      dateElem.appendChild(date);
+      dateElem.className = 'text-xs text-gray-500';
 
-    deleteBtn.addEventListener('click', event => {
-      event.stopPropagation(); // ★ 이벤트 전파 중단
-      event.preventDefault(); // ★ 기본 동작 방지 추가
+      // 감싸기 시작
+      const innerDiv = document.createElement('div');
+      const midDiv = document.createElement('div');
+      const outerDiv = document.createElement('div');
+      outerDiv.setAttribute('data-link', data[0]);
 
-      // 북마크에서 해당 기사 제거
-      for (let i = 0; i < bookMark.length; i++) {
-        if (bookMark[i][0] === data[0]) {
-          bookMark.splice(i, 1); // 배열에서 제거
-          localStorage.setItem('bookMark', JSON.stringify(bookMark));
+      midDiv.className = 'flex justify-between items-start';
+      outerDiv.className = 'py-2 px-4 border-b border-gray-100';
 
-          const section = document.querySelector('#article-panel');
-          const targetDiv = section?.querySelector(`[data-link="${data[0]}"]`);
-          if (targetDiv) {
-            section?.removeChild(targetDiv);
+      innerDiv.appendChild(linkElem);
+      innerDiv.appendChild(dateElem);
+      midDiv.appendChild(innerDiv);
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.setAttribute('type', 'button');
+      deleteBtn.setAttribute('aria-label', '즐겨찾기에서 삭제'); // 웹접근성
+      deleteBtn.setAttribute('title', '즐겨찾기에서 삭제'); // 툴팁
+      deleteBtn.className = 'cursor-pointer p-1 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500'; // 웹접근성 스타일
+      deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
+
+      deleteBtn.addEventListener('click', event => {
+        event.stopPropagation(); // 이벤트 전파 중단
+        event.preventDefault(); // 기본 동작 방지 추가
+
+        // 북마크에서 해당 기사 제거
+        for (let i = 0; i < bookMark.length; i++) {
+          if (bookMark[i][0] === data[0]) {
+            bookMark.splice(i, 1); // 배열에서 제거
+            localStorage.setItem('bookMark', JSON.stringify(bookMark));
+
+            // 패널 업데이트
+            updateBookmarkPanel();
+
+            // 웹접근성: 삭제 완료 알림
+            const srAnnouncement = document.createElement('div');
+            srAnnouncement.className = 'sr-only';
+            srAnnouncement.setAttribute('aria-live', 'polite');
+            srAnnouncement.setAttribute('role', 'status');
+            srAnnouncement.textContent = '즐겨찾기에서 기사가 삭제되었습니다.';
+            document.body.appendChild(srAnnouncement);
+
+            setTimeout(() => {
+              if (document.body.contains(srAnnouncement)) {
+                document.body.removeChild(srAnnouncement);
+              }
+            }, 2000);
+
+            break;
           }
-
-          // ★ 웹접근성: 삭제 완료 알림
-          const srAnnouncement = document.createElement('div');
-          srAnnouncement.className = 'sr-only';
-          srAnnouncement.setAttribute('aria-live', 'polite');
-          srAnnouncement.setAttribute('role', 'status');
-          srAnnouncement.textContent = '즐겨찾기에서 기사가 삭제되었습니다.';
-          document.body.appendChild(srAnnouncement);
-
-          setTimeout(() => {
-            if (document.body.contains(srAnnouncement)) {
-              document.body.removeChild(srAnnouncement);
-            }
-          }, 2000);
-
-          break;
         }
-      }
+      });
+
+      midDiv.appendChild(deleteBtn);
+      outerDiv.append(midDiv);
+
+      // 최종 반영
+      section.appendChild(outerDiv);
     });
 
-    midDiv.appendChild(deleteBtn);
-    outerDiv.append(midDiv);
+    // 웹접근성: 즐겨찾기 항목 수 알림
+    if (bookMark.length > 0) {
+      const countAnnouncement = document.createElement('div');
+      countAnnouncement.className = 'sr-only';
+      countAnnouncement.setAttribute('aria-live', 'polite');
+      countAnnouncement.setAttribute('role', 'status');
+      countAnnouncement.textContent = `총 ${bookMark.length}개의 즐겨찾기 기사가 있습니다.`;
+      section.appendChild(countAnnouncement);
+    }
+  }
 
-    // 최종 반영
-    section?.appendChild(outerDiv);
+  // 초기 패널 업데이트
+  updateBookmarkPanel();
+
+  // 로컬 스토리지 변경 감지 (다른 탭이나 창에서 변경된 경우 대응)
+  window.addEventListener('storage', event => {
+    if (event.key === 'bookMark') {
+      updateBookmarkPanel();
+    }
   });
 
   // 토글 로직
@@ -350,13 +392,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // 웹접근성: 확장/축소 상태 알림
     toggleBtn?.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
     section?.setAttribute('aria-hidden', isExpanded ? 'true' : 'false');
+
+    // 토글 버튼 클릭 시에도 패널 내용 업데이트
+    updateBookmarkPanel();
   });
 
   // 초기 접근성 속성 설정
   toggleBtn?.setAttribute('aria-expanded', 'true');
   section?.setAttribute('aria-hidden', 'false');
-});
 
+  // 사이드바 열릴 때마다 즐겨찾기 패널 업데이트
+  const openSidebarBtn = document.getElementById('open-sidebar');
+  openSidebarBtn?.addEventListener('click', () => {
+    updateBookmarkPanel();
+  });
+
+  // 마이페이지 탭 클릭 시 업데이트
+  const tabMypage = document.getElementById('tab-mypage');
+  tabMypage?.addEventListener('click', () => {
+    updateBookmarkPanel();
+  });
+});
 // Toggle attendance section
 document.addEventListener('DOMContentLoaded', () => {
   const toggleBtn = document.getElementById('toggle-attendance');
@@ -394,7 +450,10 @@ export function updateCalendar() {
   if (gridElem) gridElem.innerHTML = '';
 
   // 출석한 날짜들 불러오기!
-  const dateLog = JSON.parse(localStorage.getItem('pointLog') || '[]') as { date: string; log: string }[];
+  const dateLog = JSON.parse(localStorage.getItem('pointLog') || '[]') as {
+    date: string;
+    log: string;
+  }[];
 
   cals.forEach(cal => {
     let cellElem;

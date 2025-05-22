@@ -1,0 +1,14 @@
+<svg width="3000" height="1000" xmlns="http://www.w3.org/2000/svg">
+ <!-- 아이콘 -->
+
+ <!-- 텍스트 -->
+ <g>
+  <title>Layer 1</title>
+  <rect x="684.50725" y="190.77581" width="612.29462" height="612.29462" rx="100" fill="#0070f3" id="svg_1" stroke="null"/>
+  <rect x="811.58151" y="538.87132" width="344.29991" height="40.81964" rx="15" fill="#E0F0FF" id="svg_4" stroke="null"/>
+  <rect x="811.58151" y="620.5106" width="204.09821" height="40.81964" rx="15" fill="#E0F0FF" id="svg_5" stroke="null"/>
+  <text x="1418.8631" y="56.99602" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#0070F3" id="svg_6" stroke="null" transform="matrix(10.2049 0 0 10.2049 -13075.9 0)">wagle</text>
+  <rect x="811.58152" y="455.89558" width="265.63653" height="46.97348" rx="15" fill="#E0F0FF" id="svg_8" stroke="null"/>
+  <rect x="811.58151" y="332.81894" width="365.63631" height="83.89647" rx="20" fill="#E0F0FF" id="svg_9" stroke="null"/>
+ </g>
+</svg>
