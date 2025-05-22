@@ -2,9 +2,9 @@
 <html lang="ko-KR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/public/iconLogo.svg" />
+    <link rel="icon" type="image/svg+xml" href="/public/iconLogo3.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wagle - 뉴스들이 모이는 곳</title>
+    <title>WAGLE</title>
     <link rel="preload" as="font" href="/font/woff2/PretendardVariable.woff2" crossorigin="anonymous" />
     <link rel="stylesheet" as="style" href="/font/pretendardvariable.css" />
     <script type="module" src="/src/main.ts"></script>
@@ -84,11 +84,17 @@
         </button>
       </div>
 
+      <!-- 탭 콘텐츠 -->
+      <!-- <div id="tab-content-mypage" class="space-y-6 px-3 pt-4 pb-4"> -->
+      <!-- 기존 마이페이지 내용: 포인트, 출석, 즐겨찾기 -->
+      <!-- 그대로 유지 -->
+      <!-- </div> -->
+
       <!-- 마이페이지 콘텐츠 -->
-      <div id="tab-content-mypage" class="p-4">
+      <div id="tab-content-mypage" class="space-y-4 px-3 pt-4 pb-4">
         <!-- Toggle point section (포인트 영역) -->
-        <section class="" aria-labelledby="point-title">
-          <div class="bg-white rounded-lg shadow-md w-full max-w-md border border-gray-200 mb-4">
+        <section class="p-1" aria-labelledby="point-title">
+          <div class="bg-white rounded-lg shadow-md w-full max-w-md border border-gray-200">
             <header id="toggle-point" class="flex justify-between items-center cursor-pointer p-4.5">
               <div class="flex items-center gap-2 text-yellow-500">
                 <svg class="w-7 h-7 pt-1 pl-1" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -118,7 +124,7 @@
         </section>
 
         <!-- Toggle attendance section (내 출석 영역) -->
-        <section class="" aria-labelledby="attendance-heading">
+        <section class="pr-1" aria-labelledby="attendance-heading">
           <div class="bg-white rounded-lg shadow-md w-full max-w-md p-4 border border-gray-200">
             <!-- 내 출석 토글 버튼 -->
             <div class="flex justify-between items-center cursor-pointer p-1" id="toggle-attendance">
@@ -180,11 +186,10 @@
       </div>
 
       <!-- history 컨텐츠 -->
-      <div id="tab-content-history" class="p-4 hidden">
+      <div id="tab-content-history" class="space-y-4 px-3 pt-4 pb-4 hidden">
         <!-- Toggle article panel (즐겨찾기 기사 영역) -->
-        <section class="" aria-labelledby="article-title">
+        <section class="pr-1" aria-labelledby="article-title">
           <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md">
-            <!-- <header id="toggle-header" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg"> -->
             <header id="toggle-header" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg p-5">
               <div class="flex items-center">
                 <div class="text-[#e06666] mr-2">
@@ -204,8 +209,8 @@
         </section>
 
         <!-- Toggle history panel (열람한 기사 영역) - 새로 추가된 부분 -->
-        <section class="" aria-labelledby="history-title">
-          <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md mt-4">
+        <section class="pr-1" aria-labelledby="history-title">
+          <article class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-md w-full max-w-md">
             <header id="toggle-history" class="flex items-center cursor-pointer justify-between bg-white rounded-t-lg p-5">
               <div class="flex items-center">
                 <div class="text-[#3d85c6] mr-2">
@@ -234,17 +239,22 @@
     <header class="bg-white w-full z-[10]">
       <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         <!-- 로고 -->
-        <a href="/src/pages/main-page.html" class="block h-10 w-44">
-          <svg aria-hidden="true" aria-label="홈페이지로 이동" width="150" height="45" viewBox="0 0 180 60" xmlns="http://www.w3.org/2000/svg">
+        <a href="/src/pages/main-page.html" class="block h-10 w-28 ml-[25px]">
+          <svg viewBox="0 0 1614 612" xmlns="http://www.w3.org/2000/svg">
             <!-- 아이콘 -->
-            <rect x="0" y="0" width="60" height="60" rx="12" fill="#E0F0FF" />
-            <rect x="12" y="12" width="36" height="8" rx="2" fill="#0070F3" />
-            <rect x="12" y="24" width="24" height="4" rx="2" fill="#0070F3" />
-            <rect x="12" y="32" width="36" height="4" rx="2" fill="#0070F3" />
-            <rect x="12" y="40" width="20" height="4" rx="2" fill="#0070F3" />
 
             <!-- 텍스트 -->
-            <text x="70" y="40" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#0070F3">wagle</text>
+            <g>
+              <title>Layer 1</title>
+              <g id="svg_2">
+                <rect stroke="null" id="svg_1" fill="#0070f3" rx="100" height="612.29462" width="612.29462" y="0" x="0" />
+                <rect stroke="null" id="svg_4" fill="#E0F0FF" rx="15" height="40.81964" width="344.29991" y="348.09551" x="127.07426" />
+                <rect stroke="null" id="svg_5" fill="#E0F0FF" rx="15" height="40.81964" width="204.09821" y="429.73479" x="127.07426" />
+                <text transform="matrix(10.2049 0 0 10.2049 -13075.9 0)" stroke="null" id="svg_6" fill="#0070F3" font-weight="bold" font-size="32" font-family="Arial, sans-serif" y="38.30149" x="1351.78677">wagle</text>
+                <rect stroke="null" id="svg_8" fill="#E0F0FF" rx="15" height="46.97348" width="265.63653" y="265.11977" x="127.07427" />
+                <rect stroke="null" id="svg_9" fill="#E0F0FF" rx="20" height="83.89647" width="365.63631" y="142.04313" x="127.07426" />
+              </g>
+            </g>
           </svg>
         </a>
 
@@ -270,12 +280,12 @@
     <!-- Centered Container -->
     <div class="flex flex-col items-center justify-center min-h-screen px-4 pb-20 text-center">
       <!-- Title -->
-      <h1 class="text-4xl md:text-5xl font-medium text-gray-600 mb-12">
+      <h1 class="text-4xl md:text-5xl font-medium text-gray-600 mb-5">
         뉴스가 모이는 곳<br />
         <div style="color: #0170f3">Wagle!</div>
       </h1>
       <!-- 검색창 -->
-      <div class="relative w-full max-w-md mx-auto my-10">
+      <div class="relative w-full max-w-lg mx-auto my-10 mb-16">
         <div class="relative w-full rounded-full bg-[#f1f3f6] border border-[#f5f5f5] shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] before:content-[''] before:absolute before:inset-0 before:rounded-full before:shadow-[inset_2px_2px_5px_rgba(255,255,255,0.6)] before:pointer-events-none">
           <input id="searchInput" type="search" placeholder="키워드를 입력하세요!" class="w-full pl-10 pr-4 py-2 bg-[#f1f3f6] text-gray-600 rounded-full text-base outline-none" />
 
