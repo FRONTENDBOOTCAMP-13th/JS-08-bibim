@@ -258,12 +258,12 @@ function showQuestion(index: number): void {
 
     question.options.forEach(option => {
       const listItem = document.createElement('li');
-      listItem.className = 'p-4 border rounded-lg hover:bg-blue-50 cursor-pointer transition';
+      listItem.className = 'p-4 border border-gray-300 rounded-lg hover:bg-blue-100 hover:outline-none hover:ring-2 hover:ring-[#0070F3] focus:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-[#0070F3] cursor-pointer transition';
       listItem.textContent = option.text;
 
       // 이미 선택한 옵션인 경우 스타일 적용
       if (userAnswers[index] === option.value) {
-        listItem.classList.add('bg-blue-100', 'border-blue-500');
+        listItem.classList.add('bg-blue-100', 'border-2', 'border-blue-500');
       }
 
       //리스트를 클릭했을때 일어날 이벤트
@@ -271,9 +271,11 @@ function showQuestion(index: number): void {
         userAnswers[index] = option.value; //사용자의 답변을 배열에 저장하고
         //클릭한것의 스타일 변경
         optionList.querySelectorAll('li').forEach(item => {
-          item.classList.remove('bg-blue-100', 'border-blue-500');
+          item.classList.remove('bg-blue-100', 'border-blue-500', 'border-2');
+          item.classList.add('border-gray-300'); // 다시 초기 border로
         });
-        listItem.classList.add('bg-blue-100', 'border-blue-500');
+        listItem.classList.remove('border-gray-300'); // ★ 이 줄이 핵심
+        listItem.classList.add('bg-blue-100', 'border-blue-500', 'border-2');
       });
 
       optionList.appendChild(listItem);
@@ -391,7 +393,7 @@ function showResult(): void {
       <h2 class="text-3xl font-bold mb-6">테스트 결과</h2>
       <p class="text-5xl font-bold text-blue-600 mb-6">${result.name}</p>
       <p class="text-xl mb-8">${result.message}</p>
-      <button id="restartButton" class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg">
+      <button id="restartButton" class="bg-blue-500 hover:brightness-125 text-white font-semibold py-3 px-6 rounded-lg">
         다시 시작하기
       </button>
     `;

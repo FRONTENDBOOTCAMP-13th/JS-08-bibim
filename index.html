@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WAGLE</title>
     <link rel="preload" as="font" href="/font/woff2/PretendardVariable.woff2" crossorigin="anonymous" />
-    <link rel="stylesheet" as="style" href="/font/pretendardvariable.css" />
+    <link rel="preload" as="style" href="/font/pretendardvariable.css" />
     <script type="module" src="/src/main.ts"></script>
     <script type="module" src="/src/typescript/toggle-menu.ts"></script>
 
@@ -281,13 +281,14 @@
     <div class="flex flex-col items-center justify-center min-h-screen px-4 pb-20 text-center">
       <!-- Title -->
       <h1 class="text-4xl md:text-5xl font-medium text-gray-600 mb-5">
-        뉴스가 모이는 곳<br />
-        <div style="color: #0170f3">Wagle!</div>
+        <span>뉴스가 모이는곳</span>
+        <br />
+        <span class="mt-2 inline-flex text-[#0170f3]">Wagle!</span>
       </h1>
       <!-- 검색창 -->
       <div class="relative w-full max-w-lg mx-auto my-10 mb-16">
         <div class="relative w-full rounded-full bg-[#f1f3f6] border border-[#f5f5f5] shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] before:content-[''] before:absolute before:inset-0 before:rounded-full before:shadow-[inset_2px_2px_5px_rgba(255,255,255,0.6)] before:pointer-events-none">
-          <input id="searchInput" type="search" placeholder="키워드를 입력하세요!" class="w-full pl-10 pr-4 py-2 bg-[#f1f3f6] text-gray-600 rounded-full text-base outline-none" />
+          <input aria-label="검색" id="searchInput" type="search" placeholder="키워드를 입력하세요!" class="w-full pl-10 pr-4 py-2 bg-[#f1f3f6] text-gray-600 rounded-full text-base outline-none" />
 
           <!-- 🔍 아이콘 -->
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-[#0d75f3] absolute left-3.5 top-1/2 transform -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -301,8 +302,8 @@
         <div class="swiper-wrapper">
           <!-- Slide 1 -->
           <div class="swiper-slide">
-            <div class="relative bg-[#0d75f3] rounded-2xl p-8 md:p-10 text-left text-white shadow-lg">
-              <div class="text-xl pretendard mb-4 text-orange-400">[경제]</div>
+            <div class="relative bg-[#0069e2] rounded-2xl p-8 md:p-10 text-left text-white shadow-lg">
+              <div class="text-xl pretendard mb-4 text-orange-400">경제</div>
               <div class="text-4xl pretendard mb-4">트럼프 관세에 무너지는 韓 성장률...KDI, 3개월만에 1.6→0.8%로 대...</div>
               <p class="text-lg md:text-xl mb-6">트럼프발 관세 전쟁으로 한국개발연구원(KDI)이 올해 한국의 경제성장률 전망치를 종전 1.6%에서 0.8%로 대폭 끌어내렸다. 한국은행과 정부를 비롯한 국내외기구가 제시한 전망치 가운데 가장 낮은 수준으로 첫 0%대 성장률이다. KDI는 14일 발표한 ‘2025 상반기 경제전망’에서...</p>
               <a href="/" class="mt-3 mb-3 text-white bg-gradient-to-r from-orange-500 to-blue-500 hover:brightness-125 read-more border-0 px-3 py-1 rounded-full">Read More</a>
@@ -329,27 +330,27 @@
       <!-- Scrolling Partner Logos -->
       <div class="marquee-wrapper py-4">
         <div class="marquee-track" id="marqueeTrack">
-          <img src="/public/svg/Asiae_CI_Light.svg" class="h-10 mx-6" />
-          <img src="/public/svg/Dong-a_Ilbo_logo.svg" class="h-10 mx-6" />
-          <img src="/public/svg/Hankyorehe.svg" class="h-10 mx-6" />
-          <img src="/public/svg/Hankyung_logo.svg" class="h-10 mx-6" />
-          <img src="/public/svg/Seoul_Shinmun_logo.svg" class="h-10 mx-6" />
-          <img src="/public/svg/The_JoongAng_logo.svg" class="h-10 mx-6" />
-          <img src="/public/svg/The_kyunghyang_shinmun_logo.svg" class="h-10 mx-6" />
-          <img src="/public/svg/YTN_2014_logo.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/Asiae_CI_Light.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/Dong-a_Ilbo_logo.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/Hankyorehe.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/Hankyung_logo.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/Seoul_Shinmun_logo.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/The_JoongAng_logo.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/The_kyunghyang_shinmun_logo.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/YTN_2014_logo.svg" class="h-10 mx-6" />
           <!-- 복제본 (같은 이미지 다시 반복) -->
-          <img src="/public/svg/Asiae_CI_Light.svg" class="h-10 mx-6" />
-          <img src="/public/svg/Dong-a_Ilbo_logo.svg" class="h-10 mx-6" />
-          <img src="/public/svg/Hankyorehe.svg" class="h-10 mx-6" />
-          <img src="/public/svg/Hankyung_logo.svg" class="h-10 mx-6" />
-          <img src="/public/svg/Seoul_Shinmun_logo.svg" class="h-10 mx-6" />
-          <img src="/public/svg/The_JoongAng_logo.svg" class="h-10 mx-6" />
-          <img src="/public/svg/The_kyunghyang_shinmun_logo.svg" class="h-10 mx-6" />
-          <img src="/public/svg/YTN_2014_logo.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/Asiae_CI_Light.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/Dong-a_Ilbo_logo.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/Hankyorehe.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/Hankyung_logo.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/Seoul_Shinmun_logo.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/The_JoongAng_logo.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/The_kyunghyang_shinmun_logo.svg" class="h-10 mx-6" />
+          <img alt="" aria-hidden="true" src="/public/svg/YTN_2014_logo.svg" class="h-10 mx-6" />
         </div>
       </div>
 
-      <button id="toggleButton" class="mt-10 w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center shadow-xl transition-all">
+      <button type="button" aria-label="토글 버튼" id="toggleButton" class="mt-10 w-12 h-12 bg-blue-500 hover:brightness-125 rounded-xl flex items-center justify-center shadow-xl transition-all">
         <!-- ▶️ (재생 아이콘) -->
         <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
           <path d="M5 3v18l15-9L5 3z" />

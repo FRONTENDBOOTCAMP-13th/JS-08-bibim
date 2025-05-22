@@ -18,7 +18,7 @@
         --primary-light: #bfdbfe; /* blue-200 */
         --background-color: #238e23; /* 원래 잔디색 */
         --player-color: #ffffff;
-        --opponent-color: #ef4444; /* red-500 */
+        --opponent-color: #df2020; /* red */
         --ball-color: #ffffff;
         --goal-color: #f8fafc; /* slate-50 */
         --text-color: #374151; /* gray-700 - 어두운 텍스트 */
@@ -37,7 +37,7 @@
       #accessibility-title,
       #control-title,
       #soccer-game-title {
-        color: var(--primary-color);
+        color: #026be7;
         text-align: center;
       }
 
@@ -196,7 +196,7 @@
 
       #reset-game,
       #start-game {
-        background-color: var(--primary-color);
+        background-color: #026be7;
         color: white;
         border: none;
         padding: 12px 20px;
@@ -213,7 +213,7 @@
       #reset-game:focus,
       #start-game:hover,
       #start-game:focus {
-        background-color: var(--primary-dark);
+        filter: brightness(1.25);
         outline: 3px solid var(--primary-light);
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
@@ -563,9 +563,9 @@
       <h1 id="soccer-game-title" class="text-5xl font-bold pb-7">축구 게임</h1>
       <div id="accessibility-options">
         <h2 id="accessibility-title">접근성 설정</h2>
-        <label> <input type="checkbox" id="high-contrast" /> 고대비 모드 (색약/색맹 사용자용) </label>
-        <label> <input type="checkbox" id="slow-motion" /> 느린 게임 속도 (시각장애, 인지장애 사용자용) </label>
-        <label> <input type="checkbox" id="sound-effects" checked /> 소리 효과 (화면을 보지 않고도 게임 상태 파악 가능) </label>
+        <label> <input type="checkbox" id="high-contrast" /> 고대비 모드 </label>
+        <label> <input type="checkbox" id="slow-motion" /> 느린 게임 속도 </label>
+        <label> <input type="checkbox" id="sound-effects" checked /> 소리 효과 </label>
       </div>
       <div id="controls">
         <h2 id="control-title">게임 조작 방법</h2>

@@ -227,12 +227,12 @@ function isValidQuizData(data: Quiz): boolean {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const quizProblems = document.querySelectorAll('[name="quizProblem"]');
+  const quizProblems = document.querySelectorAll('[data-name="quizProblem"]');
   const options = document.querySelectorAll('.option');
   const quizFeedbacks = document.querySelectorAll('.quiz-feedback');
-  const quizResult = document.querySelectorAll('[name="quiz-result"]');
-  const quizReason = document.querySelectorAll('[name="quiz-reason"]');
-  const quizPoints = document.querySelectorAll('[name="quiz-points"]');
+  const quizResult = document.querySelectorAll('[data-name="quiz-result"]');
+  const quizReason = document.querySelectorAll('[data-name="quiz-reason"]');
+  const quizPoints = document.querySelectorAll('[data-name="quiz-points"]');
   const retryBtns = document.querySelectorAll('.retry');
 
   const points = JSON.parse(localStorage.getItem('points') || '[0]');
@@ -433,5 +433,25 @@ document.addEventListener('DOMContentLoaded', async () => {
       quizSection.appendChild(errorImg);
       quizSection.appendChild(errorMsg);
     }
+  }
+});
+
+// quiz.ts
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const keyword = params.get('keyword');
+
+  if (keyword) {
+    console.log('검색 키워드:', keyword); // 확인용
+    const articles = document.querySelectorAll('.recommand-title, .recommand-description');
+
+    articles.forEach(el => {
+      const text = el.textContent?.toLowerCase() || '';
+      if (!text.includes(keyword.toLowerCase())) {
+        (el.closest('div') as HTMLElement).style.display = 'none';
+      } else {
+        (el.closest('div') as HTMLElement).style.display = '';
+      }
+    });
   }
 });

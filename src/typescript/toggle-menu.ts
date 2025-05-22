@@ -1,5 +1,12 @@
 import type { NaverNewsItem } from './naverapi.ts';
 
+// HTML 디코딩을 위한 안전한 함수 (함수 상단에 추가)
+function decodeHtmlEntities(text: string): string {
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = text;
+  return tempDiv.textContent || tempDiv.innerText || '';
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const sidebar = document.getElementById('sidebar');
   const backdrop = document.getElementById('backdrop');
@@ -544,20 +551,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const historyPanel = document.getElementById('history-panel');
   const historyIcon = document.getElementById('history-toggle-icon');
 
-  // 히스토리 패널 업데이트 함수 - 언제든 호출 가능
   function updateHistoryPanel() {
     if (!historyPanel) return;
 
-    // 패널 내용 초기화
     historyPanel.innerHTML = '';
-
-    // 로컬 스토리지에서 히스토리 데이터 불러오기
     const history = JSON.parse(localStorage.getItem('history') || '[]') as NaverNewsItem[];
-
-    // 역순으로 정렬 (최신 항목이 맨 위로)
     const reversedHistory = [...history].reverse();
 
-    // 히스토리가 비어있을 때 메시지 표시
     if (reversedHistory.length === 0) {
       const emptyMessage = document.createElement('div');
       emptyMessage.className = 'py-4 px-4 text-center text-gray-500';
@@ -566,71 +566,98 @@ document.addEventListener('DOMContentLoaded', () => {
       emptyMessage.setAttribute('aria-live', 'polite');
       historyPanel.appendChild(emptyMessage);
     } else {
-      // 히스토리 항목 추가 (역순으로)
       reversedHistory.forEach(article => {
-        // 내부 히스토리 내용
+        // ✅ 핵심 수정: title이 "[종합]"이면 description에서 제목 추출
+        let displayTitle = '';
+
+        if (article.title && article.title !== '[종합]' && article.title.trim() !== '') {
+          const decodedTitle = decodeHtmlEntities(article.title);
+          displayTitle = decodedTitle.replace(/<\/?[^>]+(>|$)/g, '').trim();
+        } else if (article.description) {
+          const decodedDesc = decodeHtmlEntities(article.description);
+          const cleanDesc = decodedDesc.replace(/<\/?[^>]+(>|$)/g, '').trim();
+
+          const sentences = cleanDesc.split(/[.!?。]/);
+          if (sentences.length > 0 && sentences[0].trim()) {
+            displayTitle = sentences[0].trim().substring(0, 100);
+            if (cleanDesc.length > 100) {
+              displayTitle += '...';
+            }
+          } else {
+            displayTitle = cleanDesc.substring(0, 100);
+            if (cleanDesc.length > 100) {
+              displayTitle += '...';
+            }
+          }
+        }
+
+        if (!displayTitle || displayTitle.trim() === '') {
+          displayTitle = '제목 없음';
+        }
+
         const linkElem = document.createElement('a');
-
-        const txt = document.createElement('textarea');
-        txt.innerHTML = article.title;
-        const decoded = txt.value;
-
-        // <b>와 </b> 태그만 제거
-        const cleanText = decoded.replace(/<\/?b>/g, '');
-
-        // 텍스트 노드로 변환
-        const title = document.createTextNode(cleanText);
-
-        const dateElem = document.createElement('span');
-        const date = document.createTextNode(article.pubDate);
-
         linkElem.setAttribute('href', article.link);
         linkElem.setAttribute('target', '_blank');
         linkElem.setAttribute('rel', 'noopener noreferrer');
-        linkElem.setAttribute('aria-label', `열람한 기사: ${cleanText}`); // 웹접근성
-        linkElem.appendChild(title);
-        linkElem.className = 'text-sm text-gray-900 hover:underline block focus:outline-none focus:ring-2 focus:ring-blue-500 rounded'; // 웹접근성 스타일
+        linkElem.setAttribute('aria-label', `열람한 기사: ${displayTitle}`);
+        linkElem.textContent = displayTitle;
+        linkElem.className = 'text-sm text-gray-900 hover:underline block focus:outline-none focus:ring-2 focus:ring-blue-500 rounded p-1';
 
-        dateElem.appendChild(date);
-        dateElem.className = 'text-xs text-gray-500';
+        const dateElem = document.createElement('span');
+        let displayDate = '';
+        if (article.pubDate) {
+          try {
+            const date = new Date(article.pubDate);
+            displayDate = date.toLocaleDateString('ko-KR', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+            });
+          } catch {
+            displayDate = article.pubDate;
+          }
+        }
+        dateElem.textContent = displayDate;
+        dateElem.className = 'text-xs text-gray-500 mt-1';
 
-        // 감싸기 시작
         const innerDiv = document.createElement('div');
         const midDiv = document.createElement('div');
         const outerDiv = document.createElement('div');
         outerDiv.setAttribute('data-link', article.link);
 
-        midDiv.className = 'flex justify-between items-start';
-        outerDiv.className = 'py-2 px-4 border-b border-gray-100';
+        midDiv.className = 'flex justify-between items-start gap-2';
+        outerDiv.className = 'py-3 px-4 border-b border-gray-100 hover:bg-gray-50 transition-colors';
 
-        innerDiv.appendChild(linkElem);
-        innerDiv.appendChild(dateElem);
+        const textContainer = document.createElement('div');
+        textContainer.className = 'flex-1 min-w-0';
+        textContainer.appendChild(linkElem);
+        textContainer.appendChild(dateElem);
+
+        innerDiv.appendChild(textContainer);
         midDiv.appendChild(innerDiv);
 
         const deleteBtn = document.createElement('button');
         deleteBtn.setAttribute('type', 'button');
-        deleteBtn.setAttribute('aria-label', '히스토리에서 삭제'); // ★ 웹접근성
-        deleteBtn.setAttribute('title', '히스토리에서 삭제'); // ★ 툴팁
-        deleteBtn.className = 'cursor-pointer p-1 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500'; // ★ 웹접근성 스타일
-        deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
+        deleteBtn.setAttribute('aria-label', `히스토리에서 "${displayTitle}" 삭제`);
+        deleteBtn.setAttribute('title', '히스토리에서 삭제');
+        deleteBtn.className = 'flex-shrink-0 p-2 rounded-full hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors';
+        deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-red-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
 
         deleteBtn.addEventListener('click', event => {
-          event.stopPropagation(); // ★ 이벤트 전파 중단
-          event.preventDefault(); // ★ 기본 동작 방지 추가
+          event.stopPropagation();
+          event.preventDefault();
 
-          // 히스토리에서 해당 기사 제거
           const updatedHistory = history.filter(item => item.link !== article.link);
           localStorage.setItem('history', JSON.stringify(updatedHistory));
-
-          // 패널 업데이트
           updateHistoryPanel();
 
-          // ★ 웹접근성: 삭제 완료 알림
           const srAnnouncement = document.createElement('div');
           srAnnouncement.className = 'sr-only';
           srAnnouncement.setAttribute('aria-live', 'polite');
           srAnnouncement.setAttribute('role', 'status');
-          srAnnouncement.textContent = '히스토리에서 기사가 삭제되었습니다.';
+          srAnnouncement.textContent = `"${displayTitle}" 기사가 히스토리에서 삭제되었습니다.`;
           document.body.appendChild(srAnnouncement);
 
           setTimeout(() => {
@@ -641,19 +668,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         midDiv.appendChild(deleteBtn);
-        outerDiv.append(midDiv);
-
-        // 최종 반영
+        outerDiv.appendChild(midDiv);
         historyPanel.appendChild(outerDiv);
       });
-
-      // 웹접근성: 히스토리 항목 수 알림
-      const countAnnouncement = document.createElement('div');
-      countAnnouncement.className = 'sr-only';
-      countAnnouncement.setAttribute('aria-live', 'polite');
-      countAnnouncement.setAttribute('role', 'status');
-      countAnnouncement.textContent = `총 ${reversedHistory.length}개의 히스토리 항목이 있습니다.`;
-      historyPanel.appendChild(countAnnouncement);
     }
   }
 

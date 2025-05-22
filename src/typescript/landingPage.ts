@@ -55,7 +55,7 @@ function updateSwiperSlides(newsData: NewsData[], query: string): void {
 
   swiperWrapper.innerHTML = '';
 
-  const bgColors = ['bg-[#0d75f3]', 'bg-[#0a5dc2]', 'bg-[#074691]', 'bg-[#052e61]', 'bg-[#074691]', 'bg-[#0a5dc2]'];
+  const bgColors = ['bg-[#0069e2]', 'bg-[#0a5dc2]', 'bg-[#074691]', 'bg-[#052e61]', 'bg-[#074691]', 'bg-[#0a5dc2]'];
 
   newsData.forEach((news, index) => {
     const slideElement = document.createElement('div');
@@ -112,7 +112,7 @@ async function fetchAndRenderNews(query: string) {
 
 // ✅ DOM이 로드되면 초기화 + 검색 이벤트 바인딩
 window.addEventListener('DOMContentLoaded', async () => {
-  const defaultQuery = '[종합]';
+  const defaultQuery = '종합';
   await fetchAndRenderNews(defaultQuery);
 
   const inputElement = document.getElementById('searchInput') as HTMLInputElement;
@@ -133,7 +133,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       const link = (target as HTMLAnchorElement).href;
 
       const slide = target.closest('.swiper-slide');
-      const title = slide?.querySelector('.pretendard')?.textContent ?? '';
+      const title = slide?.querySelector('.text-4xl.pretendard.mb-4')?.textContent ?? '';
       const description = slide?.querySelector('p')?.textContent ?? '';
       const keyword = slide?.querySelector('.text-xl')?.textContent ?? ''; // query 텍스트
 
@@ -186,7 +186,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
         // ✅ 배경도 흐리게
         if (card) {
-          card.classList.remove('bg-[#0d75f3]', 'bg-[#0a5dc2]', 'bg-[#074691]', 'bg-[#052e61]', 'bg-[#074691]', 'bg-[#0a5dc2]');
+          card.classList.remove('bg-[#0069e2]', 'bg-[#0a5dc2]', 'bg-[#074691]', 'bg-[#052e61]', 'bg-[#074691]', 'bg-[#0a5dc2]');
           card.classList.add('bg-gray-400');
         }
 

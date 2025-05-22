@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/public/iconLogo3.svg" type="image/x-icon" />
     <link rel="preload" as="font" href="/font/woff2/PretendardVariable.woff2" crossorigin="anonymous" />
-    <link rel="stylesheet" as="style" href="/font/pretendardvariable.css" />
+    <link rel="preload" as="style" href="/font/pretendardvariable.css" />
     <script type="module" src="/src/main.ts"></script>
     <script type="module" src="/src/typescript/main-page.ts"></script>
     <script type="module" src="/src/typescript/toggle-menu.ts"></script>
@@ -221,7 +221,7 @@
         </ul>
       </div>
 
-      <form action="" class="w-full flex justify-center" role="search">
+      <form action="#" class="w-full flex justify-center" role="search">
         <div class="relative w-full max-w-2xl mx-auto my-6">
           <!-- 뉴모피즘 스타일 wrapper -->
           <div class="relative w-full rounded-full bg-[#f1f3f6] border border-[#f5f5f5] shadow-[8px_8px_16px_#d1d9e6,-8px_-8px_16px_#ffffff] before:content-[''] before:absolute before:inset-0 before:rounded-full before:shadow-[inset_2px_2px_5px_rgba(255,255,255,0.6)] before:pointer-events-none">
@@ -243,22 +243,21 @@
       <div class="w-full category-container grid place-items-center pt-[10px] pb-[15px] border-b border-[#e2e8f0]">
         <div class="relative">
           <nav id="categoryNav" class="flex flex-wrap justify-center gap-10" aria-label="뉴스 카테고리">
-            <a href="/src/pages/main-page.html?category=KBO야구" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="KBO야구"> KBO 야구 </a>
-            <a href="/src/pages/main-page.html?category=축구" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="축구"> 축구 </a>
-            <a href="/src/pages/main-page.html?category=연예" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="연예"> 연예 </a>
-            <a href="/src/pages/main-page.html?category=사회/문화" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="사회/문화"> 사회/문화 </a>
-            <a href="/src/pages/main-page.html?category=IT/과학" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="IT/과학"> IT/과학 </a>
-            <a href="/src/pages/main-page.html?category=경제" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="경제"> 경제 </a>
-            <a href="/src/pages/main-page.html?category=정치" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-blue-600 transition-colors duration-200 z-10" data-category="정치"> 정치 </a>
+            <a href="/src/pages/main-page.html?category=KBO야구" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-[#2b7ffc] transition-colors duration-200 z-10" data-category="KBO야구"> KBO 야구 </a>
+            <a href="/src/pages/main-page.html?category=축구" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-[#2b7ffc] transition-colors duration-200 z-10" data-category="축구"> 축구 </a>
+            <a href="/src/pages/main-page.html?category=연예" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-[#2b7ffc] transition-colors duration-200 z-10" data-category="연예"> 연예 </a>
+            <a href="/src/pages/main-page.html?category=사회/문화" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-[#2b7ffc] transition-colors duration-200 z-10" data-category="사회/문화"> 사회/문화 </a>
+            <a href="/src/pages/main-page.html?category=IT/과학" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-[#2b7ffc] transition-colors duration-200 z-10" data-category="IT/과학"> IT/과학 </a>
+            <a href="/src/pages/main-page.html?category=경제" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-[#2b7ffc] transition-colors duration-200 z-10" data-category="경제"> 경제 </a>
+            <a href="/src/pages/main-page.html?category=정치" class="category-btn w-fit px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-white hover:bg-[#2b7ffc] transition-colors duration-200 z-10" data-category="정치"> 정치 </a>
           </nav>
         </div>
       </div>
     </header>
     <main class="bg-[#f1f5f9] w-full mx-auto pt-6 pb-10 flex-grow">
       <section class="max-w-7xl mx-auto px-4">
-        <h1 class="text-2xl font-bold text-gray-800">뉴스 카드 리스트</h1>
-        <button id="scrollTopBtn" class="hidden bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-200">맨 위로</button>
-        <h1 class="text-2xl font-bold text-gray-800 mb-6"></h1>
+        <h1 class="text-2xl font-bold text-gray-800 mb-6">뉴스 카드 리스트</h1>
+
         <div id="newsGrid" aria-label="뉴스목록" role="region" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- 카드 렌더링 위치 -->
         </div>

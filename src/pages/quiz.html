@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/public/iconLogo3.svg" type="image/x-icon" />
     <link rel="preload" as="font" href="/font/woff2/PretendardVariable.woff2" crossorigin="anonymous" />
-    <link rel="stylesheet" as="style" href="/font/pretendardvariable.css" />
+    <link rel="preload" as="style" href="/font/pretendardvariable.css" />
     <script type="module" src="/src/main.ts"></script>
     <script src="/src/typescript/quiz.ts" type="module"></script>
     <script type="module" src="/src/typescript/toggle-menu.ts"></script>
@@ -270,13 +270,13 @@
                 <ul class="space-y-2 mt-2">
                   <!-- 여기부터 li 삭제 -->
                   <li>
-                    <p name="quizProblem" class="text-xl mb-1 text-gray-800">문제를 불러오는 중입니다. 잠시만 기다려 주세요! &gt;_&lt;</p>
+                    <p data-name="quizProblem" class="text-xl mb-1 text-gray-800">문제를 불러오는 중입니다. 잠시만 기다려 주세요! &gt;_&lt;</p>
                     <ul class="option gap-1"></ul>
                     <section class="space-y-6 quiz-feedback hidden">
                       <div class="text-center bg-white p-4 rounded shadow">
-                        <p name="quiz-result" class="font-medium"></p>
-                        <p name="quiz-reason" class="text-gray-600 text-sm mt-1"></p>
-                        <p name="quiz-points" class="text-gray-600 text-sm"></p>
+                        <p data-name="quiz-result" class="font-medium"></p>
+                        <p data-name="quiz-reason" class="text-gray-600 text-sm mt-1"></p>
+                        <p data-name="quiz-points" class="text-gray-600 text-sm"></p>
                       </div>
                       <!-- 버튼 영역 -->
                       <div class="flex justify-center gap-4 mt-4">
@@ -293,13 +293,13 @@
                 <ul class="space-y-2 mt-2">
                   <!-- 여기부터 li 삭제 -->
                   <li>
-                    <p name="quizProblem" class="text-xl mb-1 text-gray-800">문제를 불러오는 중입니다. 잠시만 기다려 주세요! &gt;_&lt;</p>
+                    <p data-name="quizProblem" class="text-xl mb-1 text-gray-800">문제를 불러오는 중입니다. 잠시만 기다려 주세요! &gt;_&lt;</p>
                     <ul class="option gap-1"></ul>
                     <section class="space-y-6 quiz-feedback hidden">
                       <div class="text-center bg-white p-4 rounded shadow">
-                        <p name="quiz-result" class="font-medium"></p>
-                        <p name="quiz-reason" class="text-gray-600 text-sm mt-1"></p>
-                        <p name="quiz-points" class="text-gray-600 text-sm"></p>
+                        <p data-name="quiz-result" class="font-medium"></p>
+                        <p data-name="quiz-reason" class="text-gray-600 text-sm mt-1"></p>
+                        <p data-name="quiz-points" class="text-gray-600 text-sm"></p>
                       </div>
                       <!-- 버튼 영역 -->
                       <div class="flex justify-center gap-4 mt-4">
@@ -316,13 +316,13 @@
                 <ul class="space-y-2 mt-2">
                   <!-- 여기부터 li 삭제 -->
                   <li>
-                    <p name="quizProblem" class="text-xl mb-1 text-gray-800">문제를 불러오는 중입니다. 잠시만 기다려 주세요! &gt;_&lt;</p>
+                    <p data-name="quizProblem" class="text-xl mb-1 text-gray-800">문제를 불러오는 중입니다. 잠시만 기다려 주세요! &gt;_&lt;</p>
                     <ul class="option gap-1"></ul>
                     <section class="space-y-6 quiz-feedback hidden">
                       <div class="text-center bg-white p-4 rounded shadow">
-                        <p name="quiz-result" class="font-medium"></p>
-                        <p name="quiz-reason" class="text-gray-600 text-sm mt-1"></p>
-                        <p name="quiz-points" class="text-gray-600 text-sm"></p>
+                        <p data-name="quiz-result" class="font-medium"></p>
+                        <p data-name="quiz-reason" class="text-gray-600 text-sm mt-1"></p>
+                        <p data-name="quiz-points" class="text-gray-600 text-sm"></p>
                       </div>
                       <!-- 버튼 영역 -->
                       <div class="flex justify-center gap-4 mt-4">
@@ -340,7 +340,7 @@
         <aside class="lg:col-span-1 border-l border-gray-300 pl-6">
           <div class="sticky top-4">
             <div class="border-b-2 border-black">
-              <h2 class="text-xl font-bold my-2">맞춤 뉴스 기사</h2>
+              <h2 class="text-xl font-bold my-2 text-[#005DBA]">맞춤 뉴스 기사</h2>
             </div>
             <br />
             <div class="space-y-4">
