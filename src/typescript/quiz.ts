@@ -133,7 +133,6 @@ async function callApiWithKeys() {
       return ans; // 성공하면 결과 반환 후 종료
     } catch (error: unknown) {
       console.warn(`API 호출 실패, API_KEY 교체 시도 ${i + 1}:`, error);
-      await new Promise(r => setTimeout(r, 1000));
       // 실패 시 다음 API_KEY로 시도
     }
   }
