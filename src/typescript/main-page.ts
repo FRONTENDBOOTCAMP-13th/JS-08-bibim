@@ -1,6 +1,8 @@
 import { naverNews } from './naverapi.ts';
 import type { NaverNewsItem } from './naverapi.ts';
 import { updatePoint } from './updatePoint.ts';
+import { renderPoint } from './updatePoint.ts';
+import { updateCalendar } from './toggle-menu.ts';
 
 /**
  * 현재 선택된 뉴스 카테고리 또는 검색어
@@ -474,6 +476,8 @@ document.addEventListener('DOMContentLoaded', () => {
   //먼저 초기화면 설정을 반드시 실행
   setupInitialView();
   updatePoint(10, '출석 포인트 적립');
+  renderPoint();
+  updateCalendar();
   // 검색 폼 이벤트 리스너 추가
   const searchForm = document.querySelector('form');
   const searchInput = document.getElementById('search') as HTMLInputElement; //타입스크립트에서 이게 input이라는 결 명시해주는 타입단언

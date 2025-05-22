@@ -275,6 +275,10 @@ document.addEventListener('DOMContentLoaded', () => {
     icon?.classList.toggle('rotate-180');
   });
 
+  updateCalendar();
+});
+
+export function updateCalendar() {
   // 달력 만들기
   const date = new Date();
   const year = date.getFullYear();
@@ -283,6 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const cals = generateCalendar(year, month);
   const gridElem = document.getElementById('grid-div');
+  if (gridElem) gridElem.innerHTML = '';
 
   // 출석한 날짜들 불러오기!
   const dateLog = JSON.parse(localStorage.getItem('pointLog') || '[]') as { date: string; log: string }[];
@@ -335,30 +340,30 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (contAttend) contAttend.textContent = `${maxLength}일`;
-});
 
-function generateCalendar(year: number, month: number): number[] {
-  const calendar = [];
+  function generateCalendar(year: number, month: number): number[] {
+    const calendar = [];
 
-  // 1일이 무슨 요일인지 확인 (0: 일요일, ..., 6: 토요일)
-  const firstDay = new Date(year, month - 1, 1).getDay();
+    // 1일이 무슨 요일인지 확인 (0: 일요일, ..., 6: 토요일)
+    const firstDay = new Date(year, month - 1, 1).getDay();
 
-  // 해당 월의 마지막 날짜 구하기
-  const lastDate = new Date(year, month, 0).getDate();
+    // 해당 월의 마지막 날짜 구하기
+    const lastDate = new Date(year, month, 0).getDate();
 
-  // 총 셀 수 = 앞 빈칸 + 날짜 수 → 주 단위(7의 배수)로 만들기
-  const totalCells = Math.ceil((firstDay + lastDate) / 7) * 7;
+    // 총 셀 수 = 앞 빈칸 + 날짜 수 → 주 단위(7의 배수)로 만들기
+    const totalCells = Math.ceil((firstDay + lastDate) / 7) * 7;
 
-  for (let i = 0; i < totalCells; i++) {
-    const date = i - firstDay + 1;
-    if (i < firstDay || date > lastDate) {
-      calendar.push(null); // 빈칸
-    } else {
-      calendar.push(date);
+    for (let i = 0; i < totalCells; i++) {
+      const date = i - firstDay + 1;
+      if (i < firstDay || date > lastDate) {
+        calendar.push(null); // 빈칸
+      } else {
+        calendar.push(date);
+      }
     }
-  }
 
-  return calendar as number[];
+    return calendar as number[];
+  }
 }
 
 // Toggle history panel (히스토리 섹션 토글 기능)
