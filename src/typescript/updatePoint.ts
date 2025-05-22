@@ -13,6 +13,7 @@ export function updatePoint(points: number, log: string) {
     if (!isExist) {
       pointsStorage[0] += points;
       logStorage.push({ date: today, log: log });
+      renderPoint();
     }
   } else if (log.endsWith(`퀴즈 정답`)) {
     const isExist = logStorage.some(entry => entry.log.includes(log));
