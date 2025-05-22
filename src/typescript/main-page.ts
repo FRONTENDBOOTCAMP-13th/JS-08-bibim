@@ -87,8 +87,8 @@ const renderCard = (article: NaverNewsItem) => {
   // 히스토리에 있으면 배경색을 gray-300, 아니면 white로 설정
   const bgColorClass = isInHistory ? 'bg-gray-300' : 'bg-white';
 
+  // ★ tabindex 없음 - 카드 클릭 불가능
   card.className = `relative flex flex-col rounded-lg overflow-hidden shadow-md ${bgColorClass} h-full transition-transform hover:scale-[1.01]`;
-  card.setAttribute('tabindex', '0'); // 키보드 포커스 가능하도록 설정
 
   // 웹 접근성 향상을 위한 속성 추가
   if (isInHistory) {
@@ -108,13 +108,12 @@ const renderCard = (article: NaverNewsItem) => {
     aria-label="${dotTooltip}"
   ></div>
   
-  <!-- 하트 아이콘 - 모든 효과 제거, 깔끔하게 -->
+  <!-- ★ 즐겨찾기 버튼 - 키보드 포커스만, 마우스 클릭 효과 제거 -->
   <button 
-    class="absolute top-3 right-4 z-10 bg-transparent border-0 p-0 favorite-button"
+    class="absolute top-3 right-4 z-10 bg-transparent border-0 p-1 favorite-button rounded-full outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
     aria-label="즐겨찾기에 추가"
     title="즐겨찾기에 추가"  
     data-article-id="${article.link}"
-    style="outline: none; box-shadow: none;"
   >
     <svg 
       xmlns="http://www.w3.org/2000/svg" 
@@ -166,88 +165,11 @@ const renderCard = (article: NaverNewsItem) => {
     arrQuiz.push({ title: article.title, description: article.description, date: article.pubDate, link: article.link });
   }
 
-  // 카드 클릭 이벤트 , 안의 세부a태그를 클릭했을경우 카드 전체를 클릭한경우와 중복되지 않도록 처리해줌
-  card.addEventListener('click', event => {
-    // 이미 버튼이나 링크 클릭 이벤트가 처리 중이면 카드 클릭 무시
-    if ((event.target as HTMLElement).closest('a') || (event.target as HTMLElement).closest('button')) {
-      return;
-    }
-
-    // 히스토리에 기사 추가 (수정된 부분)
-    const currentHistory = JSON.parse(localStorage.getItem('history') || '[]') as unknown[];
-    const isDuplicate = currentHistory.some(item => isNaverNewsItem(item) && item.link === article.link);
-
-    if (!isDuplicate) {
-      // 새로운 히스토리 배열 생성
-      const updatedHistory = [...currentHistory, article];
-      localStorage.setItem('history', JSON.stringify(updatedHistory));
-
-      // UI 업데이트 - 배경색 변경
-      card.classList.remove('bg-white');
-      card.classList.add('bg-gray-300');
-
-      // 헤더 배경 색상도 업데이트 - 파란색에서 연한 회색으로
-      const headerElement = card.querySelector('div.relative.h-40');
-      if (headerElement) {
-        headerElement.classList.remove('bg-blue-500');
-        headerElement.classList.add('bg-gray-400');
-      }
-
-      // 웹 접근성을 위한 aria-label 추가
-      card.setAttribute('aria-label', '읽은 기사');
-      card.setAttribute('aria-describedby', 'read-article-status');
-
-      // 스크린 리더 사용자를 위한 알림 (웹접근성 개선)
-      const srAnnouncement = document.createElement('div');
-      srAnnouncement.id = 'read-article-status';
-      srAnnouncement.className = 'sr-only';
-      srAnnouncement.setAttribute('aria-live', 'polite');
-      srAnnouncement.setAttribute('role', 'status');
-      srAnnouncement.textContent = '기사를 읽음 처리했습니다. 히스토리에 추가되었습니다.';
-      document.body.appendChild(srAnnouncement);
-
-      // 잠시 후 알림 요소 제거
-      setTimeout(() => {
-        if (document.body.contains(srAnnouncement)) {
-          document.body.removeChild(srAnnouncement);
-        }
-      }, 2000);
-    }
-
-    // 자세히 보기 링크로 이동
-    window.open(article.link, '_blank', 'noopener,noreferrer');
-  });
-
-  // 키보드 접근성을 위한 Enter 키 이벤트, 내부요소가 아니라 카드 전체에 포커스되어 있을 경우에만 동작
-  card.addEventListener('keydown', event => {
-    if (event.key === 'Enter' && !(event.target as HTMLElement).closest('a, button')) {
-      // 히스토리 저장 로직도 여기에 동일하게 적용
-      const currentHistory = JSON.parse(localStorage.getItem('history') || '[]') as unknown[];
-      const isDuplicate = currentHistory.some(item => isNaverNewsItem(item) && item.link === article.link);
-
-      if (!isDuplicate) {
-        const updatedHistory = [...currentHistory, article];
-        localStorage.setItem('history', JSON.stringify(updatedHistory));
-
-        // UI 업데이트
-        card.classList.remove('bg-white');
-        card.classList.add('bg-gray-300');
-
-        const headerElement = card.querySelector('div.relative.h-40');
-        if (headerElement) {
-          headerElement.classList.remove('bg-blue-500');
-          headerElement.classList.add('bg-gray-400');
-        }
-
-        card.setAttribute('aria-label', '읽은 기사');
-      }
-
-      window.open(article.link, '_blank', 'noopener,noreferrer');
-    }
-  });
+  // ★★★ 카드 클릭 이벤트 리스너 없음 - 완전 제거 ★★★
+  // ★★★ 키보드 이벤트 리스너 없음 - 완전 제거 ★★★
 
   const bookMark = JSON.parse(localStorage.getItem('bookMark') || '[]');
-  // 즐겨찾기 버튼 이벤트 리스너 추가, 즐겨찾기 기능 추가 예정
+  // 즐겨찾기 버튼 이벤트 리스너 추가
   const favoriteButton = card.querySelector('.favorite-button');
   const favoriteIcon = favoriteButton?.querySelector('.favorite-icon');
   for (let i = 0; i < bookMark.length; i++) {
@@ -257,11 +179,11 @@ const renderCard = (article: NaverNewsItem) => {
   }
 
   favoriteButton?.addEventListener('click', event => {
-    event.preventDefault(); // ★ 기본 동작 방지
-    event.stopPropagation(); // ★ 이벤트 전파 중단
+    event.preventDefault();
+    event.stopPropagation();
 
     const currentBookMark = JSON.parse(localStorage.getItem('bookMark') || '[]');
-    const isFavorite = favoriteIcon?.getAttribute('fill') === 'white'; //하트의 fill 속성이 "white"면 이미 즐겨찾기 되어 있는 상태로 판단
+    const isFavorite = favoriteIcon?.getAttribute('fill') === 'white';
 
     if (isFavorite) {
       // 즐겨찾기 해제
@@ -272,7 +194,7 @@ const renderCard = (article: NaverNewsItem) => {
       // 북마크에서 해당 기사 제거
       for (let i = 0; i < currentBookMark.length; i++) {
         if (currentBookMark[i][0] === article.link) {
-          currentBookMark.splice(i, 1); // 배열에서 제거
+          currentBookMark.splice(i, 1);
           localStorage.setItem('bookMark', JSON.stringify(currentBookMark));
 
           const section = document.querySelector('#article-panel');
@@ -280,20 +202,6 @@ const renderCard = (article: NaverNewsItem) => {
           if (targetDiv) {
             section?.removeChild(targetDiv);
           }
-
-          // 웹접근성: 삭제 완료 알림
-          const srAnnouncement = document.createElement('div');
-          srAnnouncement.className = 'sr-only';
-          srAnnouncement.setAttribute('aria-live', 'polite');
-          srAnnouncement.setAttribute('role', 'status');
-          srAnnouncement.textContent = '즐겨찾기에서 기사가 삭제되었습니다.';
-          document.body.appendChild(srAnnouncement);
-
-          setTimeout(() => {
-            if (document.body.contains(srAnnouncement)) {
-              document.body.removeChild(srAnnouncement);
-            }
-          }, 2000);
 
           break;
         }
@@ -308,19 +216,15 @@ const renderCard = (article: NaverNewsItem) => {
       arr.push(article.title);
       arr.push(article.pubDate);
 
-      currentBookMark.push(arr);
+      // ★ 맨 앞에 추가 (최신순으로 정렬)
+      currentBookMark.unshift(arr);
       localStorage.setItem('bookMark', JSON.stringify(currentBookMark));
 
       const linkElem = document.createElement('a');
-
       const txt = document.createElement('textarea');
       txt.innerHTML = article.title;
       const decoded = txt.value;
-
-      // <b>와 </b> 태그만 제거
       const cleanText = decoded.replace(/<\/?b>/g, '');
-
-      // 텍스트 노드로 변환
       const title = document.createTextNode(cleanText);
 
       const dateElem = document.createElement('span');
@@ -329,14 +233,12 @@ const renderCard = (article: NaverNewsItem) => {
       linkElem.setAttribute('href', article.link);
       linkElem.setAttribute('target', '_blank');
       linkElem.setAttribute('rel', 'noopener noreferrer');
-      linkElem.setAttribute('aria-label', `즐겨찾기 기사: ${cleanText}`); // 웹접근성
       linkElem.appendChild(title);
-      linkElem.className = 'text-sm text-gray-900 hover:underline block focus:outline-none focus:ring-2 focus:ring-blue-500 rounded';
+      linkElem.className = 'text-sm text-gray-900 hover:underline block';
 
       dateElem.appendChild(date);
       dateElem.className = 'text-xs text-gray-500';
 
-      // 감싸기 시작
       const innerDiv = document.createElement('div');
       const midDiv = document.createElement('div');
       const outerDiv = document.createElement('div');
@@ -351,21 +253,18 @@ const renderCard = (article: NaverNewsItem) => {
 
       const deleteBtn = document.createElement('button');
       deleteBtn.setAttribute('type', 'button');
-      deleteBtn.setAttribute('aria-label', '즐겨찾기에서 삭제'); // ★ 웹접근성
-      deleteBtn.setAttribute('title', '즐겨찾기에서 삭제'); // ★ 툴팁
-      deleteBtn.className = 'cursor-pointer p-1 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500'; // ★ 웹접근성 스타일
-      deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
+      deleteBtn.setAttribute('aria-label', '즐겨찾기에서 삭제');
+      deleteBtn.className = 'cursor-pointer p-1 rounded hover:bg-gray-100';
+      deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /> </svg>`;
 
       deleteBtn.addEventListener('click', deleteEvent => {
-        deleteEvent.stopPropagation(); // ★ 이벤트 전파 중단
-        deleteEvent.preventDefault(); // ★ 기본 동작 방지
+        deleteEvent.stopPropagation();
+        deleteEvent.preventDefault();
 
-        // 즐겨찾기 해제
         favoriteIcon?.setAttribute('fill', 'none');
         favoriteButton.setAttribute('aria-label', '즐겨찾기에 추가');
         favoriteButton.setAttribute('title', '즐겨찾기에 추가');
 
-        // 북마크에서 해당 기사 제거
         const latestBookMark = JSON.parse(localStorage.getItem('bookMark') || '[]');
         for (let i = 0; i < latestBookMark.length; i++) {
           if (latestBookMark[i][0] === article.link) {
@@ -377,21 +276,6 @@ const renderCard = (article: NaverNewsItem) => {
             if (targetDiv) {
               section?.removeChild(targetDiv);
             }
-
-            // 웹접근성: 삭제 완료 알림
-            const srAnnouncement = document.createElement('div');
-            srAnnouncement.className = 'sr-only';
-            srAnnouncement.setAttribute('aria-live', 'polite');
-            srAnnouncement.setAttribute('role', 'status');
-            srAnnouncement.textContent = '즐겨찾기에서 기사가 삭제되었습니다.';
-            document.body.appendChild(srAnnouncement);
-
-            setTimeout(() => {
-              if (document.body.contains(srAnnouncement)) {
-                document.body.removeChild(srAnnouncement);
-              }
-            }, 2000);
-
             break;
           }
         }
@@ -400,31 +284,21 @@ const renderCard = (article: NaverNewsItem) => {
       midDiv.appendChild(deleteBtn);
       outerDiv.append(midDiv);
 
-      // 최종 반영
+      // ★ 최신 항목을 맨 앞에 추가
       const section = document.getElementById('article-panel');
-      section?.appendChild(outerDiv);
-
-      // 웹접근성: 즐겨찾기 추가 완료 알림
-      const srAnnouncement = document.createElement('div');
-      srAnnouncement.className = 'sr-only';
-      srAnnouncement.setAttribute('aria-live', 'polite');
-      srAnnouncement.setAttribute('role', 'status');
-      srAnnouncement.textContent = '즐겨찾기에 기사가 추가되었습니다.';
-      document.body.appendChild(srAnnouncement);
-
-      setTimeout(() => {
-        if (document.body.contains(srAnnouncement)) {
-          document.body.removeChild(srAnnouncement);
-        }
-      }, 2000);
+      if (section?.firstChild) {
+        section.insertBefore(outerDiv, section.firstChild);
+      } else {
+        section?.appendChild(outerDiv);
+      }
     }
   });
 
   // 퀴즈 풀러 가기
   const quizBtn = card.querySelector('.quiz-button');
   quizBtn?.addEventListener('click', event => {
-    event.stopPropagation(); // ★ 이벤트 전파 중단
-    event.preventDefault(); // ★ 기본 동작 방지
+    event.stopPropagation();
+    event.preventDefault();
 
     const quizStorage = JSON.parse(localStorage.getItem('quiz') || '["", ""]');
     quizStorage[0] = article.title;
@@ -433,6 +307,48 @@ const renderCard = (article: NaverNewsItem) => {
     localStorage.setItem('quiz', JSON.stringify(quizStorage));
 
     window.location.href = '/src/pages/quiz.html';
+  });
+
+  // ★ "자세히 보기" 링크 클릭 시 히스토리 저장 기능 추가
+  const readMoreLink = card.querySelector('.read-more-link');
+  readMoreLink?.addEventListener('click', () => {
+    // 히스토리에 기사 추가
+    const currentHistory = JSON.parse(localStorage.getItem('history') || '[]') as unknown[];
+    const isDuplicate = currentHistory.some(item => isNaverNewsItem(item) && item.link === article.link);
+
+    if (!isDuplicate) {
+      // 새로운 히스토리 배열 생성
+      const updatedHistory = [...currentHistory, article];
+      localStorage.setItem('history', JSON.stringify(updatedHistory));
+
+      // UI 업데이트 - 배경색 변경
+      card.classList.remove('bg-white');
+      card.classList.add('bg-gray-300');
+
+      // 헤더 배경 색상도 업데이트
+      const headerElement = card.querySelector('div.relative.h-40');
+      if (headerElement) {
+        headerElement.classList.remove('bg-blue-500');
+        headerElement.classList.add('bg-gray-400');
+      }
+
+      // 웹 접근성을 위한 aria-label 추가
+      card.setAttribute('aria-label', '읽은 기사');
+
+      // 스크린 리더 사용자를 위한 알림
+      const srAnnouncement = document.createElement('div');
+      srAnnouncement.className = 'sr-only';
+      srAnnouncement.setAttribute('aria-live', 'polite');
+      srAnnouncement.setAttribute('role', 'status');
+      srAnnouncement.textContent = '기사를 읽음 처리했습니다. 히스토리에 추가되었습니다.';
+      document.body.appendChild(srAnnouncement);
+
+      setTimeout(() => {
+        if (document.body.contains(srAnnouncement)) {
+          document.body.removeChild(srAnnouncement);
+        }
+      }, 2000);
+    }
   });
 
   return card;
