@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 에러 이미지 생성
     const errorImg = document.createElement('img');
-    errorImg.src = '/src/pages/webp/503error.webp';
+    errorImg.src = '/public/webp/503error.webp';
     errorImg.alt = '서비스 에러 이미지';
     errorImg.className = 'w-full max-w-md mx-auto mt-10 rounded-lg';
 
