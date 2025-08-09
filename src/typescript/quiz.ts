@@ -63,14 +63,20 @@ nousresearch/deephermes-3-mistral-24b-preview:free ***
 microsoft/phi-4-reasoning-plus:free 그냥 쓰레기
 microsoft/phi-4-reasoning:free 개쓰레기
 opengvlab/internvl3-14b:free ***
+ai21/jamba-mini-1.7 x
+ai21/jamba-large-1.7
+openai/gpt-oss-20b
 
 */
 const data = {
-  model: 'opengvlab/internvl3-14b',
+  model: 'openai/gpt-oss-20b',
   messages: [
     {
       role: 'user',
-      content: `다음 내용에서 키워드 3개를 골라 각 키워드에 대한 토막 상식 퀴즈를 내주세요. 총 3문제입니다.
+      content: [
+        {
+          type: 'text',
+          text: `다음 내용에서 키워드 3개를 골라 각 키워드에 대한 토막 상식 퀴즈를 내주세요. 총 3문제입니다.
         **출력 형식은 아래 JSON 형식을 정확히 따르세요.**
         텍스트로 적으세요.
         출력 형식 의외의 출력 절대 금지.
@@ -111,6 +117,8 @@ const data = {
   생성할 내용:
   ${title}
   ${description}`,
+        },
+      ],
     },
   ],
   // response_format: { type: 'json_object' }, // JSON 형식으로 응답 요청
@@ -146,7 +154,7 @@ async function callApiWithKeys() {
 
     try {
       let ans = `데이터를 불러오지 못했습니다.`;
-      data.model = 'nousresearch/deephermes-3-mistral-24b-preview:free';
+      data.model = 'openai/gpt-oss-20b';
       await axios.post(API_URL, data, { headers }).then(response => {
         console.log('API 호출 성공:', response.data);
         ans = response.data.choices[0].message.content;
