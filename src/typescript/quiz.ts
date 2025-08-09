@@ -66,7 +66,7 @@ opengvlab/internvl3-14b:free ***
 
 */
 const data = {
-  model: 'opengvlab/internvl3-14b:free',
+  model: 'opengvlab/internvl3-14b',
   messages: [
     {
       role: 'user',
